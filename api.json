@@ -1,0 +1,147 @@
+{
+    /* POST логин */
+    "data": {
+        "login": "login",
+        "password": "password",
+        "api": "апи для истории"
+    },
+    /* GET */
+    "login": {
+        "login": "login",
+        "password": "password",
+        "token": "auth token",
+    },
+
+    /* POST регистрация */
+    "data": {
+        "email": "email",
+        "login": "login",
+        "password": "password"
+    },
+
+    /* В ответ на post запрос */
+    "registration": {
+        "login": "login",
+        "password": "password",
+        "token": "auth token"
+    },
+
+    /* Продумать какие данные нужны при смене пароля \ емейла, кроме основных pass/email */
+    /* POST change pass */
+    "data": {
+        "old_pass": "pass",
+        "new_pass": "new pass",
+        "token?": "token?",
+        "id?": "userid"
+    },
+    /* POST change email */
+    "data": {
+        "new_email": "pass",
+        "pass": "pass",
+        "token?": "token?",
+        "id?": "userid"
+    },
+
+    /* POST кода подтверждения, с почты, после смены емейла или пароля */
+    "data": {
+        "id": "userid",
+        "code": "code"
+    },
+
+    /* При запросе /user/{id} */
+    /* GET */
+    "user": {
+        "login": "Name",
+        "avatar": "url на аватарку",
+        "email": "email",
+        // последний вход в игру
+        "last_entrance": "17 августа в 22:53",
+        // дата регистрации
+        "register_date": "06 мая 2013",
+        // последняя смена пароля
+        "last_change_password": "10 августа в 22:53",
+        "coins": {
+            "effect": 125,
+            "bonus": 125,
+            "kinah": 125
+        },
+        "characters": [
+            {
+                "name": "Assassin",
+                "class": "Убийца",
+                "class2?": "Паладин",
+                "level": 40
+            }
+        ],
+
+        //реферальная программа
+        "refferal": {
+            "url": "ссылка для приглашения",
+            "invited": "сколько игроков приглашено"
+        },
+    },
+
+    /* GET постоянная проверка новых уведомлений */
+    // ПРи запросе /user/{id}/notifications
+    "notification": [
+        {
+            "type": "тип уведомления, нужно обдумать какие будут",
+            "text": "Ваш аккаунт временно заблокирован!"
+        }
+    ]
+
+    /* При запросе /user/{id}/history */
+    /* скорее всего нужно будет разбить на пагинацию */
+    /* GET */
+    // история в профиле
+    "history": [
+        {
+            "id": "id",
+            "ip": "192.168.0.1",
+            "action": "Вход в аккаунт",
+            "date": "17 августа 2020 в 22:53"
+        }
+    ],
+
+    /* При запросе /user/{id}/donation */
+    /* скорее всего нужно будет разбить на пагинацию */
+    /* GET */
+    // пожертвования в профиле
+    "donation": [
+        {
+            "id": "id",
+            "method": "Robokassa",
+            "sum": "15,000 руб.",
+            "status": "closed/active/error",
+            "date": "17 августа 2020 в 22:53"
+        }
+    ],
+
+    /* При запросе /user/{id}/vote */
+    /* скорее всего нужно будет разбить на пагинацию */
+    /* GET */
+    // голосование в профиле
+    "vote": [
+        {
+            "id": "id",
+            "method": "MMOTOP",
+            "reward": "23 Bonus",
+            "date": "17 августа 2020 в 22:53"
+        }
+    ],
+
+    /* При запросе /user/{id}/promo */
+    /* скорее всего нужно будет разбить на пагинацию */
+    /* GET */
+    // история промокодов в профиле
+    "vote": [
+        {
+            "id": "id",
+            "code": "E342-DK22-AO19",
+            "status": "activated",
+            "date": "17 августа 2020 в 22:53"
+        }
+    ],
+
+
+}

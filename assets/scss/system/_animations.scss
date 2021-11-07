@@ -1,0 +1,19 @@
+//fade Vue
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity $transition;
+}
+
+.fade-enter,
+.fade-leave-to {
+    opacity: 0;
+}
+
+// tabs fade Vue
+.tabs-fade-enter-active {
+    transition: opacity 0.6s;
+}
+
+.tabs-fade-enter {
+    opacity: 0;
+}

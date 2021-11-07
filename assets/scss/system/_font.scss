@@ -1,0 +1,8 @@
+@import "_mixins.scss";
+
+@include fontInc('Gilroy', normal, 400, '~/assets/fonts/Gilroy/Gilroy-Regular.woff2');
+@include fontInc('Gilroy', italic, 400, '~/assets/fonts/Gilroy/Gilroy-RegularItalic.woff2');
+@include fontInc('Gilroy', normal, 500, '~/assets/fonts/Gilroy/Gilroy-Medium.woff2');
+@include fontInc('Gilroy', normal, 600, '~/assets/fonts/Gilroy/Gilroy-SemiBold.woff2');
+@include fontInc('Gilroy', normal, 700, '~/assets/fonts/Gilroy/Gilroy-Bold.woff2');
+@include fontInc('Gilroy', normal, 800, '~/assets/fonts/Gilroy/Gilroy-Black.woff2');

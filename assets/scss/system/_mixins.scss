@@ -1,0 +1,17 @@
+@mixin fontInc($fname, $fstyle, $fweight, $furl) {
+    @font-face {
+        font-family: $fname;
+        font-style: $fstyle;
+        font-weight: $fweight;
+        font-display: swap;
+        src: local($fname), url($furl) format('woff2');
+    }
+}
+
+// CENTER MIXIN
+@mixin center() {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}

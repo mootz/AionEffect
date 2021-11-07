@@ -1,0 +1,35 @@
+/* Breakpoints: From xs to sm, from sm to md, from md to lg, after that simple desktop */
+$breakpoints: (
+    xs: 0,
+    sm: 768px,
+    md: 992px,
+    lg: 1280px
+);
+
+/* Colors */
+
+/* Defaults */
+$font-family: 'Museo', sans-serif;
+$font-size: 16px;
+$body-color: #000;
+$body-bg: #fff;
+
+/* Grid */
+$header-h: 5.8rem;
+$header-padding: 3.4rem;
+$footer-h: 64px;
+$sidebar-w: 256px;
+
+/* Spacing */
+$mobile-padding: 16px;
+
+$accent: #ff2e00;
+$fontsize: 1.4rem;
+$white: #fff;
+$grey: rgba(#fff, .4);
+$dark: #111925;
+$dark-notif: #0a0f16;
+$lightdark: #151d29;
+$system: -apple-system, blinkmacsystemfont, arial, sans-serif;
+$gilroy: 'Gilroy', -apple-system, blinkmacsystemfont, arial, sans-serif;
+$transition: 0.3s;
