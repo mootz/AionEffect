@@ -43,9 +43,7 @@
         font-style: $fstyle;
         font-weight: $fweight;
         font-display: swap;
-        src:
-            url('~assets/fonts/' + $alias + '/' + $fname + '.woff') format('woff'),
-            url('~assets/fonts/' + $alias + '/' + $fname + '.woff2') format('woff2');
+        src: url('~assets/fonts/' + $alias + '/' + $fname + '.woff2') format('woff2');
     }
 }
 

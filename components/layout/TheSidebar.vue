@@ -17,6 +17,16 @@
 
             <li :class="$style.item">
                 <AppButton icon-name="crown"
+                           text="Магазин"
+                           link="/"
+                           type="static"
+                           text-align="left"
+                           hover-background
+                />
+            </li>
+
+            <li :class="$style.item">
+                <AppButton icon-name="auction"
                            text="Аукцион"
                            link="/"
                            type="static"

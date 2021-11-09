@@ -1,5 +1,5 @@
 <template>
-    <div :class="$style.wrap">
+    <div :class="$style.BalanceCard">
         <div :class="$style.top">
             <div :class="[$style.icon, [$style[type]]]">
                 <div :class="$style.iconWrap">
@@ -58,11 +58,25 @@
 </script>
 
 <style lang="scss" module>
-    .wrap {
+    .BalanceCard {
         padding: 3.2rem 2rem 3.2rem 3.2rem;
         border-radius: 40px;
         background: $lightdark;
         overflow: hidden;
+        transition: $transition;
+        cursor: pointer;
+
+        &:hover {
+            border-radius: 20px;
+
+            .icon:before {
+                transform: translate(-50%, -50%) scale(1.5);
+            }
+
+            .tooltipIcon {
+                opacity: 1;
+            }
+        }
     }
 
     .top {
@@ -87,6 +101,7 @@
             width: 22.6rem;
             height: 22.6rem;
             transform: translate(-50%, -50%);
+            transition: transform $transition;
             opacity: .1;
         }
 
@@ -140,8 +155,8 @@
     }
 
     .tooltipIcon {
+        transition: $transition;
         opacity: .2;
-        cursor: pointer;
     }
 
     .value {

@@ -52,7 +52,9 @@
 
     .content {
         width: 100%;
+        height: 100%;
         margin-left: 6.2rem;
         padding: 3.4rem 3rem 0 0;
+        overflow-y: auto;
     }
 </style>

@@ -4,6 +4,7 @@
 
         <span class="input__inp-wrap">
             <input class="input__inp"
+                   :autocomplete="type === 'password' ? 'password' : null"
                    :placeholder="placeholder"
                    :type="passwordView ? 'text' : type"
                    :value="value"

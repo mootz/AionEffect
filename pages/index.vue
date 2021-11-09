@@ -31,7 +31,7 @@
                         Мой аккаунт
                     </div>
 
-                    <AccountCard :user="user.user" />
+                    <AccountCard :user="user" />
                 </div>
 
                 <div :class="$style.refferalWrap">
@@ -47,7 +47,7 @@
                         </div>
 
                         <div :class="$style.number">
-                            28
+                            {{ user.refferal.invited }}
                         </div>
                         <p :class="$style.rText">
                             Игроков приглашено
@@ -76,7 +76,14 @@
             </div>
 
             <div class="rSide">
-                <ListCharacters />
+                <transition name="fade"
+                            mode="out-in">
+                    <UserData v-if="userPage.dataChange" />
+
+                    <ListCharacters v-else
+                                    :characters="user.characters" />
+
+                </transition>
             </div>
         </div>
     </div>
@@ -89,17 +96,20 @@
     import AccountCard from '@/components/pages/homePage/AccountCard';
     import AppButton from '@/components/ui/inputs/AppButton';
     import ListCharacters from '@/components/pages/homePage/ListCharacters';
+    import UserData from '@/components/pages/homePage/UserData';
 
     export default {
         name: 'HomePage',
-        components: {ListCharacters,
+        components: {UserData,
+                     ListCharacters,
                      AppButton,
                      AccountCard,
                      BalanceCard},
 
         computed: {
             ...mapState({
-                user: 'user'
+                user: state => state.user.user,
+                userPage: state => state.user.userPage
             })
         },
 

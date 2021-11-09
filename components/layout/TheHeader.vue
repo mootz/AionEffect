@@ -47,15 +47,15 @@
                     </div>
                 </div>
 
-                <div :class="$style.profile"
-                     @click.stop="toggleProfile">
+                <div :class="$style.profile">
                     <div :class="$style.profileImg">
                         <ImageLazy image="images/avatar_placeholder.jpg"
                                    border-radius="100%"
                         />
                     </div>
 
-                    <div :class="$style.profileName">
+                    <div :class="$style.profileName"
+                         @click.stop="toggleProfile">
                         Overlord
 
                         <div :class="[$style.profileIcon, {[$style._isActive]: isActiveProfile}]">
@@ -291,6 +291,7 @@
 
     .menuTooltip {
         position: absolute;
+        z-index: 3;
         align-items: flex-start;
         width: max-content;
         top: calc(100% + 3rem);

@@ -17,6 +17,10 @@
         <IconKinah />
         <IconGift />
         <IconInfo />
+        <IconTeleport />
+        <IconDignity />
+        <IconUsers />
+        <IconGear />
 
     </svg>
 </template>
@@ -36,10 +40,18 @@
     import IconKinah from '@/components/layout/SpriteSet/IconKinah';
     import IconGift from '@/components/layout/SpriteSet/IconGift';
     import IconInfo from '@/components/layout/SpriteSet/IconInfo';
+    import IconTeleport from '@/components/layout/SpriteSet/IconTeleport';
+    import IconDignity from '@/components/layout/SpriteSet/IconDignity';
+    import IconUsers from '@/components/layout/SpriteSet/IconUsers';
+    import IconGear from '@/components/layout/SpriteSet/IconGear';
 
     export default {
         name: 'TheSprite',
         components: {
+            IconGear,
+            IconUsers,
+            IconDignity,
+            IconTeleport,
             IconInfo,
             IconGift,
             IconKinah,

@@ -130,8 +130,10 @@ ul {
 }
 
 .containerWSide {
+    position: relative;
     display: flex;
     justify-content: space-between;
+    padding-bottom: $contentMarginBottom;
 }
 
 .lSide {
@@ -139,5 +141,8 @@ ul {
 }
 
 .rSide {
+    position: absolute;
+    height: calc(100% - #{$contentMarginBottom});
     width: calc(30% - 3.2rem);
+    right: 0;
 }
