@@ -6,13 +6,12 @@
 
         <ul :class="$style.menu">
 
-            <li :class="$style.item">
+            <li :class="[$style.item, $style._isActive]">
                 <AppButton icon-name="profile"
                            text="Мой профиль"
                            link="/"
                            type="static"
                            text-align="left"
-                           hover-background
                 />
             </li>
 
@@ -110,6 +109,10 @@
         transition: .3s;
 
         &:hover {
+            opacity: 1;
+        }
+
+        &._isActive {
             opacity: 1;
         }
     }

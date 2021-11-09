@@ -25,8 +25,10 @@
 
         <AppButton text="Войти"
                    :class="$style.login__button"
-                   @click.native="$emit('change-step', 'acceptRegister')"
+                   @click.native="$router.push('/')"
         />
+        <!--                           @click.native="$emit('change-step', 'acceptRegister')"
+-->
 
         <a href="#"
            :class="[$style.login__forgot, $style._mobile]"

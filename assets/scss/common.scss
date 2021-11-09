@@ -31,6 +31,21 @@
     }
 }
 
+/* stylelint-disable*/
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(79, 104, 145, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #152233;
+}
+/* stylelint-enable*/
+
 ::placeholder {
     color: #666;
 }
@@ -104,4 +119,25 @@ ul {
 
 * {
     box-sizing: border-box;
+}
+
+.labelName {
+    margin-bottom: 2.4rem;
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: #fff;
+    opacity: .6;
+}
+
+.containerWSide {
+    display: flex;
+    justify-content: space-between;
+}
+
+.lSide {
+    width: calc(70% - 3.2rem);
+}
+
+.rSide {
+    width: calc(30% - 3.2rem);
 }

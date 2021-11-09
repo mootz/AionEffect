@@ -4,7 +4,7 @@ import {plugins} from './config/plugins';
 import {proxy} from './config/proxy';
 
 module.exports = {
-    target: 'server',
+    target: 'static',
     telemetry: false,
 
     publicRuntimeConfig: {
@@ -36,7 +36,7 @@ module.exports = {
         htmlAttrs: {
             lang: 'ru',
         },
-        title: 'Шаблон Nuxt проекта',
+        title: 'Aion Effect',
         meta: [
             {charset: 'utf-8'},
             {
@@ -46,7 +46,7 @@ module.exports = {
             {
                 hid: 'description',
                 name: 'description',
-                content: 'Шаблон Nuxt проекта',
+                content: 'Aion Effect',
             },
             /* Favicons */
             {name: 'msapplication-TileColor', content: '#ffffff'},
@@ -160,6 +160,7 @@ module.exports = {
     router: {
         linkActiveClass: 'is-active',
         linkExactActiveClass: 'is-exact',
+        base: process.env.NODE_ENV !== 'production' ? '/' : '/aioneffect'
     },
 
     /**
@@ -172,6 +173,7 @@ module.exports = {
      */
     build: {
         publicPath: '/n/',
+        // publicPath: '/',
 
         // analyze: true,
 

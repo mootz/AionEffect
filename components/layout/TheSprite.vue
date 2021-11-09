@@ -12,6 +12,12 @@
         <IconSupport />
         <IconBell />
         <IconChevron />
+        <IconCoinEffect />
+        <IconBonus />
+        <IconKinah />
+        <IconGift />
+        <IconInfo />
+
     </svg>
 </template>
 <script>
@@ -25,10 +31,20 @@
     import IconSupport from '@/components/layout/SpriteSet/IconSupport';
     import IconBell from '@/components/layout/SpriteSet/IconBell';
     import IconChevron from '@/components/layout/SpriteSet/IconChevron';
+    import IconCoinEffect from '@/components/layout/SpriteSet/IconCoinEffect';
+    import IconBonus from '@/components/layout/SpriteSet/IconBonus';
+    import IconKinah from '@/components/layout/SpriteSet/IconKinah';
+    import IconGift from '@/components/layout/SpriteSet/IconGift';
+    import IconInfo from '@/components/layout/SpriteSet/IconInfo';
 
     export default {
         name: 'TheSprite',
         components: {
+            IconInfo,
+            IconGift,
+            IconKinah,
+            IconBonus,
+            IconCoinEffect,
             IconChevron,
             IconBell,
             IconSupport,

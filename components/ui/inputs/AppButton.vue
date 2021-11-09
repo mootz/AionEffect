@@ -4,6 +4,7 @@
                :target="href ? '_blank' : null"
                :to="link || href ? (link || href) : null"
                :disabled="disabled"
+               :style="{height: height}"
     >
 
         <div :class="$style.btn__content">
@@ -59,6 +60,11 @@
             },
 
             textAlign: {
+                default: '',
+                type: String,
+            },
+
+            height: {
                 default: '',
                 type: String,
             }
