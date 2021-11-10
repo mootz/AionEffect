@@ -86,7 +86,7 @@
     .sidebar {
         display: flex;
         flex-direction: column;
-        width: 30rem;
+        width: 40rem;
         padding: 4.2rem 3.6rem;
         position: relative;
         overflow: hidden;

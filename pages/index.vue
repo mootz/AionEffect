@@ -54,7 +54,10 @@
                         </p>
 
                         <div :class="$style.rIcons">
-                            <div :class="$style.rIconWrap">
+                            <div :class="[$style.rIconWrap, $style._active]">
+                                <div :class="$style.rIconGifts">
+                                    {{ user.refferal.gifts }}
+                                </div>
                                 <div :class="$style.rIcon">
                                     <svg>
                                         <use xlink:href="#icon-gift" />
@@ -153,6 +156,7 @@
     }
 
     .rIconWrap {
+        position: relative;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -172,6 +176,26 @@
         &:last-child {
             margin-right: 0;
         }
+
+        &._active {
+            opacity: 1;
+        }
+    }
+
+    .rIconGifts {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: -.5rem;
+        right: -.5rem;
+        width: 2.2rem;
+        height: 2.2rem;
+        background-color: $accent;
+        border-radius: 100%;
+        font-size: 1.2rem;
+        line-height: 1.4rem;
+        font-weight: 600;
     }
 
     .rIcon {

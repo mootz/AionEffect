@@ -39,19 +39,26 @@
                     <ChangeLanguage />
                 </div>
 
-                <div :class="$style.bell">
-                    <div :class="$style.bellIcon">
+                <div :class="[$style.bell, {[$style._isActive]: isActiveNotifications}]">
+                    <div :class="$style.bellIcon"
+                         @click.stop="toggleNotifications">
                         <svg>
                             <use xlink:href="#icon-bell" />
                         </svg>
                     </div>
+
+                    <transition name="fade">
+                        <TheNotification v-if="isActiveNotifications"
+                                         :class="$style.notification"
+                                         :notifications="notifications"
+                        />
+                    </transition>
                 </div>
 
                 <div :class="$style.profile">
-                    <div :class="$style.profileImg">
-                        <ImageLazy image="images/avatar_placeholder.jpg"
-                                   border-radius="100%"
-                        />
+                    <div :class="$style.profileImg"
+                         :style="{backgroundColor: user.avatar.color}">
+                        {{ user.avatar.text }}
                     </div>
 
                     <div :class="$style.profileName"
@@ -93,40 +100,53 @@
 
 <script>
     import {mapState, mapActions} from 'vuex';
-    import ImageLazy from '@/components/common/ImageLazy';
     import ChangeLanguage from '@/components/common/ChangeLanguage';
     import Link from '@/components/common/Link';
     import Tooltip from '@/components/common/Tooltip';
+    import TheNotification from '@/components/common/TheNotification';
 
     export default {
         name: 'TheHeader',
-        components: {Tooltip,
-                     Link,
-                     ChangeLanguage,
-                     ImageLazy},
+        components: {
+            TheNotification,
+            Tooltip,
+            Link,
+            ChangeLanguage
+        },
         data() {
             return {
             };
         },
 
         computed: {
-            ...mapState('header', {
-                isActiveProfile: 'isActiveProfileMenu',
+            ...mapState({
+                isActiveProfile: state => state.header.isActiveProfileMenu,
+                isActiveNotifications: state => state.header.isActiveNotifications,
+                notifications: state => state.user.user.notifications,
+                user: state => state.user.user
             }),
         },
 
         methods: {
             toggleProfile() {
                 this.isActiveProfile ? this.closeMenu() : this.openMenu();
-                // if (this.isActiveProfile) {
-                //     this.closeMenu();
-                // } else {
-                //     this.openMenu();
-                // }
+
+                if (this.isActiveNotifications) {
+                    this.closeNotifications();
+                }
+            },
+            toggleNotifications() {
+                this.isActiveNotifications ? this.closeNotifications() : this.openNotifications();
+
+                if (this.isActiveProfile) {
+                    this.closeMenu();
+                }
             },
             ...mapActions({
                 openMenu: 'header/openProfileMenu',
                 closeMenu: 'header/closeProfileMenu',
+                openNotifications: 'header/openNotifications',
+                closeNotifications: 'header/closeNotifications',
             }),
         }
     };
@@ -211,11 +231,10 @@
     }
 
     .bell {
+        position: relative;
         width: 2.4rem;
         height: 2.4rem;
-        position: relative;
         margin-right: 3.2rem;
-        cursor: pointer;
 
         &:before {
             content: '';
@@ -227,6 +246,8 @@
             right: 0;
             border-radius: 50%;
             z-index: 2;
+            pointer-events: none;
+            transition: $transition;
         }
 
         &:after {
@@ -238,6 +259,19 @@
             right: -.8rem;
             background: radial-gradient(50% 50% at 50% 50%, rgba(255, 46, 0, 0.3) 0%, rgba(255, 46, 0, 0) 100%);
             z-index: 1;
+            pointer-events: none;
+            transition: $transition;
+        }
+
+        &._isActive {
+            &:before,
+            &:after {
+                opacity: 0;
+            }
+
+            .bellIcon {
+                opacity: 1;
+            }
         }
     }
 
@@ -245,6 +279,12 @@
         height: 2.2rem;
         fill: #fff;
         opacity: .2;
+        cursor: pointer;
+        transition: $transition;
+
+        &._isActive {
+            opacity: 1;
+        }
     }
 
     .profile {
@@ -258,6 +298,12 @@
         width: 3rem;
         height: 3rem;
         margin-right: 1rem;
+        border-radius: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 1.8rem;
     }
 
     .profileName {
@@ -311,6 +357,13 @@
         &:last-child {
             margin-bottom: 0;
         }
+    }
+
+    .notification {
+        position: absolute;
+        top: calc(100% + 3rem);
+        right: -4rem;
+        z-index: 3;
     }
 
 </style>

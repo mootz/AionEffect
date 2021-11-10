@@ -1,6 +1,6 @@
 <template>
     <div :class="$style.wrap"
-         @click.stop="closeProfileMenu">
+         @click.stop="closeAllPopups">
         <TheSidebar />
 
         <div :class="$style.content">
@@ -21,7 +21,7 @@
     import TheModal from '~/components/layout/TheModal';
     import TheSidebar from '~/components/layout/TheSidebar';
     import TheSprite from '~/components/layout/TheSprite';
-    import {mapActions} from 'vuex';
+    import {mapActions, mapMutations} from 'vuex';
 
     export default {
         components: {
@@ -31,11 +31,25 @@
             TheModal,
         },
 
+        mounted() {
+            this.createNewAvatar();
+        },
+
         methods: {
             ...mapActions({
                 closeProfileMenu: 'header/closeProfileMenu',
+                closeNotifications: 'header/closeNotifications'
             }),
-        }
+
+            ...mapMutations({
+                createNewAvatar: 'user/CREATE_AVATAR'
+            }),
+
+            closeAllPopups() {
+                this.closeProfileMenu();
+                this.closeNotifications();
+            }
+        },
     };
 </script>
 

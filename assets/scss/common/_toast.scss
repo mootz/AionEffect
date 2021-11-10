@@ -3,9 +3,12 @@ body {
         width: 50rem;
     }
 
+    .Vue-Toastification__toast {
+        border-radius: 30px;
+    }
+
     .Vue-Toastification__toast--default {
         background: $dark-notif;
-        border-radius: 30px;
     }
 
     .Vue-Toastification__toast-body {

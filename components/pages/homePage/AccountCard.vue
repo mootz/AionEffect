@@ -2,10 +2,10 @@
     <div :class="$style.wrap">
         <div :class="$style.top">
             <div :class="$style.infoWrap">
-                <div :class="$style.imgWrap">
-                    <ImageLazy :image="user.avatar"
-                               border-radius="100%"
-                    />
+                <div :class="$style.imgWrap"
+                     :style="{backgroundColor: user.avatar.color}"
+                >
+                    {{ user.avatar.text }}
                 </div>
                 <div :class="$style.info">
                     <p :class="$style.name">
@@ -68,10 +68,10 @@
 
 <script>
     import {mapActions, mapState} from 'vuex';
-    import ImageLazy from '@/components/common/ImageLazy';
+
     export default {
         name: 'AccountCard',
-        components: {ImageLazy},
+        components: {},
         props: {
             user: {
                 type: Object,
@@ -117,6 +117,11 @@
         height: 4.4rem;
         margin-right: 1.6rem;
         border-radius: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 2.6rem;
     }
 
     .name {

@@ -20,16 +20,16 @@
                     <div :class="$style.class">
                         {{ char.class }} {{ char.level }} Ур.
                     </div>
-                    <div v-if="char.class2"
-                         :class="$style.classAccent">
-                        {{ char.class2 }}
-                    </div>
+                    <!--                    <div v-if="char.class2"-->
+                    <!--                         :class="$style.classAccent">-->
+                    <!--                        {{ char.class2 }}-->
+                    <!--                    </div>-->
                 </div>
             </div>
 
             <div :class="$style.buttons">
                 <div :class="[$style.button, {[$style._disabled]: char.online}]"
-                     @click.stop="teleportChar(char.name)"
+                     @click.stop="char.online ? errorCharOnline() : teleportChar(char.name)"
                 >
                     <svg>
                         <use xlink:href="#icon-teleport" />
@@ -58,6 +58,9 @@
         methods: {
             teleportChar(name) {
                 this.$toast(`Ваш персонаж ${name} куда-то отправлен`);
+            },
+            errorCharOnline() {
+                this.$toast.error('Ваш персонаж в онлайне!');
             }
         }
     };
@@ -152,7 +155,6 @@
         }
 
         &._disabled {
-            pointer-events: none;
             opacity: .2;
         }
     }

@@ -1,7 +1,10 @@
 export const state = () => ({
     user: {
         login: 'Overlord',
-        avatar: 'images/avatar_placeholder.jpg',
+        avatar: {
+            text: '',
+            color: '',
+        },
         email: 'aioneffect@mail.ru',
         // последний вход в игру
         last_entrance: '17 августа в 22:53',
@@ -18,79 +21,61 @@ export const state = () => ({
             {
                 name: 'Assassin',
                 class: 'Убийца',
-                class2: 'Паладин',
                 level: 40,
                 online: false
             },
             {
                 name: 'Hello',
                 class: 'Лучник',
-                class2: '',
                 level: 12,
-                online: false
-            },
-            {
-                name: 'DxxRraa',
-                class: 'Страж',
-                class2: 'Рыцарь Смерти',
-                level: 24,
                 online: true
-            },
-            {
-                name: 'DxxRraa2',
-                class: 'Страж',
-                class2: 'Рыцарь Смерти',
-                level: 24,
-                online: true
-            },
-            {
-                name: 'DxxRraa3',
-                class: 'Страж',
-                class2: 'Рыцарь Смерти',
-                level: 24,
-                online: true
-            },
-            {
-                name: 'DxxRraa4',
-                class: 'Страж',
-                class2: 'Рыцарь Смерти',
-                level: 24,
-                online: true
-            },
-            {
-                name: 'DxxRraa5',
-                class: 'Страж',
-                class2: 'Рыцарь Смерти',
-                level: 24,
-                online: true
-            },
-            {
-                name: 'DxxRraa6',
-                class: 'Страж',
-                class2: 'Рыцарь Смерти',
-                level: 24,
-                online: true
-            },
-            {
-                name: 'DxxRraa7',
-                class: 'Страж',
-                class2: 'Рыцарь Смерти',
-                level: 24,
-                online: true
-            },
+            }
         ],
 
         // реферальная программа
         refferal: {
             url: 'ссылка для приглашения',
-            invited: '66'
+            invited: '66',
+            gifts: '2'
         },
+
+        // уведомления
+        notifications: [
+            {
+                type: 'bonus',
+                text: 'Спасибо за поддержку! Вам начислено 23 Bonus'
+            },
+            {
+                type: 'bonus',
+                text: 'Спасибо за поддержку! Вам начислено 23 Bonus'
+            },
+            {
+                type: 'bonus',
+                text: 'Спасибо за поддержку! Вам начислено 23 Bonus'
+            },
+            {
+                type: 'bonus',
+                text: 'Спасибо за поддержку! Вам начислено 23 Bonus'
+            },
+            {
+                type: 'bonus',
+                text: 'Спасибо за поддержку! Вам начислено 23 Bonus'
+            },
+            {
+                type: 'bonus',
+                text: 'Спасибо за поддержку! Вам начислено 23 Bonus'
+            },
+            {
+                type: 'bonus',
+                text: 'Спасибо за поддержку! Вам начислено 23 Bonus'
+            },
+        ]
     },
 
     userPage: {
         dataChange: false,
         step: 1,
-        type: '',
+        type: ''
     }
 });
 
@@ -129,4 +114,8 @@ export const mutations = {
             this.$toast('На почтовый адрес аккаунта был отправлен код подтверждения');
         }
     },
+    CREATE_AVATAR(state) {
+        state.user.avatar.text = state.user.login.split('')[0];
+        state.user.avatar.color = `#${Math.floor(Math.random()*16777215).toString(16)}`;
+    }
 };
