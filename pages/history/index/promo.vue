@@ -1,14 +1,12 @@
 <template>
     <div>
-        <nuxt-link to="/history">
-            to HISTORY
-        </nuxt-link>
+        promo
     </div>
 </template>
 
 <script>
     export default {
-        name: 'Hey',
+        name: 'Promo',
     };
 </script>
 

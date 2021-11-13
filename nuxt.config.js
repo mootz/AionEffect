@@ -18,6 +18,10 @@ module.exports = {
         },
     },
 
+    serverMiddleware: [
+        '~/middleware/redirects.js'
+    ],
+
     /**
      * В env добавить 2 переменные HTTPS_KEY и HTTPS_CERT, которые являются путями до сертификатов
      */

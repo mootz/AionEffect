@@ -1,44 +1,38 @@
 <template>
     <div class="History">
-        <h1>
-            Im index
-        </h1>
-
-        <nuxt-link to="/history/hey">
-            to hey
-        </nuxt-link>
+        <AppTabs :tabs="tabs" />
         <div class="container">
 
-            <NuxtChild />
+            <transition name="fade">
+                <NuxtChild />
+            </transition>
         </div>
     </div>
 </template>
 
 <script>
+    import AppTabs from '~/components/common/AppTabs';
     export default {
         name: 'History',
+        components: {AppTabs},
         data() {
             return {
                 tabs: [
                     {
-                        id: 1,
                         name: 'Аккаунт',
-                        routName: '/account'
+                        to: '/history/account'
                     },
                     {
-                        id: 2,
                         name: 'Пожертвования',
-                        routName: '/account'
+                        to: '/history/donate'
                     },
                     {
-                        id: 3,
                         name: 'Голосования',
-                        routName: '/account'
+                        to: '/history/vote'
                     },
                     {
-                        id: 4,
                         name: 'Промокод',
-                        routName: '/account'
+                        to: '/history/promocode'
                     },
                 ]
             };
