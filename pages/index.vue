@@ -54,7 +54,7 @@
                         </p>
 
                         <div :class="$style.rIcons">
-                            <div :class="[$style.rIconWrap, $style._active]">
+                            <div :class="$style.rIconWrap">
                                 <div :class="$style.rIconGifts">
                                     {{ user.refferal.gifts }}
                                 </div>
@@ -164,13 +164,16 @@
         height: 5.4rem;
         margin-right: 1.2rem;
         border-radius: 100%;
-        border: 1px solid #fff;
-        opacity: .2;
+        border: 1px solid rgba(#fff, .2);
         transition: $transition;
         cursor: pointer;
 
         &:hover {
-            opacity: 1;
+            border-color: #fff;
+
+            .rIcon {
+                opacity: 1;
+            }
         }
 
         &:last-child {
@@ -202,6 +205,8 @@
         width: 2.4rem;
         height: 2.4rem;
         fill: #fff;
+        transition: $transition;
+        opacity: .2;
     }
 
     .rText {

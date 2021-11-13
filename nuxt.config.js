@@ -73,7 +73,7 @@ module.exports = {
      * Подробнее смотри тут https://nuxtjs.org/api/configuration-loading#using-a-custom-loading-component
      * и тут https://nuxtjs.org/examples/custom-loading
      */
-    loading: {color: '#000'},
+    loading: {color: '#ff2e00'},
 
     /**
      * Подключаем файл с вендорными стилями и файл с общими стилями
