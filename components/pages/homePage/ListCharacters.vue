@@ -35,7 +35,9 @@
                         <use xlink:href="#icon-teleport" />
                     </svg>
                 </div>
-                <div :class="[$style.button, {[$style._disabled]: char.online}]">
+                <div :class="[$style.button, {[$style._disabled]: char.online}]"
+                     @click.stop="char.online ? errorCharOnline() : openModal()"
+                >
                     <svg>
                         <use xlink:href="#icon-dignity" />
                     </svg>
@@ -46,6 +48,8 @@
 </template>
 
 <script>
+    import RDignity from '@/components/layout/modals/RDignity';
+
     export default {
         name: 'ListCharacters',
         props: {
@@ -61,6 +65,9 @@
             },
             errorCharOnline() {
                 this.$toast.error('Ваш персонаж в онлайне!');
+            },
+            openModal() {
+                this.$modal.open(RDignity, {title: 'hey'});
             }
         }
     };

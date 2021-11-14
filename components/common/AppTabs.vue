@@ -5,6 +5,7 @@
                        :key="index"
                        :to="item.to"
                        :class="$style.tab"
+                       :exact-active-class="$style.isActive"
             >
                 {{ item.name }}
             </nuxt-link>
@@ -53,6 +54,11 @@
         background-color: rgba(#fff, .02);
 
         &:hover {
+            color: #fff;
+            background-color: $accent;
+        }
+
+        &.isActive {
             color: #fff;
             background-color: $accent;
         }

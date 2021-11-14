@@ -21,6 +21,7 @@
         <IconDignity />
         <IconUsers />
         <IconGear />
+        <IconPromo />
 
     </svg>
 </template>
@@ -44,10 +45,12 @@
     import IconDignity from '@/components/layout/SpriteSet/IconDignity';
     import IconUsers from '@/components/layout/SpriteSet/IconUsers';
     import IconGear from '@/components/layout/SpriteSet/IconGear';
+    import IconPromo from '@/components/layout/SpriteSet/IconPromo';
 
     export default {
         name: 'TheSprite',
         components: {
+            IconPromo,
             IconGear,
             IconUsers,
             IconDignity,

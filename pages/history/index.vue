@@ -32,7 +32,7 @@
                     },
                     {
                         name: 'Промокод',
-                        to: '/history/promocode'
+                        to: '/history/promo'
                     },
                 ]
             };

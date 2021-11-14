@@ -77,11 +77,11 @@
 
                         <Link text="Промокод"
                               :class="$style.menuItem"
-                              link="/promocode"
+                              @click.native="openPromo"
                         />
                         <Link text="История"
                               :class="$style.menuItem"
-                              link="/history"
+                              link="/history/account"
                         />
                         <Link text="Сменить акаунт"
                               :class="$style.menuItem"
@@ -104,6 +104,7 @@
     import Link from '@/components/common/Link';
     import Tooltip from '@/components/common/Tooltip';
     import TheNotification from '@/components/common/TheNotification';
+    import RPromo from '@/components/layout/modals/RPromo';
 
     export default {
         name: 'TheHeader',
@@ -148,6 +149,10 @@
                 openNotifications: 'header/openNotifications',
                 closeNotifications: 'header/closeNotifications',
             }),
+
+            openPromo() {
+                this.$modal.open(RPromo);
+            }
         }
     };
 </script>

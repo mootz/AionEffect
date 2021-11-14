@@ -18,6 +18,8 @@ module.exports = {
         },
     },
 
+    mode: 'spa',
+
     serverMiddleware: [
         '~/middleware/redirects.js'
     ],
