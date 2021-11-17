@@ -3,33 +3,54 @@
                 @after-enter="$emit('after-enter')"
                 @after-leave="$emit('after-leave')">
         <div v-if="visible"
-             :class="$style.RDignity">
+             :class="$style.KinahDonation">
             <div :class="$style.wrap">
                 <div :class="$style.iconWrap">
                     <div :class="$style.icon">
                         <svg>
-                            <use xlink:href="#icon-dignity" />
+                            <use xlink:href="#icon-kinah" />
                         </svg>
                     </div>
                 </div>
 
                 <div :class="$style.content">
                     <h5 :class="$style.title">
-                        Активация промокода
+                        Зачем мне нужна Kinah в личном кабинете?
                     </h5>
 
-                    <p :class="$style.desc">
-                        Если у вас есть промокод, его можно активировать здесь.
-                    </p>
+                    <ol :class="$style.list">
+                        <li>
+                            Кинару можно выставить на аукцион, продав ее, вы получите Coin of Effect.
+                        </li>
+                        <li>
+                            Для участия в мини-игре колесе удачи.
+                        </li>
+                        <li>
+                            В магазине есть товары, которые можно приобрести только за кинару.
+                        </li>
+                    </ol>
 
-                    <div class="input">
-                        <AppInput placeholder="Введите код"
-                                  label="Промокод"
-                        />
-                    </div>
+
+                    <h5 :class="$style.title">
+                        Как правильно пополнить свой кошелек Kinah?
+                    </h5>
+
+                    <ol :class="$style.list">
+                        <li>
+                            Вернуть отправленную кинару на персонажа нельзя!
+                        </li>
+                        <li>
+                            Отправьте в игре почтой нужное количество кинар персонажу
+                            <span :class="$style.accent">Kinah</span>
+                        </li>
+                        <li>
+                            Пополнение кошелька произойдёт
+                            в течении нескольких минут.
+                        </li>
+                    </ol>
 
                     <div :class="$style.btn">
-                        <AppButton text="Активировать"
+                        <AppButton text="Закрыть"
                                    height="5.4rem"
                                    @click.native="closeModal"
 
@@ -45,10 +66,8 @@
 <script>
 
     import AppButton from '@/components/ui/inputs/AppButton';
-    import AppInput from '@/components/ui/inputs/AppInput';
     export default {
-        components: {AppInput,
-                     AppButton},
+        components: {AppButton},
         props: {
             visible: Boolean,
 
@@ -70,7 +89,7 @@
 </script>
 
 <style lang="scss" module>
-    .RDignity {
+    .KinahDonation {
         position: absolute;
         top: 0;
         right: 0;
@@ -109,7 +128,7 @@
         flex-shrink: 0;
         width: 100%;
         height: 35.4rem;
-        background: linear-gradient(315.98deg, #00e0ff 5.13%, #0094ff 94.99%);
+        background: linear-gradient(315.98deg, #ff8a00 5.13%, #ff2e00 94.99%);
     }
 
     .icon {
@@ -131,62 +150,27 @@
         font-weight: 500;
     }
 
-    .desc {
+    .list {
+        margin-top: 0;
         margin-bottom: 3.2rem;
+        padding-left: 1.6rem;
         font-weight: 500;
         font-size: 1.4rem;
-        opacity: .4;
-    }
+        color: rgba(#fff, .4);
 
-    .listWrap {
-        position: relative;
-
-        &:after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            z-index: 1;
-            pointer-events: none;
-            width: 100%;
-            height: 12rem;
-            background: linear-gradient(0deg, #151d29 3%, rgba(21, 29, 41, 0) 88%);
-        }
-    }
-
-    .list {
-        display: flex;
-        flex-direction: column;
-        max-height: 33rem;
-        height: 100%;
-        overflow: auto;
-        margin-bottom: 3.2rem;
-
-        &::-webkit-scrollbar {
-            display: none;
-        }
-    }
-
-    .item {
-        margin-bottom: .6rem;
-        padding: 1.6rem 2.2rem;
-        border-radius: 20px;
-        font-weight: 600;
-        background-color: rgba(#fff, 0.01);
-        transition: $transition;
-        cursor: pointer;
-
-        &:hover {
-            background-color: rgba(#fff, 0.04);
-        }
-
-        &:last-child {
-            margin-bottom: 0;
+        li {
+            line-height: 1.3;
+            list-style: auto;
         }
     }
 
     .btn {
-        margin: 3.2rem 0 0 auto;
-        width: 15.2rem;
+        margin: 0 0 0 auto;
+        width: 11.6rem;
+    }
+
+    .accent {
+        opacity: 1;
+        color: #fff;
     }
 </style>

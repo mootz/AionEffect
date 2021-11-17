@@ -7,3 +7,28 @@
 .fade-leave-active {
     opacity: 0;
 }
+
+.show-enter-active,
+.show-leave-enter {
+    transform: translateX(0);
+    transition: all .3s linear;
+}
+
+.show-enter,
+.show-leave-to {
+    transition: all .3s linear;
+    transform: translateX(100%);
+}
+
+.form-appear-enter-active {
+    transition: transform .8s;
+}
+
+.form-appear-leave-active {
+    transition: transform .4s;
+}
+
+.form-appear-enter,
+.form-appear-leave-to {
+    transform: translateX(110%);
+}

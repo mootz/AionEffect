@@ -1,6 +1,6 @@
 <template>
     <component :is="link ? 'NuxtLink' : (href ? 'a' : 'button')"
-               :class="[$style.btn, {[$style.hoverBackground]: hoverBackground}, $style[type], $style[`text${textAlign}`] ]"
+               :class="[$style.btn, {[$style._reverse]: reverse}, {[$style.hoverBackground]: hoverBackground}, $style[type], $style[`text${textAlign}`] ]"
                :target="href ? '_blank' : null"
                :to="link || href ? (link || href) : null"
                :disabled="disabled"
@@ -67,6 +67,11 @@
             height: {
                 default: '',
                 type: String,
+            },
+
+            reverse: {
+                default: false,
+                type: Boolean
             }
         }
     };
@@ -186,6 +191,20 @@
 
             &:before {
                 display: none;
+            }
+        }
+
+        &._reverse {
+            background-color: transparent;
+            opacity: 1;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+
+            &:before {
+                display: none;
+            }
+
+            &:hover {
+                background-color: rgba(#fff, 0.04);
             }
         }
     }

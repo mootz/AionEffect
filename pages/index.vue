@@ -11,16 +11,19 @@
                         <div :class="$style.balanceItem">
                             <BalanceCard type="effect"
                                          value="12,241"
+                                         @click.native="openModalEffect"
                             />
                         </div>
                         <div :class="$style.balanceItem">
                             <BalanceCard type="bonus"
                                          value="102"
+                                         @click.native="openModalBonus"
                             />
                         </div>
                         <div :class="$style.balanceItem">
                             <BalanceCard type="kinah"
                                          value="726"
+                                         @click.native="openModalKinah"
                             />
                         </div>
                     </div>
@@ -95,6 +98,9 @@
 <script>
     import {mapState} from 'vuex';
     import FormExample1 from '~/components/layout/modals/FormExample1';
+    import KinahDonation from '@/components/layout/modals/KinahDonation';
+    import EffectDonation from '@/components/layout/modals/EffectDonation';
+    import BonusDonation from '@/components/layout/modals/BonusDonation';
     import BalanceCard from '@/components/pages/homePage/BalanceCard';
     import AccountCard from '@/components/pages/homePage/AccountCard';
     import AppButton from '@/components/ui/inputs/AppButton';
@@ -119,6 +125,15 @@
         methods: {
             openModal() {
                 this.$modal.open(FormExample1);
+            },
+            openModalKinah() {
+                this.$modal.open(KinahDonation);
+            },
+            openModalEffect() {
+                this.$modal.open(EffectDonation);
+            },
+            openModalBonus() {
+                this.$modal.open(BonusDonation);
             },
         },
     };

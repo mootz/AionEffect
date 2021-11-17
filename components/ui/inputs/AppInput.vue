@@ -8,6 +8,7 @@
                    :placeholder="placeholder"
                    :type="passwordView ? 'text' : type"
                    :value="value"
+                   :min="type === 'number' ? min : null "
                    @input="$emit('input', $event.target.value)"
             >
 
@@ -56,6 +57,10 @@
             placeholder: {
                 type: String,
                 default: ''
+            },
+            min: {
+                type: [Number, String],
+                default: 0
             }
         },
         data() {

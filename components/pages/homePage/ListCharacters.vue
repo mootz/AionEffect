@@ -35,13 +35,13 @@
                         <use xlink:href="#icon-teleport" />
                     </svg>
                 </div>
-                <div :class="[$style.button, {[$style._disabled]: char.online}]"
-                     @click.stop="char.online ? errorCharOnline() : openModal()"
-                >
-                    <svg>
-                        <use xlink:href="#icon-dignity" />
-                    </svg>
-                </div>
+                <!--                <div :class="[$style.button, {[$style._disabled]: char.online}]"-->
+                <!--                     @click.stop="char.online ? errorCharOnline() : openModal()"-->
+                <!--                >-->
+                <!--                    <svg>-->
+                <!--                        <use xlink:href="#icon-dignity" />-->
+                <!--                    </svg>-->
+                <!--                </div>-->
             </div>
         </div>
     </div>

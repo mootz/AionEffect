@@ -73,10 +73,6 @@
     export default {
         components: {AppButton},
         props: {
-            submited: {
-                type: Boolean,
-                default: false
-            },
             visible: Boolean,
 
             data: {
