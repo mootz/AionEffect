@@ -18,9 +18,10 @@
         <div :class="$style.login__help">
             <AppCheckbox label="Запомнить меня" />
 
-            <a href="#"
-               :class="$style.login__forgot"
-               @click="$emit('change-step', 'forgot')">Забыли пароль?</a>
+            <p :class="$style.login__forgot"
+               @click="$emit('change-step', 'forgot')">
+                Забыли пароль?
+            </p>
         </div>
 
         <AppButton text="Войти"
