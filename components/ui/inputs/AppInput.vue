@@ -1,19 +1,28 @@
 <template>
-    <label class="input">
-        <span class="input__label">{{ label }}</span>
+    <label :class="[$style.input, {[$style._focused]: focused}]">
+        <span :class="$style.input__label">{{ label }}</span>
 
-        <span class="input__inp-wrap">
-            <input class="input__inp"
+        <span :class="$style.input__inpWrap">
+            <span v-if="search"
+                  :class="$style.input__iconSearch">
+                <svg>
+                    <use xlink:href="#icon-search" />
+                </svg>
+            </span>
+
+            <input :class="[$style.input__inp, {[$style.input__inpSearch]: search}]"
                    :autocomplete="type === 'password' ? 'password' : null"
                    :placeholder="placeholder"
                    :type="passwordView ? 'text' : type"
                    :value="value"
                    :min="type === 'number' ? min : null "
                    @input="$emit('input', $event.target.value)"
+                   @focus="setFocused(true)"
+                   @blur="setFocused(false)"
             >
 
             <span v-if="type === 'password' || passwordView"
-                  :class="['input__eye', {'_active': passwordView}]"
+                  :class="[$style.input__eye, {[$style._active]: passwordView}]"
                   @click="showPassword">
                 <svg width="24"
                      height="24"
@@ -61,23 +70,32 @@
             min: {
                 type: [Number, String],
                 default: 0
+            },
+            search: {
+                type: Boolean,
+                default: false
             }
         },
         data() {
             return {
-                passwordView: false
+                passwordView: false,
+                focused: false
             };
         },
 
         methods: {
             showPassword() {
                 this.passwordView = !this.passwordView;
+            },
+
+            setFocused(val) {
+                this.focused = val;
             }
         }
     };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" module>
     .input {
         display: flex;
         flex-direction: column;
@@ -94,6 +112,10 @@
             background: rgba(#fff, 0.04);
         }
 
+        &__inpSearch {
+            padding: 1.8rem 2.4rem 1.8rem 5.2rem;
+        }
+
         &__label {
             color: $grey;
             margin-bottom: .8rem;
@@ -101,8 +123,20 @@
             font-weight: 600;
         }
 
-        &__inp-wrap {
+        &__inpWrap {
             position: relative;
+        }
+
+        &__iconSearch {
+            position: absolute;
+            left: 1.8rem;
+            top: 50%;
+            width: 2.4rem;
+            height: 2.4rem;
+            fill: #fff;
+            opacity: .2;
+            transform: translateY(-50%);
+            transition: opacity $transition;
         }
 
         &__eye {
@@ -127,6 +161,19 @@
             &._active {
                 g {
                     opacity: .8;
+                }
+            }
+        }
+
+        &._focused {
+            .input {
+                &__iconSearch {
+                    opacity: 1;
+                }
+
+                &__inp {
+                    border-color: rgba(#fff, .12);
+                    background: rgba(#fff, .04);
                 }
             }
         }

@@ -18,7 +18,7 @@
             <li :class="$style.item">
                 <AppButton icon-name="crown"
                            text="Магазин"
-                           link="/"
+                           link="/shop"
                            type="static"
                            text-align="left"
                            hover-background

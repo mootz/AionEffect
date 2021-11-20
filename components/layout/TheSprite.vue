@@ -23,6 +23,7 @@
         <IconGear />
         <IconPromo />
         <IconFinger />
+        <IconSearch />
 
     </svg>
 </template>
@@ -48,10 +49,12 @@
     import IconGear from '@/components/layout/SpriteSet/IconGear';
     import IconPromo from '@/components/layout/SpriteSet/IconPromo';
     import IconFinger from '@/components/layout/SpriteSet/IconFinger';
+    import IconSearch from '@/components/layout/SpriteSet/IconSearch';
 
     export default {
         name: 'TheSprite',
         components: {
+            IconSearch,
             IconFinger,
             IconPromo,
             IconGear,
