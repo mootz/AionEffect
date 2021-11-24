@@ -98,7 +98,7 @@
         outline: 0;
         background-color: transparent;
         border-radius: 100px;
-        box-shadow: none;
+        box-shadow: 0 8px 20px rgba(255, 90, 0, 0.2);
 
         &:before {
             content: "";
@@ -152,6 +152,7 @@
 
         &.static {
             background-color: $accent;
+            box-shadow: none;
 
             &:before {
                 display: none;
@@ -198,6 +199,7 @@
             background-color: transparent;
             opacity: 1;
             border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: none;
 
             &:before {
                 display: none;

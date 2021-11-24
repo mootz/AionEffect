@@ -5,4 +5,5 @@ export const plugins = [
     // '~plugins/api',
     '~config/plugins/lazyload',
     '~config/plugins/modal',
+    '~config/plugins/tooltip/tooltip.js',
 ];

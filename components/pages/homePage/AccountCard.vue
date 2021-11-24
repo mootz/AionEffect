@@ -1,5 +1,5 @@
 <template>
-    <div :class="$style.wrap">
+    <div :class="$style.AccountCard">
         <div :class="$style.top">
             <div :class="$style.infoWrap">
                 <div :class="$style.imgWrap"
@@ -94,7 +94,7 @@
 </script>
 
 <style lang="scss" module>
-    .wrap {
+    .AccountCard {
         width: 100%;
         padding: 3.2rem;
         border-radius: 40px;
@@ -168,8 +168,9 @@
     .item {
         display: flex;
         justify-content: space-between;
-        font-size: 1.4rem;
         padding: 1.8rem 0;
+        font-size: 1.4rem;
+        font-weight: 500;
         border-bottom: 1px solid rgba(#fff, .04);
 
         &:last-child {

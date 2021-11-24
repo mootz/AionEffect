@@ -20,9 +20,9 @@
                                          @click.native="openModalBonus"
                             />
                         </div>
-                        <div :class="$style.balanceItem">
+                        <div :class="[$style.balanceItem, $style._kinah]">
                             <BalanceCard type="kinah"
-                                         value="726"
+                                         value="0"
                                          @click.native="openModalKinah"
                             />
                         </div>
@@ -57,7 +57,9 @@
                         </p>
 
                         <div :class="$style.rIcons">
-                            <div :class="$style.rIconWrap">
+                            <div v-tippy="{ distance: 14 }"
+                                 :class="$style.rIconWrap"
+                                 content="Подарок за приглашенного игрока">
                                 <div :class="$style.rIconGifts">
                                     {{ user.refferal.gifts }}
                                 </div>
@@ -67,7 +69,10 @@
                                     </svg>
                                 </div>
                             </div>
-                            <div :class="$style.rIconWrap">
+                            <div v-tippy="{ distance: 14 }"
+                                 :class="$style.rIconWrap"
+                                 content="Все о реферальной программе"
+                            >
                                 <div :class="$style.rIcon">
                                     <svg>
                                         <use xlink:href="#icon-info" />
@@ -151,6 +156,10 @@
 
     .balanceItem {
         width: calc(33% - 1.5rem);
+
+        &._kinah {
+            pointer-events: none;
+        }
     }
 
     .refferalWrap {
@@ -225,7 +234,6 @@
     }
 
     .rText {
-        width: min-content;
         font-size: 1.4rem;
         font-weight: 500;
     }

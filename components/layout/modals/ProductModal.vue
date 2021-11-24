@@ -6,50 +6,31 @@
              :class="$style.BonusDonation">
             <div :class="$style.wrap">
                 <div :class="$style.iconWrap">
-                    <div :class="$style.icon">
-                        <svg>
-                            <use xlink:href="#icon-bonus" />
-                        </svg>
-                    </div>
+                    <ImageLazy image="images/item_placeholder.png"
+                    />
                 </div>
 
                 <div :class="$style.content">
                     <h5 :class="$style.title">
-                        Как я могу получить Bonus?
-                    </h5>
-
-                    <ol :class="$style.list">
-                        <li>
-                            За каждый час, проведенный в игре,
-                            мы начисляем вам 1 бонус.
-                        </li>
-                        <li>
-                            При пожертвовании от 500 CoE
-                            вы получаете 10% вознаграждение
-                            в виде бонусов.
-                        </li>
-                        <!--                        <li>-->
-                        <!--                            Голосуя за сервер, вы можете получать-->
-                        <!--                            от 7 до 23 бонусов каждый день!-->
-                        <!--                        </li>-->
-                    </ol>
-
-                    <!--                    <div :class="$style.server"-->
-                    <!--                         @click.stop="openVoteDesc">-->
-                    <!--                        <svg :class="$style.serverIcon">-->
-                    <!--                            <use xlink:href="#icon-finger" />-->
-                    <!--                        </svg>-->
-
-                    <!--                        <span>Голосовать за сервер</span>-->
-                    <!--                    </div>-->
-
-
-                    <h5 :class="$style.title">
-                        Обменивайте свои бонусы
+                        Anniversary Fairy Treasure Pack
                     </h5>
 
                     <div :class="$style.desc">
-                        10 бонусов можно обменять на Coin of Effect
+                        Grab yours and get Enchantment Stones that can improve your Stigmas by up to 3 levels!
+
+                        You can participate in Ribbit’s Lucky Pot with this item and have a chance of winning fantastic prizes! Check the AION Newsletter to learn more about how the lucky pot works and what you can win.
+                    </div>
+
+                    <div :class="$style.tags">
+                        <div :class="$style.tag">
+                            Нельзя продать
+                        </div>
+                        <div :class="$style.tag">
+                            Только для асмодиан
+                        </div>
+                        <div :class="$style.tag">
+                            Привязан к персонажу
+                        </div>
                     </div>
 
                     <ul :class="$style.listCoin">
@@ -66,7 +47,7 @@
                         </li>
 
                         <li :class="$style.itemCoin">
-                            <span :class="$style.itemText">К обмену</span>
+                            <span :class="$style.itemText">К оплате</span>
                             <div :class="$style.itemValue">
                                 <div :class="$style.itemIcon">
                                     <svg>
@@ -74,18 +55,6 @@
                                     </svg>
                                 </div>
                                 <span :class="$style.itemTextValue">280</span>
-                            </div>
-                        </li>
-
-                        <li :class="$style.itemCoin">
-                            <span :class="$style.itemText">Вы получите</span>
-                            <div :class="$style.itemValue">
-                                <div :class="[$style.itemIcon, $style._effect]">
-                                    <svg>
-                                        <use xlink:href="#icon-coin-effect" />
-                                    </svg>
-                                </div>
-                                <span :class="$style.itemTextValue">28</span>
                             </div>
                         </li>
 
@@ -103,11 +72,21 @@
 
                     </ul>
 
-                    <div :class="$style.btn">
-                        <AppButton text="Обменять"
-                                   height="5.4rem"
-                                   @click.native="closeModal"
-                        />
+                    <div :class="$style.btns">
+                        <div :class="$style.btn">
+                            <AppButton text="Подарить"
+                                       reverse
+                                       height="5.4rem"
+                                       @click.native="giftModal"
+
+                            />
+                        </div>
+                        <div :class="[$style.btn, $style.btnChange]">
+                            <AppButton text="Купить"
+                                       height="5.4rem"
+                                       @click.native="closeModal"
+                            />
+                        </div>
                     </div>
                 </div>
 
@@ -119,10 +98,12 @@
 <script>
 
     import AppButton from '@/components/ui/inputs/AppButton';
-    import VoteDescription from '@/components/layout/modals/VoteDescription';
+    import ImageLazy from '@/components/common/ImageLazy';
+    import GiftModal from '@/components/layout/modals/GiftModal';
 
     export default {
-        components: {AppButton},
+        components: {ImageLazy,
+                     AppButton},
         props: {
             visible: Boolean,
 
@@ -133,11 +114,11 @@
         },
 
         methods: {
-            openVoteDesc() {
-                this.$modal.open(VoteDescription);
-            },
             closeModal() {
                 this.$modal.close();
+            },
+            giftModal() {
+                this.$modal.open(GiftModal);
             }
         }
     };
@@ -177,19 +158,14 @@
     }
 
     .iconWrap {
+        position: relative;
         display: flex;
         align-items: center;
         justify-content: center;
         flex-shrink: 0;
         width: 100%;
-        height: 10rem;
+        height: 35.4rem;
         background: linear-gradient(141.24deg, #ff00c7 2.72%, #ff5c00 128.61%);
-    }
-
-    .icon {
-        width: 8rem;
-        height: 8rem;
-        fill: #fff;
     }
 
     .content {
@@ -200,28 +176,9 @@
     }
 
     .title {
-        margin-bottom: 3.2rem;
+        margin-bottom: 2.4rem;
         font-size: 1.6rem;
         font-weight: 500;
-    }
-
-    .list {
-        margin-top: 0;
-        margin-bottom: 3rem;
-        padding-left: 1.6rem;
-        font-weight: 500;
-        font-size: 1.4rem;
-        color: rgba(#fff, .4);
-
-        li {
-            line-height: 1.3;
-            list-style: auto;
-        }
-    }
-
-    .btn {
-        margin: 0 0 0 auto;
-        width: 12.6rem;
     }
 
     .accent {
@@ -306,5 +263,34 @@
 
     .itemText {
         line-height: 2.1rem;
+    }
+
+    .btns {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 3.2rem;
+    }
+
+    .btn {
+        width: 12.4rem;
+    }
+
+    .btnChange {
+        width: 10.4rem;
+        margin-left: 1rem;
+    }
+
+    .tags {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .tag {
+        margin: 0 .6rem .8rem 0;
+        padding: 1rem;
+        border-radius: 100px;
+        background: rgba(255, 255, 255, 0.08);
+        color: rgba(#fff, .4);
+        font-weight: 500;
     }
 </style>

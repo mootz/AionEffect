@@ -108,13 +108,13 @@
         justify-content: center;
         flex-shrink: 0;
         width: 100%;
-        height: 35.4rem;
+        height: 10rem;
         background: linear-gradient(315.98deg, #00e0ff 5.13%, #0094ff 94.99%);
     }
 
     .icon {
-        width: 20rem;
-        height: 20rem;
+        width: 8rem;
+        height: 8rem;
         fill: #fff;
     }
 

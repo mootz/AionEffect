@@ -1,0 +1,11 @@
+.tippy-tooltip.dark-theme {
+    padding: 1rem;
+    font-size: 1.4rem;
+    font-weight: 500;
+    font-family: $gilroy;
+    border-radius: 10px;
+
+    .tippy-backdrop {
+        background: $dark-notif;
+    }
+}

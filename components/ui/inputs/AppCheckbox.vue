@@ -1,8 +1,9 @@
 <template>
-    <div class="checkbox">
+    <div :class="['checkbox', {'_selectType': selectType}]">
 
         <label class="checkbox__label">
             <input type="checkbox"
+                   :checked="checked"
                    class="checkbox__input">
             <span class="checkbox__block"></span>
         </label>
@@ -32,10 +33,14 @@
                 default: ''
             },
             checked: {
-                type: String,
-                default: ''
+                type: Boolean,
+                default: false
             },
-            rules: Boolean
+            rules: Boolean,
+            selectType: {
+                type: Boolean,
+                default: false
+            }
         },
 
         methods: {
@@ -49,7 +54,6 @@
         align-items: center;
 
         &__label {
-            height: 32px;
             display: inline-flex;
             align-items: center;
         }
@@ -75,7 +79,7 @@
             content: '';
             background-position: center;
             background-repeat: no-repeat;
-            background-image: url("data:image/svg+xml,%3Csvg width='18' height='18' viewBox='0 0 18 18' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7.50005 11.3791L14.3941 4.48438L15.4553 5.54488L7.50005 13.5001L2.72705 8.72712L3.78755 7.66663L7.50005 11.3791Z' fill='white'/%3E%3C/svg%3E%0A");
+            background-image: url("data:image/svg+xml,%3Csvg width='15' height='10' viewBox='0 0 15 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.29456 7.64745L12.9412 0L14.1183 1.17627L5.29456 10L0.000488281 4.70593L1.17676 3.52966L5.29456 7.64745Z' fill='white'/%3E%3C/svg%3E%0A");
             position: absolute;
             top: 50%;
             left: 50%;
@@ -109,6 +113,14 @@
 
         a {
             color: #fff;
+        }
+
+        &._selectType {
+            .checkbox {
+                &__block {
+                    border: 1px solid rgba(#fff, .02);
+                }
+            }
         }
     }
 

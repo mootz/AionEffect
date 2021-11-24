@@ -50,7 +50,17 @@
                         </div>
 
                         <div :class="$style.input">
-                            <AppInput label="Количество монет"
+
+                            <AppSelect v-if="thisValueDigiseller"
+                                       label="Количество монет"
+                                       :class="$style.digiSelect"
+                                       :options="digiOptions"
+                                       :value="digiValueSelect"
+                                       @on-select="setDigiValue"
+                            />
+
+                            <AppInput v-else
+                                      label="Количество монет"
                                       :value="valueCoin"
                                       min="50"
                                       type="number"
@@ -68,7 +78,7 @@
 
                         <div :class="$style.btns">
                             <transition name="fade">
-                                <div v-show="showSetCode"
+                                <div v-show="thisValueDigiseller"
                                      :class="[$style.btn, $style.btnCode]">
                                     <AppButton text="Обменять код"
                                                reverse
@@ -157,21 +167,69 @@
                 options: [
                     {
                         name: 'Способ оплаты Enot.io',
-                        value: 'enot'
+                        value: 'enot',
+                        id: 1
                     },
                     {
                         name: 'Способ оплаты Digiseller',
-                        value: 'digiseller'
+                        value: 'digiseller',
+                        id: 2
                     },
                     {
                         name: 'Способ оплаты Paypal',
-                        value: 'paypal'
+                        value: 'paypal',
+                        id: 3
+                    },
+                ],
+
+                digiOptions: [
+                    {
+                        name: '100 Coin of Effect',
+                        value: '100',
+                        id: 1
+                    },
+                    {
+                        name: '250 Coin of Effect',
+                        value: '250',
+                        id: 2
+                    },
+                    {
+                        name: '500 Coin of Effect',
+                        value: '500',
+                        id: 3
+                    },
+                    {
+                        name: '1000 Coin of Effect',
+                        value: '1000',
+                        id: 4
+                    },
+                    {
+                        name: '3000 Coin of Effect',
+                        value: '3000',
+                        id: 5
+                    },
+                    {
+                        name: '5000 Coin of Effect',
+                        value: '5000',
+                        id: 6
+                    },
+                    {
+                        name: '10000 Coin of Effect',
+                        value: '10000',
+                        id: 7
                     },
                 ],
 
                 valueSelect: {
                     name: 'Способ оплаты Enot.io',
-                    value: 'enot'
+                    value: 'enot',
+                    id: 1
+                },
+
+                digiValueSelect: {
+                    name: '100 Coin of Effect',
+                    value: '100',
+                    id: 1
                 },
 
                 valueCoin: '50',
@@ -181,7 +239,7 @@
         },
 
         computed: {
-            showSetCode() {
+            thisValueDigiseller() {
                 return this.valueSelect.value === 'digiseller';
             }
         },
@@ -209,6 +267,9 @@
             },
             toDigiCode() {
                 this.$modal.open(DigisellerCodeDonation);
+            },
+            setDigiValue(val) {
+                this.digiValueSelect = val.option;
             }
         }
     };
@@ -253,13 +314,13 @@
         justify-content: center;
         flex-shrink: 0;
         width: 100%;
-        height: 35.4rem;
+        height: 10rem;
         background: linear-gradient(315.98deg, #9e00ff 5.13%, #7000ff 94.99%);
     }
 
     .icon {
-        width: 20rem;
-        height: 20rem;
+        width: 8rem;
+        height: 8rem;
         fill: #fff;
     }
 

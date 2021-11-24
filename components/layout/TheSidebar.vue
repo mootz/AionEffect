@@ -6,63 +6,94 @@
 
         <ul :class="$style.menu">
 
-            <li :class="[$style.item, $style._isActive]">
-                <AppButton icon-name="profile"
-                           text="Мой профиль"
-                           link="/"
-                           type="static"
-                           text-align="left"
-                />
-            </li>
-
             <li :class="$style.item">
-                <AppButton icon-name="crown"
-                           text="Магазин"
-                           link="/shop"
-                           type="static"
-                           text-align="left"
-                           hover-background
-                />
-            </li>
 
-            <li :class="$style.item">
-                <AppButton icon-name="auction"
-                           text="Аукцион"
-                           link="/"
-                           type="static"
-                           text-align="left"
-                           hover-background
-                />
+                <nuxt-link :to="{ name: 'index'}"
+                           :class="$style.link"
+                           :active-class="$style._isActive"
+                           exact
+                >
+                    <span :class="$style.icon">
+                        <svg>
+                            <use xlink:href="#icon-profile" />
+                        </svg>
+                    </span>
+                    <span>Мой профиль</span>
+                </nuxt-link>
             </li>
-
             <li :class="$style.item">
-                <AppButton icon-name="rating"
-                           text="Рейтинг"
-                           link="/"
-                           type="static"
-                           text-align="left"
-                           hover-background
-                />
+
+                <nuxt-link :to="{name: 'shop'}"
+                           :class="$style.link"
+                           :active-class="$style._isActive"
+                >
+                    <span :class="$style.icon">
+                        <svg>
+                            <use xlink:href="#icon-crown" />
+                        </svg>
+                    </span>
+                    <span>Магазин</span>
+                </nuxt-link>
             </li>
+            <!--            <li :class="$style.item">-->
 
-            <li :class="$style.item">
-                <AppButton icon-name="achievement"
-                           text="Достижения"
-                           link="/"
-                           type="static"
-                           text-align="left"
-                           hover-background
-                />
+            <!--                <nuxt-link to="/auction"-->
+            <!--                           :class="$style.link"-->
+            <!--                           :active-class="$style._isActive"-->
+            <!--                           exact-->
+            <!--                >-->
+            <!--                    <span :class="$style.icon">-->
+            <!--                        <svg>-->
+            <!--                            <use xlink:href="#icon-auction" />-->
+            <!--                        </svg>-->
+            <!--                    </span>-->
+            <!--                    <span>Аукцион</span>-->
+            <!--                </nuxt-link>-->
+            <!--            </li>-->
+            <li :class="[$style.item, $style._disabled]">
+
+                <nuxt-link to="/achievements"
+                           :class="$style.link"
+                           :active-class="$style._isActive"
+                           exact
+                >
+                    <span :class="$style.icon">
+                        <svg>
+                            <use xlink:href="#icon-achievement" />
+                        </svg>
+                    </span>
+                    <span>Достижения</span>
+                </nuxt-link>
             </li>
+            <li :class="[$style.item, $style._disabled]">
 
-            <li :class="$style.item">
-                <AppButton icon-name="star  "
-                           text="Колесо удачи"
-                           link="/"
-                           type="static"
-                           text-align="left"
-                           hover-background
-                />
+                <nuxt-link to="/rating"
+                           :class="$style.link"
+                           :active-class="$style._isActive"
+                           exact
+                >
+                    <span :class="$style.icon">
+                        <svg>
+                            <use xlink:href="#icon-rating" />
+                        </svg>
+                    </span>
+                    <span>Рейтинг</span>
+                </nuxt-link>
+            </li>
+            <li :class="[$style.item, $style._disabled]">
+
+                <nuxt-link to="/fortune"
+                           :class="$style.link"
+                           :active-class="$style._isActive"
+                           exact
+                >
+                    <span :class="$style.icon">
+                        <svg>
+                            <use xlink:href="#icon-star" />
+                        </svg>
+                    </span>
+                    <span>Колесо удачи</span>
+                </nuxt-link>
             </li>
         </ul>
 
@@ -72,12 +103,11 @@
 
 <script>
     import TheLogo from '~/components/layout/TheLogo';
-    import AppButton from '~/components/ui/inputs/AppButton';
     import AppSocials from '@/components/common/AppSocials';
     export default {
         name: 'TheSidebar',
         components: {AppSocials,
-                     AppButton,
+
                      TheLogo},
     };
 </script>
@@ -91,6 +121,7 @@
         position: relative;
         overflow: hidden;
         background-color: $lightdark;
+        pointer-events: none;
 
         &:before {
             content: '';
@@ -113,26 +144,60 @@
 
     .item {
         display: flex;
+        width: 100%;
         height: 5rem;
         margin-bottom: 1.6rem;
-        opacity: .4;
-        transition: .3s;
+        cursor: pointer;
 
         &:hover {
-            opacity: 1;
+            .link {
+                background-color: #ff2e00;
+                opacity: 1;
+            }
         }
 
+        &._disabled {
+            pointer-events: none;
+
+            .link {
+                opacity: .2;
+            }
+        }
+    }
+
+    .link {
+        display: flex;
+        align-items: center;
+        padding: 1rem 3rem;
+        width: 100%;
+        letter-spacing: .5px;
+        font-weight: 600;
+        border-radius: 100px;
+        opacity: .4;
+        cursor: pointer;
+        transition: $transition;
+
         &._isActive {
+            background-color: #ff2e00;
             opacity: 1;
         }
     }
 
+    .icon {
+        width: 1.8rem;
+        height: 100%;
+        margin-right: 1.1rem;
+        fill: white;
+    }
+
     .menu {
         margin-top: 6.2rem;
+        pointer-events: all;
     }
 
     .socials {
         width: fit-content;
         margin: auto auto 0;
+        pointer-events: all;
     }
 </style>

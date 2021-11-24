@@ -1,6 +1,7 @@
 <template>
     <label :class="[$style.input, {[$style._focused]: focused}]">
-        <span :class="$style.input__label">{{ label }}</span>
+        <span v-if="label"
+              :class="$style.input__label">{{ label }}</span>
 
         <span :class="$style.input__inpWrap">
             <span v-if="search"
@@ -110,6 +111,10 @@
             font-size: 1.4rem;
             color: rgba(#fff, .8);
             background: rgba(#fff, 0.04);
+
+            &::placeholder {
+                color: #6666667a;
+            }
         }
 
         &__inpSearch {

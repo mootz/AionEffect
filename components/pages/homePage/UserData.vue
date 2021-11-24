@@ -10,7 +10,7 @@
 
                         <form :class="$style.form"
                               @submit.prevent="changeDataStep({step: 2, type: 'password'})">
-                            <p class="labelName">
+                            <p :class="['labelName', $style.labelName]">
                                 Изменить пароль
                             </p>
 
@@ -31,7 +31,7 @@
                             <div :class="$style.formItem">
                                 <AppInput label="Повторите новый пароль"
                                           type="password"
-                                          placeholder="Повторите новый пароль"
+                                          placeholder="Введите новый пароль"
                                 />
                             </div>
 
@@ -47,7 +47,7 @@
                         <form :class="$style.form"
                               @submit.prevent="changeDataStep({step: 2, type: 'email'})"
                         >
-                            <p class="labelName">
+                            <p :class="['labelName', $style.labelName]">
                                 Изменить почтовый адрес
                             </p>
 
@@ -163,7 +163,7 @@
         display: flex;
         justify-content: flex-end;
         width: 100%;
-        margin-top: 3.2rem;
+        margin-top: 3rem;
     }
 
     .button {
@@ -175,5 +175,9 @@
         margin: 3.2rem 0 2.4rem;
         font-size: 1.4rem;
         opacity: .4;
+    }
+
+    .labelName {
+        margin-bottom: 1.2rem;
     }
 </style>

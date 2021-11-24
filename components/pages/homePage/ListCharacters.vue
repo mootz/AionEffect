@@ -64,7 +64,7 @@
                 this.$toast(`Ваш персонаж ${name} куда-то отправлен`);
             },
             errorCharOnline() {
-                this.$toast.error('Ваш персонаж в онлайне!');
+                this.$toast.error('Чтобы использовать эту функцию, персонаж должен быть вне игры');
             },
             openModal() {
                 this.$modal.open(RDignity, {title: 'hey'});

@@ -1,18 +1,21 @@
 <template>
-    <div :class="$style.Shop">
-        <div :class="$style.header">
-            <ShopFilter />
+    <div :class="$style.Categories">
+        <div :class="$style.items">
+            <CategoryItem v-for="cat in categories"
+                          :key="cat.name"
+                          :item="cat"
+                          :class="$style.item"
+                          @click.native="goGoods"
+            />
         </div>
-
-        <NuxtChild />
     </div>
 </template>
 
 <script>
-    import ShopFilter from '@/components/pages/shop/ShopFilter';
+    import CategoryItem from '@/components/pages/shop/CategoryItem';
     export default {
-        name: 'Shop',
-        components: {ShopFilter},
+        name: 'Categories',
+        components: {CategoryItem},
         data() {
             return {
                 categories: [
@@ -50,14 +53,27 @@
             };
         },
 
-        mounted() {
-            this.$router.push('/shop/categories');
+        methods: {
+            goGoods() {
+                this.$router.push({path: '/shop/goods'});
+            }
         }
     };
 </script>
 
 <style lang="scss" module>
-    .header {
-        margin-bottom: 3.2rem;
+    .items {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        grid-template-rows: 1fr;
+        gap: 3.2rem 20px;
+        grid-template-areas: ". . . . .";
+        width: 100%;
+        height: 100%;
+    }
+
+    .item {
+        //width: calc(20% - .4rem);
+        //margin-bottom: 3.2rem;
     }
 </style>
