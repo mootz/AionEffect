@@ -5,7 +5,7 @@
                           :key="cat.name"
                           :item="cat"
                           :class="$style.item"
-                          @click.native="goGoods"
+                          @click.native="goGoods(cat.name)"
             />
         </div>
     </div>
@@ -54,7 +54,8 @@
         },
 
         methods: {
-            goGoods() {
+            goGoods(name) {
+                this.$emit('open-category', name);
                 this.$router.push({path: '/shop/goods'});
             }
         }

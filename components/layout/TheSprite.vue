@@ -25,6 +25,7 @@
         <IconFinger />
         <IconSearch />
         <IconHeart />
+        <IconLoup />
 
     </svg>
 </template>
@@ -52,10 +53,12 @@
     import IconFinger from '@/components/layout/SpriteSet/IconFinger';
     import IconSearch from '@/components/layout/SpriteSet/IconSearch';
     import IconHeart from '@/components/layout/SpriteSet/IconHeart';
+    import IconLoup from '@/components/layout/SpriteSet/IconLoup';
 
     export default {
         name: 'TheSprite',
         components: {
+            IconLoup,
             IconHeart,
             IconSearch,
             IconFinger,

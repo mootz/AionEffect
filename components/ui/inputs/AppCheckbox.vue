@@ -4,7 +4,9 @@
         <label class="checkbox__label">
             <input type="checkbox"
                    :checked="checked"
-                   class="checkbox__input">
+                   class="checkbox__input"
+                   @input="$emit('click-check')"
+            >
             <span class="checkbox__block"></span>
         </label>
 

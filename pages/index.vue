@@ -235,7 +235,7 @@
 
     .rText {
         font-size: 1.4rem;
-        font-weight: 500;
+        font-weight: bold;
     }
 
     .number {

@@ -5,6 +5,7 @@
                :to="link || href ? (link || href) : null"
                :disabled="disabled"
                :style="{height: height}"
+               :type="submit ? 'submit' : null"
     >
 
         <div :class="$style.btn__content">
@@ -57,6 +58,11 @@
             type: {
                 default: '',
                 type: String,
+            },
+
+            submit: {
+                default: false,
+                type: Boolean
             },
 
             textAlign: {
@@ -144,6 +150,7 @@
             background-color: transparent;
             opacity: .2;
             border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: none;
 
             &:before {
                 display: none;

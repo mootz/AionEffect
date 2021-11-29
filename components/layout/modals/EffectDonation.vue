@@ -43,7 +43,8 @@
                         </ul>
 
                         <div :class="$style.select">
-                            <AppSelect :value="valueSelect"
+                            <AppSelect id="orderType"
+                                       :value="valueSelect"
                                        :options="options"
                                        @on-select="setOrderType"
                             />
@@ -52,10 +53,12 @@
                         <div :class="$style.input">
 
                             <AppSelect v-if="thisValueDigiseller"
+                                       id="digiValue"
                                        label="Количество монет"
                                        :class="$style.digiSelect"
                                        :options="digiOptions"
                                        :value="digiValueSelect"
+                                       :max-height="350"
                                        @on-select="setDigiValue"
                             />
 
@@ -167,16 +170,19 @@
                 options: [
                     {
                         name: 'Способ оплаты Enot.io',
+                        full_name: 'Enot.io',
                         value: 'enot',
                         id: 1
                     },
                     {
                         name: 'Способ оплаты Digiseller',
+                        full_name: 'Digiseller',
                         value: 'digiseller',
                         id: 2
                     },
                     {
                         name: 'Способ оплаты Paypal',
+                        full_name: 'Paypal',
                         value: 'paypal',
                         id: 3
                     },
@@ -185,38 +191,39 @@
                 digiOptions: [
                     {
                         name: '100 Coin of Effect',
+                        full_name: '100 Coin of Effect',
                         value: '100',
                         id: 1
                     },
                     {
                         name: '250 Coin of Effect',
+                        full_name: '250 Coin of Effect',
                         value: '250',
                         id: 2
                     },
                     {
                         name: '500 Coin of Effect',
+                        full_name: '500 Coin of Effect',
                         value: '500',
                         id: 3
                     },
                     {
                         name: '1000 Coin of Effect',
+                        full_name: '1000 Coin of Effect',
                         value: '1000',
                         id: 4
                     },
                     {
                         name: '3000 Coin of Effect',
+                        full_name: '3000 Coin of Effect',
                         value: '3000',
                         id: 5
                     },
                     {
                         name: '5000 Coin of Effect',
+                        full_name: '5000 Coin of Effect',
                         value: '5000',
                         id: 6
-                    },
-                    {
-                        name: '10000 Coin of Effect',
-                        value: '10000',
-                        id: 7
                     },
                 ],
 
@@ -256,6 +263,8 @@
             },
             setOrderType(data) {
                 this.valueSelect = data.option;
+
+                this.nextStep();
             },
             setValueCoin(val) {
                 this.valueCoin = val;

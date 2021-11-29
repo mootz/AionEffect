@@ -1,19 +1,6 @@
-export default function(req, res, next) {
-    const redirects = [
-        {
-            from: '/shop',
-            to: '/shop/categories'
-        },
-        {
-            from: '/history',
-            to: '/history/account'
-        },
-    ];
-    const redirect = redirects.find(r => r.from === req.url);
-    if (redirect) {
-        res.writeHead(301, {Location: redirect.to});
-        res.end();
-    } else {
-        next();
+export default function({route, redirect}) {
+    const pathName = route.path.split('/').filter(item => item);
+    if (pathName[pathName.length - 1] === 'shop') {
+        redirect('/shop/categories');
     }
 }

@@ -20,9 +20,9 @@ module.exports = {
 
     mode: 'spa',
 
-    serverMiddleware: [
-        '~/middleware/redirects.js'
-    ],
+    // serverMiddleware: [
+    //     '~/middleware/redirects.js'
+    // ],
 
     /**
      * В env добавить 2 переменные HTTPS_KEY и HTTPS_CERT, которые являются путями до сертификатов
@@ -111,6 +111,7 @@ module.exports = {
     modules: [
         '@nuxtjs/axios',
         '@nuxtjs/proxy',
+        '@nuxtjs/auth-next',
         '@nuxtjs/style-resources',
         'nuxt-polyfill',
         ['vue-toastification/nuxt', {
@@ -166,7 +167,42 @@ module.exports = {
     router: {
         linkActiveClass: 'is-active',
         linkExactActiveClass: 'is-exact',
-        base: process.env.NODE_ENV !== 'production' ? '/' : '/aioneffect'
+        middleware: ['redirects'],
+        base: process.env.NODE_ENV !== 'production' ? '/' : '/aioneffect',
+        headers: {
+            common: {
+                Authorization: '',
+            },
+        },
+    },
+
+    auth: {
+        redirect: {
+            login: '/login',
+            logout: '/login',
+            callback: false,
+            home: false,
+        },
+        strategies: {
+            local: {
+                token: {
+                    property: 'token',
+                    global: true,
+                    // required: true,
+                    type: ''
+                },
+                // user: {
+                //     property: 'user',
+                //     // autoFetch: true
+                // },
+                endpoints: {
+                    login: {url: '/api/user/login', method: 'post'},
+                    logout: {url: '/api/auth/logout', method: 'post'},
+                    // user: {url: '/api/user/1', method: 'get'}
+                    user: false
+                }
+            }
+        }
     },
 
     /**

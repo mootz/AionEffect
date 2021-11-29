@@ -30,9 +30,13 @@
             TheHeader,
             TheModal,
         },
+        middleware: 'auth',
 
-        mounted() {
+
+        async mounted() {
             this.createNewAvatar();
+
+            // await this.getUserData();
         },
 
         methods: {
@@ -48,7 +52,42 @@
             closeAllPopups() {
                 this.closeProfileMenu();
                 this.closeNotifications();
-            }
+            },
+
+            // getUserData() {
+            //     // const dataLogin = {
+            //     //     login: this.login,
+            //     //     password: this.password,
+            //     //     remember: Number(this.remember)
+            //     // };
+            //
+            //     try {
+            //         const response = this.$auth.loginWith('local', {data: {
+            //             login: this.login,
+            //             password: this.password,
+            //             remember: Number(this.remember)
+            //         }});
+            //
+            //         // this.$auth.setUser({data: {dataLogin}})
+            //
+            //         console.log(response);
+            //     } catch (err) {
+            //         console.log(err.response);
+            //
+            //         if (err.response.data.validation) {
+            //             const listErrors = Object.entries(err.response.data.validation);
+            //
+            //             listErrors.forEach((e, index) => {
+            //                 setTimeout(() => {
+            //                     this.errors[e[0]] = e[1];
+            //                     this.$toast.error(e[1], {timeout: 5000});
+            //                 }, index * 500);
+            //             });
+            //         } else {
+            //             this.$toast.error(err.response.data.result_msg);
+            //         }
+            //     }
+            // }
         },
     };
 </script>

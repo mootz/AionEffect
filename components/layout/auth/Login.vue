@@ -4,41 +4,59 @@
             Авторизация
         </h2>
 
-        <div :class="$style.login__item">
-            <AppInput label="Логин"
-                      placeholder="Введите имя пользователя" />
-        </div>
+        <form :class="$style.form"
+              @submit.prevent="userLogin">
 
-        <div :class="$style.login__item">
-            <AppInput label="Пароль"
-                      type="password"
-                      placeholder="Введите пароль" />
-        </div>
+            <div :class="$style.login__item">
+                <AppInput label="Логин"
+                          placeholder="Введите имя пользователя"
+                          :value="login"
+                          :error="errors.login"
+                          @focus="clearError('login')"
+                          @input="setLoginValue"
+                />
+            </div>
 
-        <div :class="$style.login__help">
-            <AppCheckbox label="Запомнить меня" />
+            <div :class="$style.login__item">
+                <AppInput label="Пароль"
+                          type="password"
+                          placeholder="Введите пароль"
+                          :value="password"
+                          :error="errors.login"
+                          @focus="clearError('password')"
+                          @input="setPasswordValue"
+                />
+            </div>
 
-            <p :class="$style.login__forgot"
-               @click="$emit('change-step', 'forgot')">
-                Забыли пароль?
-            </p>
-        </div>
+            <div :class="$style.login__help">
+                <AppCheckbox label="Запомнить меня"
+                             :checked="remember"
+                             @click-check="setRemember"
+                />
 
-        <AppButton text="Войти"
-                   :class="$style.login__button"
-                   @click.native="$router.push('/')"
-        />
-        <!--                           @click.native="$emit('change-step', 'acceptRegister')"
+                <p :class="$style.login__forgot"
+                   @click="$emit('change-step', 'forgot')">
+                    Забыли пароль?
+                </p>
+            </div>
+
+            <AppButton text="Войти"
+                       :class="$style.login__button"
+                       submit
+            />
+            <!--                           @click.native="$emit('change-step', 'acceptRegister')"
 -->
 
-        <a href="#"
-           :class="[$style.login__forgot, $style._mobile]"
-           @click="$emit('change-step', 'forgot')">Забыли пароль?</a>
+            <a href="#"
+               :class="[$style.login__forgot, $style._mobile]"
+               @click="$emit('change-step', 'forgot')">Забыли пароль?</a>
 
-        <div :class="$style.login__create"
-             @click="$emit('change-step', 'register')">
-            Создать учетную запись
-        </div>
+            <div :class="$style.login__create"
+                 @click="$emit('change-step', 'register')">
+                Создать учетную запись
+            </div>
+        </form>
+
     </div>
 </template>
 
@@ -50,10 +68,122 @@
     export default {
         name: 'Login',
         components: {AppButton, AppCheckbox, AppInput},
+
+        data() {
+            return {
+                login: 'Demo5',
+                password: 'Test1234',
+                remember: false,
+                errors: {
+                    login: '',
+                    password: ''
+                }
+            };
+        },
+
+        methods: {
+            async userLogin() {
+                try {
+                    await this.$auth.loginWith('local', {data: {
+                        login: this.login,
+                        password: this.password,
+                        remember: Number(this.remember)
+                    }}).then(res => {
+                        console.log(res);
+                        let user = {
+                            id: res.data.id,
+                            token: res.data.token,
+                            session_end: res.data.session_end
+                        };
+                        console.log(user);
+                        this.$auth.$storage.setUniversal('user', user);
+
+                        user = this.$auth.$storage.getUniversal('user'); 
+                        console.log(user);
+
+                        this.$router.push('/');
+                    })
+                        .catch(err => {
+                            console.log(err.response);
+                        });
+                } catch (err) {
+                    console.log(err.response);
+
+                    if (err.response.data.validation) {
+                        const listErrors = Object.entries(err.response.data.validation);
+
+                        listErrors.forEach((e, index) => {
+                            setTimeout(() => {
+                                this.errors[e[0]] = e[1];
+                                this.$toast.error(e[1], {timeout: 5000});
+                            }, index * 500);
+                        });
+                    } else {
+                        this.$toast.error(err.response.data.result_msg);
+                    }
+                }
+            },
+
+            // async userLogin() {
+            //     // const dataLogin = {
+            //     //     login: this.login,
+            //     //     password: this.password,
+            //     //     remember: Number(this.remember)
+            //     // };
+            //
+            //     try {
+            //         const response = await this.$auth.loginWith('local', {data: {
+            //             login: this.login,
+            //             password: this.password,
+            //             remember: Number(this.remember)
+            //         }});
+            //
+            //         // this.$auth.setUser({data: {dataLogin}})
+            //
+            //         console.log(response);
+            //     } catch (err) {
+            //         console.log(err.response);
+            //
+            //         if (err.response.data.validation) {
+            //             const listErrors = Object.entries(err.response.data.validation);
+            //
+            //             listErrors.forEach((e, index) => {
+            //                 setTimeout(() => {
+            //                     this.errors[e[0]] = e[1];
+            //                     this.$toast.error(e[1], {timeout: 5000});
+            //                 }, index * 500);
+            //             });
+            //         } else {
+            //             this.$toast.error(err.response.data.result_msg);
+            //         }
+            //     }
+            // },
+
+            setPasswordValue(val) {
+                this.password = val;
+            },
+
+            setLoginValue(val) {
+                this.login = val;
+            },
+
+            setRemember() {
+                this.remember = !this.remember;
+                console.log(this.remember);
+            },
+
+            clearError(val) {
+                this.errors[val] = '';
+            }
+        }
     };
 </script>
 
 <style lang="scss" module>
+    .form {
+        width: 100%;
+    }
+
     .login {
         max-width: 38rem;
         width: 100%;

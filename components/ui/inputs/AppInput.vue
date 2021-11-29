@@ -11,7 +11,7 @@
                 </svg>
             </span>
 
-            <input :class="[$style.input__inp, {[$style.input__inpSearch]: search}]"
+            <input :class="[$style.input__inp, {[$style.input__inpSearch]: search}, {[$style._error]: error}]"
                    :autocomplete="type === 'password' ? 'password' : null"
                    :placeholder="placeholder"
                    :type="passwordView ? 'text' : type"
@@ -75,6 +75,10 @@
             search: {
                 type: Boolean,
                 default: false
+            },
+            error: {
+                type: String,
+                default: ''
             }
         },
         data() {
@@ -91,6 +95,9 @@
 
             setFocused(val) {
                 this.focused = val;
+                if (val) {
+                    this.$emit('focus');
+                }
             }
         }
     };
@@ -111,9 +118,15 @@
             font-size: 1.4rem;
             color: rgba(#fff, .8);
             background: rgba(#fff, 0.04);
+            transition: $transition;
 
             &::placeholder {
                 color: #6666667a;
+            }
+
+            &._error {
+                border: 1px solid #ff2e00;
+                background: rgba(255, 80, 80, 0.04);
             }
         }
 

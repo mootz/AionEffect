@@ -1,10 +1,10 @@
 <template>
     <div :class="$style.Shop">
         <div :class="$style.header">
-            <ShopFilter />
+            <ShopFilter :active-category="activeCategory" />
         </div>
 
-        <NuxtChild />
+        <NuxtChild @open-category="openCategory" />
     </div>
 </template>
 
@@ -15,6 +15,7 @@
         components: {ShopFilter},
         data() {
             return {
+                activeCategory: null,
                 categories: [
                     {
                         name: 'Популярное'
@@ -52,11 +53,21 @@
 
         mounted() {
             this.$router.push('/shop/categories');
+        },
+
+        methods: {
+            openCategory(name) {
+                this.activeCategory = name;
+            }
         }
     };
 </script>
 
 <style lang="scss" module>
+    .Shop {
+        height: 100%;
+    }
+
     .header {
         margin-bottom: 3.2rem;
     }

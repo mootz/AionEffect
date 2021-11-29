@@ -1,43 +1,72 @@
 <template>
     <div :class="$style.Product">
-        <div :class="$style.img">
+        <div :class="$style.img"
+             @click="openLightBox">
             <ImageLazy image="images/item_placeholder.png"
-                       border-radius="30px" />
+                       border-radius="30px"
+            />
         </div>
 
-        <div :class="$style.name">
-            {{ item.name }}
-        </div>
-
-        <div :class="$style.priceWrap">
-            <div :class="[$style.priceIconWrap, $style[item.price.type]]">
-                <span :class="$style.priceIcon">
-                    <svg>
-                        <use :xlink:href="`#icon-${typeIcon}`" />
-                    </svg>
-                </span>
+        <div :class="$style.info"
+             @click="openItem">
+            <div :class="$style.name">
+                {{ item.name }}
             </div>
-            <span :class="$style.priceValue">{{ item.price.value }}</span>
 
+            <div :class="$style.priceWrap">
+                <div :class="[$style.priceIconWrap, $style[item.price.type]]">
+                    <span :class="$style.priceIcon">
+                        <svg>
+                            <use :xlink:href="`#icon-${typeIcon}`" />
+                        </svg>
+                    </span>
+                </div>
+                <span :class="$style.priceValue">{{ item.price.value }}</span>
+            </div>
         </div>
+
+        <LightBox :items="listImages"
+                  :index="activeIndex"
+                  @close="activeIndex = null"
+        />
     </div>
 </template>
 
 <script>
     import ImageLazy from '@/components/common/ImageLazy';
+    import ProductModal from '@/components/layout/modals/ProductModal';
+    import LightBox from '@/components/ui/LightBox';
     export default {
         name: 'Product',
-        components: {ImageLazy},
+        components: {LightBox,
+                     ImageLazy},
         props: {
             item: {
                 type: Object,
                 default: () => ({})
             }
         },
+        data() {
+            return {
+                activeIndex: null
+            };
+        },
 
         computed: {
             typeIcon() {
                 return this.item.price.type === 'effect' ? 'coin-effect' : this.item.price.type;
+            },
+            listImages() {
+                return this.item.images.map(e => e.src);
+            }
+        },
+
+        methods: {
+            openItem() {
+                this.$modal.open(ProductModal);
+            },
+            openLightBox() {
+                this.activeIndex = this.item.images[0].id;
             }
         }
     };
@@ -45,6 +74,37 @@
 
 <style lang="scss" module>
     .Product {
+        //
+    }
+
+    .img {
+        position: relative;
+        height: 14rem;
+        border-radius: 30px;
+        cursor: zoom-in;
+
+        &:hover {
+            &:before {
+                opacity: 1;
+            }
+        }
+
+        &:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(#000, .5);
+            transition: $transition;
+            opacity: 0;
+            border-radius: 30px;
+            z-index: 1;
+        }
+    }
+
+    .info {
         cursor: pointer;
 
         &:hover {
@@ -52,12 +112,6 @@
                 opacity: 1;
             }
         }
-    }
-
-    .img {
-        position: relative;
-        height: 14rem;
-        border-radius: 30px;
     }
 
     .name {

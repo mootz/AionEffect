@@ -67,6 +67,11 @@
 
                         <li :class="$style.itemCoin">
                             <span :class="$style.itemText">К обмену</span>
+
+                            <div :class="$style.itemChange">
+                                <AppInputTrade />
+                            </div>
+
                             <div :class="$style.itemValue">
                                 <div :class="$style.itemIcon">
                                     <svg>
@@ -120,9 +125,11 @@
 
     import AppButton from '@/components/ui/inputs/AppButton';
     import VoteDescription from '@/components/layout/modals/VoteDescription';
+    import AppInputTrade from '@/components/ui/inputs/AppInputTrade';
 
     export default {
-        components: {AppButton},
+        components: {AppInputTrade,
+                     AppButton},
         props: {
             visible: Boolean,
 
@@ -265,12 +272,14 @@
 
     .itemCoin {
         display: flex;
+        align-items: center;
         justify-content: space-between;
         padding: 1.2rem 0;
         font-weight: 500;
         font-size: 1.4rem;
         letter-spacing: .02em;
         border-bottom: 1px solid rgba(#fff, 0.04);
+        user-select: none;
     }
 
     .itemValue {

@@ -5,10 +5,6 @@
         <div v-if="visible"
              :class="$style.BonusDonation">
             <div :class="$style.wrap">
-                <div :class="$style.iconWrap">
-                    <ImageLazy image="images/item_placeholder.png"
-                    />
-                </div>
 
                 <div :class="$style.content">
                     <h5 :class="$style.title">
@@ -48,6 +44,11 @@
 
                         <li :class="$style.itemCoin">
                             <span :class="$style.itemText">К оплате</span>
+
+                            <div :class="$style.itemChange">
+                                <AppInputTrade />
+                            </div>
+
                             <div :class="$style.itemValue">
                                 <div :class="$style.itemIcon">
                                     <svg>
@@ -98,11 +99,11 @@
 <script>
 
     import AppButton from '@/components/ui/inputs/AppButton';
-    import ImageLazy from '@/components/common/ImageLazy';
     import GiftModal from '@/components/layout/modals/GiftModal';
+    import AppInputTrade from '@/components/ui/inputs/AppInputTrade';
 
     export default {
-        components: {ImageLazy,
+        components: {AppInputTrade,
                      AppButton},
         props: {
             visible: Boolean,
@@ -222,12 +223,14 @@
 
     .itemCoin {
         display: flex;
+        align-items: center;
         justify-content: space-between;
         padding: 1.2rem 0;
         font-weight: 500;
         font-size: 1.4rem;
         letter-spacing: .02em;
         border-bottom: 1px solid rgba(#fff, 0.04);
+        user-select: none;
     }
 
     .itemValue {

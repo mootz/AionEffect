@@ -60,8 +60,8 @@
         },
 
         methods: {
-            teleportChar(name) {
-                this.$toast(`Ваш персонаж ${name} куда-то отправлен`);
+            teleportChar() {
+                this.$toast('Персонаж успешно отправлен в столицу');
             },
             errorCharOnline() {
                 this.$toast.error('Чтобы использовать эту функцию, персонаж должен быть вне игры');

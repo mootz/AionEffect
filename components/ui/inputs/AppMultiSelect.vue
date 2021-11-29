@@ -10,7 +10,7 @@
                      :value="value"
                      :options="options"
                      :searchable="searchable"
-                     :multiple="false"
+                     multiple
                      select-label=""
                      selected-label=""
                      deselect-label=""
@@ -18,7 +18,7 @@
                      track-by="id"
                      :max-height="maxHeight"
                      :allow-empty="allowEmpty"
-                     :close-on-select="true"
+                     :close-on-select="false"
                      @select="onSelect"
                      @remove="onRemove"
         >
@@ -32,7 +32,7 @@
 
             <template slot="tag"
                       slot-scope="{ option }">
-                {{ option.name }}
+                {{ option.name }}{{ showSeparatedNames(option.name) }}
             </template>
 
             <template slot="noResult"
@@ -47,7 +47,14 @@
 
             <template slot="option"
                       slot-scope="props">
-                {{ props.option.full_name }}
+                <div class="option__check">
+                    <AppCheckbox class="option__checkbox"
+                                 :checked="Boolean(checkedItem(props.option.id))"
+                                 select-type
+                    />
+
+                    <span class="option__desc">{{ props.option.full_name }}</span>
+                </div>
             </template>
 
 
@@ -58,10 +65,12 @@
 
 <script>
     import Multiselect from 'vue-multiselect';
+    import AppCheckbox from '@/components/ui/inputs/AppCheckbox';
 
     export default {
-        name: 'AppSelect',
+        name: 'AppMultiSelect',
         components: {
+            AppCheckbox,
             Multiselect
         },
         props: {
@@ -100,6 +109,13 @@
             }
         },
 
+        // computed: {
+        //     showSeparatedNames() {
+        //         console.log(this.value);
+        //         return this.value.map(v => v.name).join(', ');
+        //     }
+        // },
+
         methods: {
             onSelect(option) {
                 const data = {
@@ -110,6 +126,10 @@
             },
             onRemove(option) {
                 this.$emit('on-remove', option.id);
+            },
+
+            showSeparatedNames(name) {
+                return this.value[this.value.length - 1].name === name ? '' : ',';
             },
 
             checkedItem(id) {

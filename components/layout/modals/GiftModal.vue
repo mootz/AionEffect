@@ -32,11 +32,20 @@
                         Убедитесь, что введенные данные верны, после нажатия на кнопку подарок будет отправлен на игровую почту персонажа.
                     </p>
 
-                    <div :class="[$style.btn, $style.btnChange]">
-                        <AppButton text="Подарить"
-                                   height="5.4rem"
-                                   @click.native="closeModal"
-                        />
+                    <div :class="$style.btns">
+                        <div :class="$style.btn">
+                            <AppButton text="Назад"
+                                       height="5.4rem"
+                                       reverse
+                                       @click.native="backToModal"
+                            />
+                        </div>
+                        <div :class="[$style.btn, $style.btnChange]">
+                            <AppButton text="Подарить"
+                                       height="5.4rem"
+                                       @click.native="closeModal"
+                            />
+                        </div>
                     </div>
                 </div>
 
@@ -48,8 +57,8 @@
 <script>
 
     import AppButton from '@/components/ui/inputs/AppButton';
-    import BonusDonation from '@/components/layout/modals/BonusDonation';
     import AppInput from '@/components/ui/inputs/AppInput';
+    import ProductModal from '@/components/layout/modals/ProductModal';
     export default {
         components: {AppInput,
                      AppButton},
@@ -63,14 +72,11 @@
         },
 
         methods: {
-            openModal() {
-                // this.$modal.open(FormExample2, {classList: 'is-article'});
-            },
             closeModal() {
                 this.$modal.close();
             },
             backToModal() {
-                this.$modal.open(BonusDonation);
+                this.$modal.open(ProductModal);
             }
         }
     };
@@ -149,8 +155,17 @@
         margin-bottom: 2.4rem;
     }
 
+    .btns {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .btn {
+        width: 10.2rem;
+    }
+
     .btnChange {
         width: 12.4rem;
-        margin-left: auto;
+        margin-left: 1rem;
     }
 </style>

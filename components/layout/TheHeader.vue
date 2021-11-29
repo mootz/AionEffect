@@ -3,10 +3,10 @@
         <div :class="$style.wrap">
             <div :class="$style.route">
                 <h1 :class="$style.title">
-                    Мой профиль
+                    {{ namePage }}
                 </h1>
                 <h2 :class="$style.subtitle">
-                    Информация об аккаунте
+                    {{ descPage }}
                 </h2>
             </div>
 
@@ -116,6 +116,8 @@
         },
         data() {
             return {
+                namePage: 'Мой профиль',
+                descPage: 'Информация об аккаунте'
             };
         },
 
@@ -126,6 +128,30 @@
                 notifications: state => state.user.user.notifications,
                 user: state => state.user.user
             }),
+
+            // generateNamePage() {
+            //     const includeName = name => this.$router.history.current.fullPath.includes(name);
+            //
+            //     if (includeName('/shop')) {
+            //         this.namePage = 'Магазин';
+            //     }
+            //     this.namePage = 'Мой профиль';
+            // }
+        },
+
+        watch: {
+            $route() {
+                const includeName = name => this.$router.history.current.fullPath.includes(name);
+
+                if (includeName('/shop')) {
+                    this.namePage = 'Магазин';
+                    this.descPage = 'Уникальные айтемы';
+                } else {
+                    this.namePage = 'Мой профиль';
+                    this.descPage = 'Информация об аккаунте';
+                }
+                console.log('hey');
+            }
         },
 
         methods: {

@@ -5,12 +5,13 @@
                 <nuxt />
             </div>
 
-            <div :class="$style.logo">
+            <a href="https://aioneffect.com/"
+               :class="$style.logo">
                 <AppLogo />
-            </div>
+            </a>
 
             <div :class="$style.socials">
-                <AppSocials />
+                <AppSocials size="login" />
             </div>
         </main>
 
@@ -24,11 +25,13 @@
     import AppSocials from '~/components/common/AppSocials';
 
     export default {
+
         components: {
             AppSocials,
             AppLogo,
             TheModal,
         },
+        middleware: 'auth',
 
         methods: {
         }
@@ -66,8 +69,8 @@
         position: absolute;
         bottom: 6rem;
         left: 6rem;
-        width: 9.6rem;
-        height: 5.4rem;
+        width: 13rem;
+        height: 7rem;
 
         @include respond-to(xs) {
             position: relative;
@@ -91,5 +94,16 @@
             bottom: auto;
             //transform: translateX(-50%);
         }
+    }
+</style>
+
+<style lang="scss" scoped>
+    /* stylelint-disable */
+    ::v-deep .social {
+        .social__item {
+            width: 3rem;
+            height: 3rem;
+            padding: .7rem;
+         }
     }
 </style>

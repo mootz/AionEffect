@@ -76,7 +76,13 @@
 
 <script>
     export default {
-        name: 'AppSocials'
+        name: 'AppSocials',
+        props: {
+            login: {
+                type: String,
+                default: '',
+            }
+        }
     };
 </script>
 
