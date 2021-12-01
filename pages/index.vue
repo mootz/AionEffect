@@ -10,19 +10,19 @@
                     <div :class="$style.balanceList">
                         <div :class="$style.balanceItem">
                             <BalanceCard type="effect"
-                                         value="12,241"
+                                         :value="user.balance.effect"
                                          @click.native="openModalEffect"
                             />
                         </div>
                         <div :class="$style.balanceItem">
                             <BalanceCard type="bonus"
-                                         value="102"
+                                         :value="user.balance.bonus"
                                          @click.native="openModalBonus"
                             />
                         </div>
                         <div :class="[$style.balanceItem, $style._kinah]">
                             <BalanceCard type="kinah"
-                                         value="0"
+                                         :value="user.balance.kinah"
                                          @click.native="openModalKinah"
                             />
                         </div>
@@ -50,7 +50,7 @@
                         </div>
 
                         <div :class="$style.number">
-                            {{ user.refferal.invited }}
+                            <!--                            {{ user.refferal.invited }}-->
                         </div>
                         <p :class="$style.rText">
                             Игроков приглашено
@@ -61,7 +61,7 @@
                                  :class="$style.rIconWrap"
                                  content="Подарок за приглашенного игрока">
                                 <div :class="$style.rIconGifts">
-                                    {{ user.refferal.gifts }}
+                                    <!--                                    {{ user.refferal.gifts }}-->
                                 </div>
                                 <div :class="$style.rIcon">
                                     <svg>

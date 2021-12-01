@@ -203,6 +203,21 @@ export function dateToString(date) {
     }
     return `${year}-${month}-${day}`;
 }
+export function timestampToDate(value, type = 'full') {
+    const a = new Date(value * 1000);
+    const months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+    const year = a.getFullYear();
+    const month = months[a.getMonth()];
+    const date = a.getDate();
+    const hour = a.getHours();
+    const min = a.getMinutes();
+    // const sec = a.getSeconds();
+    if (type === 'full') {
+        return date + ' ' + month + ' ' + year + ' в ' + hour + ':' + min;
+    } else if (type === 'month') {
+        return date + ' ' + month + ' ' + year;
+    }
+}
 
 export function getCookie(name) {
     const decodedCookie = decodeURIComponent(document.cookie);

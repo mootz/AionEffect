@@ -1,75 +1,98 @@
 export const state = () => ({
+    // user: {
+    //     login: 'Overlord',
+    //     avatar: {
+    //         text: '',
+    //         color: '',
+    //     },
+    //     email: 'aioneffect@mail.ru',
+    //     // последний вход в игру
+    //     last_entrance: '17 августа в 22:53',
+    //     // дата регистрации
+    //     register_date: '06 мая 2013',
+    //     // последняя смена пароля
+    //     last_change_password: '10 августа в 22:53',
+    //     coins: {
+    //         effect: '12,241',
+    //         bonus: '102',
+    //         kinah: '726'
+    //     },
+    //     characters: [
+    //         {
+    //             name: 'Assassin',
+    //             class: 'Убийца',
+    //             level: 40,
+    //             online: false
+    //         },
+    //         {
+    //             name: 'Hello',
+    //             class: 'Лучник',
+    //             level: 12,
+    //             online: true
+    //         }
+    //     ],
+    //
+    //     // реферальная программа
+    //     refferal: {
+    //         url: 'ссылка для приглашения',
+    //         invited: '66',
+    //         gifts: '2'
+    //     },
+    //
+    //     // уведомления
+    //     notifications: [
+    //         {
+    //             type: 'bonus',
+    //             text: 'Спасибо за поддержку! Вам начислено 23 Bonus'
+    //         },
+    //         {
+    //             type: 'bonus',
+    //             text: 'Спасибо за поддержку! Вам начислено 23 Bonus'
+    //         },
+    //         {
+    //             type: 'bonus',
+    //             text: 'Спасибо за поддержку! Вам начислено 23 Bonus'
+    //         },
+    //         {
+    //             type: 'bonus',
+    //             text: 'Спасибо за поддержку! Вам начислено 23 Bonus'
+    //         },
+    //         {
+    //             type: 'bonus',
+    //             text: 'Спасибо за поддержку! Вам начислено 23 Bonus'
+    //         },
+    //         {
+    //             type: 'bonus',
+    //             text: 'Спасибо за поддержку! Вам начислено 23 Bonus'
+    //         },
+    //         {
+    //             type: 'bonus',
+    //             text: 'Спасибо за поддержку! Вам начислено 23 Bonus'
+    //         },
+    //     ]
+    // },
     user: {
-        login: 'Overlord',
         avatar: {
             text: '',
             color: '',
         },
-        email: 'aioneffect@mail.ru',
-        // последний вход в игру
-        last_entrance: '17 августа в 22:53',
-        // дата регистрации
-        register_date: '06 мая 2013',
-        // последняя смена пароля
-        last_change_password: '10 августа в 22:53',
-        coins: {
-            effect: '12,241',
-            bonus: '102',
-            kinah: '726'
+        login: '',
+        phone: '',
+        email: '',
+        telegram: '',
+        last_active: '',
+        last_change_pass: '',
+        date_create: '',
+        iso: '',
+        lang: '',
+        status: '',
+        confirm_email: '',
+        balance: {
+            effect: '0',
+            bonus: '0',
+            kinah: '0'
         },
-        characters: [
-            {
-                name: 'Assassin',
-                class: 'Убийца',
-                level: 40,
-                online: false
-            },
-            {
-                name: 'Hello',
-                class: 'Лучник',
-                level: 12,
-                online: true
-            }
-        ],
-
-        // реферальная программа
-        refferal: {
-            url: 'ссылка для приглашения',
-            invited: '66',
-            gifts: '2'
-        },
-
-        // уведомления
-        notifications: [
-            {
-                type: 'bonus',
-                text: 'Спасибо за поддержку! Вам начислено 23 Bonus'
-            },
-            {
-                type: 'bonus',
-                text: 'Спасибо за поддержку! Вам начислено 23 Bonus'
-            },
-            {
-                type: 'bonus',
-                text: 'Спасибо за поддержку! Вам начислено 23 Bonus'
-            },
-            {
-                type: 'bonus',
-                text: 'Спасибо за поддержку! Вам начислено 23 Bonus'
-            },
-            {
-                type: 'bonus',
-                text: 'Спасибо за поддержку! Вам начислено 23 Bonus'
-            },
-            {
-                type: 'bonus',
-                text: 'Спасибо за поддержку! Вам начислено 23 Bonus'
-            },
-            {
-                type: 'bonus',
-                text: 'Спасибо за поддержку! Вам начислено 23 Bonus'
-            },
-        ]
+        characters: []
     },
 
     userPage: {
@@ -79,7 +102,22 @@ export const state = () => ({
     }
 });
 
+export const getters = {
+    getUserData: state => state.user,
+};
+
 export const actions = {
+    async getUserData({commit}) {
+        try {
+            const userId = localStorage['auth.userId'];
+
+            const user = await this.$axios.$get(`/api/user/${userId}`);
+            commit('SET_USER_DATA', user.user);
+        } catch (error) {
+            console.warn('VueX User Data:', error.response);
+        }
+    },
+
     toggleDataChange({commit, state}) {
         if (state.userPage.dataChange) {
             commit('LEAVE_DATA_CHANGE');
@@ -96,6 +134,14 @@ export const actions = {
 };
 
 export const mutations = {
+    SET_USER_DATA(state, user) {
+        const userText = user.login.split('')[0];
+        const userAvatar = `#${Math.floor(Math.random()*16777215).toString(16)}`;
+
+        state.user = {...user, avatar: {text: userText, color: userAvatar}};
+        console.log(state);
+    },
+
     TOGGLE_DATA_CHANGE(state) {
         state.userPage.dataChange = !state.userPage.dataChange;
     },

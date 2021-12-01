@@ -32,15 +32,22 @@
         },
         middleware: 'auth',
 
+        // async asyncData({$axios}) {
+        //     const userId = localStorage['auth.userId'];
+        //
+        //     const user = await $axios.$get(`/api/user/${userId}`);
+        //     console.log(user);
+        // },
 
-        async mounted() {
-            this.createNewAvatar();
 
-            // await this.getUserData();
+        async created() {
+            await this.userData();
+            console.log(this);
         },
 
         methods: {
             ...mapActions({
+                userData: 'user/getUserData',
                 closeProfileMenu: 'header/closeProfileMenu',
                 closeNotifications: 'header/closeNotifications'
             }),
@@ -49,45 +56,21 @@
                 createNewAvatar: 'user/CREATE_AVATAR'
             }),
 
+            // getUserData() {
+            //     try {
+            //         const userId = localStorage['auth.userId'];
+            //         const {data: response} = this.$axios.get(`/api/user/${userId}`);
+            //         console.log(response.data.user);
+            //     } catch (err) {
+            //         console.log(err);
+            //         console.log(err.response);
+            //     }
+            // },
+
             closeAllPopups() {
                 this.closeProfileMenu();
                 this.closeNotifications();
             },
-
-            // getUserData() {
-            //     // const dataLogin = {
-            //     //     login: this.login,
-            //     //     password: this.password,
-            //     //     remember: Number(this.remember)
-            //     // };
-            //
-            //     try {
-            //         const response = this.$auth.loginWith('local', {data: {
-            //             login: this.login,
-            //             password: this.password,
-            //             remember: Number(this.remember)
-            //         }});
-            //
-            //         // this.$auth.setUser({data: {dataLogin}})
-            //
-            //         console.log(response);
-            //     } catch (err) {
-            //         console.log(err.response);
-            //
-            //         if (err.response.data.validation) {
-            //             const listErrors = Object.entries(err.response.data.validation);
-            //
-            //             listErrors.forEach((e, index) => {
-            //                 setTimeout(() => {
-            //                     this.errors[e[0]] = e[1];
-            //                     this.$toast.error(e[1], {timeout: 5000});
-            //                 }, index * 500);
-            //             });
-            //         } else {
-            //             this.$toast.error(err.response.data.result_msg);
-            //         }
-            //     }
-            // }
         },
     };
 </script>

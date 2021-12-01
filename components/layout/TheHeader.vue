@@ -57,8 +57,10 @@
 
                 <div :class="$style.profile">
                     <div :class="$style.profileImg"
-                         :style="{backgroundColor: user.avatar.color}">
-                        {{ user.avatar.text }}
+                    >
+                        <!--                        :style="{backgroundColor: userData.avatar.color}"-->
+                        <!--                        {{ userData.avatar.text }}-->
+                        w
                     </div>
 
                     <div :class="$style.profileName"
@@ -125,9 +127,13 @@
             ...mapState({
                 isActiveProfile: state => state.header.isActiveProfileMenu,
                 isActiveNotifications: state => state.header.isActiveNotifications,
-                notifications: state => state.user.user.notifications,
-                user: state => state.user.user
+                notifications: state => state.user.user.notifications
+                // user: state => state.user.user
             }),
+
+            userData() {
+                return this.$store.getters['user/getUserData'];
+            }
 
             // generateNamePage() {
             //     const includeName = name => this.$router.history.current.fullPath.includes(name);
@@ -152,6 +158,11 @@
                 }
                 console.log('hey');
             }
+        },
+
+
+        mounted() {
+            console.log('header:', this.userData);
         },
 
         methods: {
@@ -179,7 +190,7 @@
             openPromo() {
                 this.$modal.open(RPromo);
             }
-        }
+        },
     };
 </script>
 

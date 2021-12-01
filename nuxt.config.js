@@ -122,6 +122,9 @@ module.exports = {
             transition: 'Vue-Toastification__fade',
         }],
     ],
+    axios: {
+        proxy: true
+    },
 
     buildModules: [
         [
@@ -190,6 +193,11 @@ module.exports = {
                     global: true,
                     // required: true,
                     type: ''
+                },
+                refreshToken: {
+                    property: 'refresh_token',
+                    data: 'refresh_token',
+                    maxAge: 60 * 60,
                 },
                 // user: {
                 //     property: 'user',

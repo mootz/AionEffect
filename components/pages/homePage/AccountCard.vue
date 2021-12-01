@@ -5,6 +5,7 @@
                 <div :class="$style.imgWrap"
                      :style="{backgroundColor: user.avatar.color}"
                 >
+
                     {{ user.avatar.text }}
                 </div>
                 <div :class="$style.info">
@@ -41,7 +42,7 @@
                 </div>
 
                 <div :class="$style.value">
-                    {{ user.last_entrance }}
+                    {{ dateFormat(user.last_active, 'full') }}
                 </div>
             </div>
             <div :class="$style.item">
@@ -50,7 +51,7 @@
                 </div>
 
                 <div :class="$style.value">
-                    {{ user.register_date }}
+                    {{ dateFormat(user.date_create, 'month') }}
                 </div>
             </div>
             <div :class="$style.item">
@@ -59,7 +60,7 @@
                 </div>
 
                 <div :class="$style.value">
-                    {{ user.last_change_password }}
+                    {{ dateFormat(user.last_change_pass, 'full') }}
                 </div>
             </div>
         </div>
@@ -68,6 +69,7 @@
 
 <script>
     import {mapActions, mapState} from 'vuex';
+    import {timestampToDate} from 'assets/js/utils/commonUtils';
 
     export default {
         name: 'AccountCard',
@@ -88,7 +90,10 @@
         methods: {
             ...mapActions({
                 toggleDataChange: 'user/toggleDataChange'
-            })
+            }),
+            dateFormat(val, type) {
+                return timestampToDate(val, type);
+            }
         }
     };
 </script>

@@ -96,9 +96,9 @@
                             session_end: res.data.session_end
                         };
                         console.log(user);
-                        this.$auth.$storage.setUniversal('user', user);
+                        this.$auth.$storage.setUniversal('userId', user.id);
 
-                        user = this.$auth.$storage.getUniversal('user'); 
+                        user = this.$auth.$storage.getUniversal('user');
                         console.log(user);
 
                         this.$router.push('/');
@@ -169,7 +169,6 @@
 
             setRemember() {
                 this.remember = !this.remember;
-                console.log(this.remember);
             },
 
             clearError(val) {

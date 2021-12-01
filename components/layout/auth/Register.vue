@@ -1,48 +1,71 @@
 <template>
     <div class="login">
-        <h2 class="login__title">
-            Регистрация
-        </h2>
+        <form class="login__form"
+              @submit.prevent="userRegister"
+        >
+            <h2 class="login__title">
+                Регистрация
+            </h2>
 
-        <div class="login__item">
-            <AppInput :value="login"
-                      label="Логин"
-                      placeholder="Введите имя пользователя"
-                      @input="changeLogin"
+            <div class="login__item">
+                <AppInput label="Логин"
+                          placeholder="Введите имя пользователя"
+                          :value="login"
+                          :error="errors.login"
+                          @input="setValueLogin"
+                          @focus="clearError('login')"
+                />
+            </div>
+
+            <div class="login__item">
+                <AppInput label="Почта"
+                          type="text"
+                          :value="email"
+                          :error="errors.email"
+                          placeholder="Введите электронный адрес"
+                          @input="setValueEmail"
+                          @focus="clearError('email')"
+                />
+            </div>
+
+            <div class="login__item">
+                <AppInput label="Пароль"
+                          type="password"
+                          :value="password"
+                          :error="errors.password"
+                          placeholder="Введите пароль"
+                          @input="setValuePassword"
+                          @focus="clearError('password')"
+                />
+            </div>
+
+            <div class="login__item">
+                <AppInput label="Повторите пароль"
+                          type="password"
+                          :value="passconf"
+                          :error="errors.passconf"
+                          placeholder="Введите пароль"
+                          @input="setValueRePassword"
+                          @focus="clearError('passconf')"
+                />
+            </div>
+
+            <div class="login__help">
+                <AppCheckbox :rules="true"
+                             :checked="rule"
+                             @click-check="setRule" />
+            </div>
+
+            <AppButton text="Создать аккаунт"
+                       :disabled="!btnEnable"
+                       class="login__button"
             />
-        </div>
 
-        <div class="login__item">
-            <AppInput label="Почта"
-                      type="text"
-                      placeholder="Введите электронный адрес" />
-        </div>
-
-        <div class="login__item">
-            <AppInput label="Пароль"
-                      type="password"
-                      placeholder="Введите пароль" />
-        </div>
-
-        <div class="login__item">
-            <AppInput label="Повторите пароль"
-                      type="password"
-                      placeholder="Введите пароль" />
-        </div>
-
-        <div class="login__help">
-            <AppCheckbox :rules="true" />
-        </div>
-
-        <AppButton text="Создать аккаунт"
-                   :disabled="true"
-                   class="login__button"
-        />
-
-        <div class="login__create"
-             @click="registerSubmit">
-            У меня уже есть учетная запись
-        </div>
+            <div class="login__create"
+                 @click="$emit('change-step', 'login')">
+                У меня уже есть учетная запись
+            </div>
+        </form>
     </div>
 </template>
 
@@ -56,13 +79,57 @@
 
         data() {
             return {
-                login: 'admin'
+                login: '',
+                email: '',
+                password: '',
+                passconf: '',
+                rule: false,
+                errors: {
+                    login: '',
+                    email: '',
+                    password: '',
+                    passconf: ''
+                }
             };
         },
 
+        computed: {
+            btnEnable() {
+                return this.login && this.email && this.password && this.passconf && this.rule;
+            }
+        },
+
         methods: {
-            registerSubmit() {
-                this.login !== 'admin' ? this.loginUsed() : this.$emit('change-step', 'login');
+            async userRegister() {
+                try {
+                    const data = {
+                        login: this.login,
+                        email: this.email,
+                        password: this.password,
+                        passconf: this.passconf,
+                        rules: this.rule,
+                    };
+                    const response = await this.$axios.$post('/api/user/registration', data);
+
+
+                    this.$emit('change-step', 'acceptRegister');
+                    console.log(response);
+                } catch (err) {
+                    console.log(err.response);
+
+                    if (err.response.data.validation) {
+                        const listErrors = Object.entries(err.response.data.validation);
+
+                        listErrors.forEach((e, index) => {
+                            setTimeout(() => {
+                                this.errors[e[0]] = e[1];
+                                this.$toast.error(e[1], {timeout: 5000});
+                            }, index * 500);
+                        });
+                    } else {
+                        this.$toast.error(err.response.data.result_msg);
+                    }
+                }
             },
 
             loginUsed() {
@@ -71,9 +138,25 @@
                 });
             },
 
-            changeLogin(val) {
-                console.log(val);
+            setValueLogin(val) {
                 this.login = val;
+            },
+            setValueEmail(val) {
+                this.email = val;
+            },
+            setValuePassword(val) {
+                this.password = val;
+            },
+            setValueRePassword(val) {
+                this.passconf = val;
+            },
+
+            setRule() {
+                this.rule = !this.rule;
+            },
+
+            clearError(val) {
+                this.errors[val] = '';
             }
         }
     };

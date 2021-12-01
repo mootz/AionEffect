@@ -10,6 +10,7 @@ export const proxy = () => ({
         pathRewrite: {
             '/api': '',
         },
+        changeOrigin: true
     },
     '/video': process.env.PROXY_URL,
     '/media': process.env.PROXY_URL,

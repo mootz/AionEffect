@@ -5,7 +5,8 @@
         </div>
 
         <div v-for="char in characters"
-             :key="char.name"
+             v-show="characters.length"
+             :key="char.char_id"
              :class="$style.item"
         >
             <div :class="$style.wrap">
