@@ -37,12 +37,12 @@
                     <AccountCard :user="user" />
                 </div>
 
-                <div :class="$style.refferalWrap">
+                <!--                <div :class="$style.refferalWrap">
                     <div class="labelName">
                         Реферальная программа
                     </div>
 
-                    <div :class="$style.refferal">
+                                        <div :class="$style.refferal">
                         <div :class="$style.buttonWrap">
                             <AppButton text="Скопировать ссылку"
                                        height="100%"
@@ -50,7 +50,7 @@
                         </div>
 
                         <div :class="$style.number">
-                            <!--                            {{ user.refferal.invited }}-->
+                            &lt;!&ndash;                            {{ user.refferal.invited }}&ndash;&gt;
                         </div>
                         <p :class="$style.rText">
                             Игроков приглашено
@@ -61,7 +61,7 @@
                                  :class="$style.rIconWrap"
                                  content="Подарок за приглашенного игрока">
                                 <div :class="$style.rIconGifts">
-                                    <!--                                    {{ user.refferal.gifts }}-->
+                                    &lt;!&ndash;                                    {{ user.refferal.gifts }}&ndash;&gt;
                                 </div>
                                 <div :class="$style.rIcon">
                                     <svg>
@@ -80,10 +80,9 @@
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
-                </div>
+                </div>-->
+
             </div>
 
             <div class="rSide">
@@ -108,7 +107,6 @@
     import BonusDonation from '@/components/layout/modals/BonusDonation';
     import BalanceCard from '@/components/pages/homePage/BalanceCard';
     import AccountCard from '@/components/pages/homePage/AccountCard';
-    import AppButton from '@/components/ui/inputs/AppButton';
     import ListCharacters from '@/components/pages/homePage/ListCharacters';
     import UserData from '@/components/pages/homePage/UserData';
 
@@ -116,7 +114,6 @@
         name: 'HomePage',
         components: {UserData,
                      ListCharacters,
-                     AppButton,
                      AccountCard,
                      BalanceCard},
 

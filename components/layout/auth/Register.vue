@@ -109,11 +109,12 @@
                         passconf: this.passconf,
                         rules: this.rule,
                     };
-                    const response = await this.$axios.$post('/api/user/registration', data);
+                    // eslint-disable-next-line no-unused-vars
+                    await this.$axios.$post('/user/registration', data);
 
+                    localStorage.setItem('userEmail', this.email);
 
                     this.$emit('change-step', 'acceptRegister');
-                    console.log(response);
                 } catch (err) {
                     console.log(err.response);
 

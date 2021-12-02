@@ -26,10 +26,10 @@
                         name: 'Пожертвования',
                         to: '/history/donate'
                     },
-                    {
-                        name: 'Голосования',
-                        to: '/history/vote'
-                    },
+                    // {
+                    //     name: 'Голосования',
+                    //     to: '/history/vote'
+                    // },
                     {
                         name: 'Промокод',
                         to: '/history/promo'

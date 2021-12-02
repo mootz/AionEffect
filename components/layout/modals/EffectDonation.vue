@@ -356,7 +356,7 @@
 
     .btn {
         margin: 0 0 0 auto;
-        width: 14rem;
+        width: 13.4rem;
     }
 
     .btns {
@@ -365,7 +365,7 @@
     }
 
     .btnCode {
-        width: 15.2rem;
+        width: 15.8rem;
         margin-left: 0;
     }
 

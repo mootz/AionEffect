@@ -19,7 +19,7 @@
                 </div>
                 <div :class="$style.info">
                     <div :class="$style.class">
-                        {{ char.class }} {{ char.level }} Ур.
+                        {{ computClass(char.class) }} {{ char.lev }} Ур.
                     </div>
                     <!--                    <div v-if="char.class2"-->
                     <!--                         :class="$style.classAccent">-->
@@ -60,6 +60,12 @@
             }
         },
 
+        data() {
+            return {
+                class: ''
+            };
+        },
+
         methods: {
             teleportChar() {
                 this.$toast('Персонаж успешно отправлен в столицу');
@@ -69,6 +75,46 @@
             },
             openModal() {
                 this.$modal.open(RDignity, {title: 'hey'});
+            },
+            computClass(val) {
+                switch (val) {
+                    case 0:
+                        return 'Воин';
+                    case 1:
+                        return 'Гладиатор';
+                    case 2:
+                        return 'Страж';
+                    case 3:
+                        return 'Следопыт';
+                    case 4:
+                        return 'Убийца';
+                    case 5:
+                        return 'Стрелок';
+                    case 6:
+                        return 'Маг';
+                    case 7:
+                        return 'Волшебник';
+                    case 8:
+                        return 'Заклинатель';
+                    case 9:
+                        return 'Жрец';
+                    case 10:
+                        return 'Целитель';
+                    case 11:
+                        return 'Чародей';
+                    case 12:
+                        return 'Инженер';
+                    case 13:
+                        return 'Пилот';
+                    case 14:
+                        return 'Снайпер';
+                    case 15:
+                        return 'Артист';
+                    case 16:
+                        return 'Бард';
+                    default:
+                        return 'Ошибка';
+                }
             }
         }
     };

@@ -122,9 +122,9 @@ module.exports = {
             transition: 'Vue-Toastification__fade',
         }],
     ],
-    axios: {
-        proxy: true
-    },
+    // axios: {
+    //     proxy: true
+    // },
 
     buildModules: [
         [
@@ -204,7 +204,8 @@ module.exports = {
                 //     // autoFetch: true
                 // },
                 endpoints: {
-                    login: {url: '/api/user/login', method: 'post'},
+                    login: {url: process.env.NODE_ENV !== 'production' ? '/user/login' : 'https://apisite.aioneffect.com/user/login', method: 'post'},
+                    // login: {url: 'https://apisite.aioneffect.com/user/login', method: 'post'},
                     logout: {url: '/api/auth/logout', method: 'post'},
                     // user: {url: '/api/user/1', method: 'get'}
                     user: false
@@ -216,7 +217,7 @@ module.exports = {
     /**
      * Модуль прокси решает проблемы с CORS, используется только на локалке
      */
-    proxy: process.env.PROXY_URL ? proxy() : {},
+    proxy: proxy(),
 
     /**
      * Тут можно внести изменения в настройки сборки и webpack

@@ -39,7 +39,7 @@
                     <ChangeLanguage />
                 </div>
 
-                <div :class="[$style.bell, {[$style._isActive]: isActiveNotifications}]">
+                <div :class="[$style.bell, {[$style._isActive]: isActiveNotifications}, {[$style._new]: false}]">
                     <div :class="$style.bellIcon"
                          @click.stop="toggleNotifications">
                         <svg>
@@ -58,14 +58,13 @@
                 <div :class="$style.profile">
                     <div :class="$style.profileImg"
                     >
-                        <!--                        :style="{backgroundColor: userData.avatar.color}"-->
-                        <!--                        {{ userData.avatar.text }}-->
-                        w
+                        <ImageLazy image="images/avatar.png"
+                        />
                     </div>
 
                     <div :class="$style.profileName"
                          @click.stop="toggleProfile">
-                        Overlord
+                        {{ userData.login }}
 
                         <div :class="[$style.profileIcon, {[$style._isActive]: isActiveProfile}]">
                             <svg>
@@ -87,9 +86,11 @@
                         />
                         <Link text="Сменить акаунт"
                               :class="$style.menuItem"
+                              @click.native="logout"
                         />
                         <Link text="Выход"
                               :class="$style.menuItem"
+                              href="https://aioneffect.com/"
                         />
 
                     </Tooltip>
@@ -107,10 +108,12 @@
     import Tooltip from '@/components/common/Tooltip';
     import TheNotification from '@/components/common/TheNotification';
     import RPromo from '@/components/layout/modals/RPromo';
+    import ImageLazy from '@/components/common/ImageLazy';
 
     export default {
         name: 'TheHeader',
         components: {
+            ImageLazy,
             TheNotification,
             Tooltip,
             Link,
@@ -160,11 +163,6 @@
             }
         },
 
-
-        mounted() {
-            console.log('header:', this.userData);
-        },
-
         methods: {
             toggleProfile() {
                 this.isActiveProfile ? this.closeMenu() : this.openMenu();
@@ -189,6 +187,11 @@
 
             openPromo() {
                 this.$modal.open(RPromo);
+            },
+
+            async logout() {
+                await this.$auth.logout();
+                this.$auth.$storage.removeUniversal('userId');
             }
         },
     };
@@ -277,32 +280,35 @@
         width: 2.4rem;
         height: 2.4rem;
         margin-right: 3.2rem;
+        pointer-events: none;
 
-        &:before {
-            content: '';
-            position: absolute;
-            width: .8rem;
-            height: .8rem;
-            background-color: $accent;
-            top: 0;
-            right: 0;
-            border-radius: 50%;
-            z-index: 2;
-            pointer-events: none;
-            transition: $transition;
-        }
+        &._new {
+            &:before {
+                content: '';
+                position: absolute;
+                width: .8rem;
+                height: .8rem;
+                background-color: $accent;
+                top: 0;
+                right: 0;
+                border-radius: 50%;
+                z-index: 2;
+                pointer-events: none;
+                transition: $transition;
+            }
 
-        &:after {
-            content: '';
-            position: absolute;
-            width: 2.2rem;
-            height: 2.2rem;
-            top: -.8rem;
-            right: -.8rem;
-            background: radial-gradient(50% 50% at 50% 50%, rgba(255, 46, 0, 0.3) 0%, rgba(255, 46, 0, 0) 100%);
-            z-index: 1;
-            pointer-events: none;
-            transition: $transition;
+            &:after {
+                content: '';
+                position: absolute;
+                width: 2.2rem;
+                height: 2.2rem;
+                top: -.8rem;
+                right: -.8rem;
+                background: radial-gradient(50% 50% at 50% 50%, rgba(255, 46, 0, 0.3) 0%, rgba(255, 46, 0, 0) 100%);
+                z-index: 1;
+                pointer-events: none;
+                transition: $transition;
+            }
         }
 
         &._isActive {
@@ -346,6 +352,8 @@
         justify-content: center;
         font-weight: bold;
         font-size: 1.8rem;
+        background: $avatarBackground;
+        overflow: hidden;
     }
 
     .profileName {

@@ -83,45 +83,34 @@
 
         methods: {
             async userLogin() {
-                try {
-                    await this.$auth.loginWith('local', {data: {
-                        login: this.login,
-                        password: this.password,
-                        remember: Number(this.remember)
-                    }}).then(res => {
-                        console.log(res);
-                        let user = {
-                            id: res.data.id,
-                            token: res.data.token,
-                            session_end: res.data.session_end
-                        };
-                        console.log(user);
-                        this.$auth.$storage.setUniversal('userId', user.id);
+                await this.$auth.loginWith('local', {data: {
+                    login: this.login,
+                    password: this.password,
+                    remember: Number(this.remember)
+                }}).then(res => {
+                    const user = {
+                        id: res.data.id,
+                        token: res.data.token,
+                        session_end: res.data.session_end
+                    };
+                    this.$auth.$storage.setUniversal('userId', user.id);
 
-                        user = this.$auth.$storage.getUniversal('user');
-                        console.log(user);
+                    this.$router.push('/');
+                })
+                    .catch(err => {
+                        if (err.response.data.validation) {
+                            const listErrors = Object.entries(err.response.data.validation);
 
-                        this.$router.push('/');
-                    })
-                        .catch(err => {
-                            console.log(err.response);
-                        });
-                } catch (err) {
-                    console.log(err.response);
-
-                    if (err.response.data.validation) {
-                        const listErrors = Object.entries(err.response.data.validation);
-
-                        listErrors.forEach((e, index) => {
-                            setTimeout(() => {
-                                this.errors[e[0]] = e[1];
-                                this.$toast.error(e[1], {timeout: 5000});
-                            }, index * 500);
-                        });
-                    } else {
-                        this.$toast.error(err.response.data.result_msg);
-                    }
-                }
+                            listErrors.forEach((e, index) => {
+                                setTimeout(() => {
+                                    this.errors[e[0]] = e[1];
+                                    this.$toast.error(e[1], {timeout: 5000});
+                                }, index * 500);
+                            });
+                        } else {
+                            this.$toast.error(err.response.data.result_msg);
+                        }
+                    });
             },
 
             // async userLogin() {
@@ -231,6 +220,7 @@
         &__forgot {
             font-size: 1.4rem;
             font-weight: 500;
+            cursor: pointer;
 
             &._mobile {
                 display: none;

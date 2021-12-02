@@ -3,10 +3,9 @@
         <div :class="$style.top">
             <div :class="$style.infoWrap">
                 <div :class="$style.imgWrap"
-                     :style="{backgroundColor: user.avatar.color}"
                 >
-
-                    {{ user.avatar.text }}
+                    <ImageLazy image="images/avatar.png"
+                    />
                 </div>
                 <div :class="$style.info">
                     <p :class="$style.name">
@@ -70,10 +69,11 @@
 <script>
     import {mapActions, mapState} from 'vuex';
     import {timestampToDate} from 'assets/js/utils/commonUtils';
+    import ImageLazy from '@/components/common/ImageLazy';
 
     export default {
         name: 'AccountCard',
-        components: {},
+        components: {ImageLazy},
         props: {
             user: {
                 type: Object,
@@ -127,6 +127,8 @@
         justify-content: center;
         font-weight: bold;
         font-size: 2.6rem;
+        background: $avatarBackground;
+        overflow: hidden;
     }
 
     .name {

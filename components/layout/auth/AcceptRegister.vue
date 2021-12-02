@@ -1,12 +1,14 @@
 <template>
     <div class="login">
         <h2 class="login__title">
-            Поздравляем!
+            Пожалуйста,<br>подтвердите ваш email
         </h2>
 
         <div class="login__info">
-            Аккаунт успешно зарегистрирован.
-            Теперь вы можете войти в свой личный кабинет.
+
+            Мы отправили письмо на {{ email }}. Оно содержит ссылку для подтверждения вашего аккаунта. <br><br>
+
+            Перед получением доступа к нашему сайту в качестве зарегистрированного пользователя, вам необходимо подтвердить свой Email адрес.
         </div>
 
         <AppButton text="Войти"
@@ -20,7 +22,22 @@
     import AppButton from '~/components/ui/inputs/AppButton';
     export default {
         name: 'AcceptRegister',
-        components: {AppButton}
+        components: {AppButton},
+        data() {
+            return {
+                email: 'email@aioneffect.com'
+            };
+        },
+        mounted() {
+            this.email = localStorage.getItem('userEmail');
+        },
+
+        methods: {
+            goNext() {
+                this.$emit('change-step', 'login');
+                localStorage.removeItem('userEmail');
+            }
+        }
     };
 </script>
 
@@ -33,10 +50,11 @@
         background-color: $lightdark;
 
         &__title {
+            margin-bottom: 3.2rem;
             font-size: 1.8rem;
             opacity: .9;
             text-align: center;
-            margin-bottom: 3.2rem;
+            font-weight: bold;
         }
 
         &__item {

@@ -111,7 +111,7 @@ export const actions = {
         try {
             const userId = localStorage['auth.userId'];
 
-            const user = await this.$axios.$get(`/api/user/${userId}`);
+            const user = await this.$axios.$post(`/user/${userId}`);
             commit('SET_USER_DATA', user.user);
         } catch (error) {
             console.warn('VueX User Data:', error.response);
@@ -135,11 +135,10 @@ export const actions = {
 
 export const mutations = {
     SET_USER_DATA(state, user) {
-        const userText = user.login.split('')[0];
-        const userAvatar = `#${Math.floor(Math.random()*16777215).toString(16)}`;
+        // const userText = user.login.split('')[0];
+        // const userAvatar = `#${Math.floor(Math.random()*16777215).toString(16)}`;
 
-        state.user = {...user, avatar: {text: userText, color: userAvatar}};
-        console.log(state);
+        state.user = {...user};
     },
 
     TOGGLE_DATA_CHANGE(state) {

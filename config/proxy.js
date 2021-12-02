@@ -1,17 +1,9 @@
 export const proxy = () => ({
-    '/graphql': {
-        target: process.env.PROXY_URL,
-        pathRewrite: {
-            '^/graphql': '/graphql/',
-        },
-    },
     '/api': {
-        target: process.env.PROXY_URL,
+        target: 'https://apisite.aioneffect.com',
         pathRewrite: {
             '/api': '',
         },
         changeOrigin: true
     },
-    '/video': process.env.PROXY_URL,
-    '/media': process.env.PROXY_URL,
 });
