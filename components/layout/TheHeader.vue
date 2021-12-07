@@ -31,7 +31,7 @@
 
                     </span>
                     <span :class="$style.onlineCount">
-                        7147
+                        {{ online.all }}
                     </span>
                 </div>
 
@@ -122,8 +122,18 @@
         data() {
             return {
                 namePage: 'Мой профиль',
-                descPage: 'Информация об аккаунте'
+                descPage: 'Информация об аккаунте',
+                online: {}
             };
+        },
+
+        async fetch() {
+            try {
+                const response = await this.$axios.$post('/server/online');
+                this.online = response.online;
+            } catch (error) {
+                console.log('TheHeader/online: ', error.response);
+            }
         },
 
         computed: {
@@ -159,7 +169,6 @@
                     this.namePage = 'Мой профиль';
                     this.descPage = 'Информация об аккаунте';
                 }
-                console.log('hey');
             }
         },
 

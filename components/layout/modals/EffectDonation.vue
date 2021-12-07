@@ -30,15 +30,15 @@
                         <ul :class="$style.list">
                             <li :class="$style.item">
                                 <span :class="$style.label">USD</span>
-                                <span :class="$style.value">4804.03</span>
+                                <span :class="$style.value">{{ calcUsd }}</span>
                             </li>
                             <li :class="$style.item">
                                 <span :class="$style.label">RUB</span>
-                                <span :class="$style.value">375461.69</span>
+                                <span :class="$style.value">{{ valueCoin }}</span>
                             </li>
                             <li :class="$style.item">
                                 <span :class="$style.label">EUR</span>
-                                <span :class="$style.value">4106.721</span>
+                                <span :class="$style.value">{{ calcEur }}</span>
                             </li>
                         </ul>
 
@@ -65,15 +65,19 @@
                             <AppInput v-else
                                       label="Количество монет"
                                       :value="valueCoin"
-                                      min="50"
+                                      min="1"
                                       type="number"
+                                      :error="errors.count"
+                                      @focus="clearErrors"
                                       @input="setValueCoin"
                             />
                         </div>
 
 
                         <div :class="$style.checkbox">
-                            <AppCheckbox />
+                            <AppCheckbox :checked="rule"
+                                         @click-check="setRule"
+                            />
                             <div :class="$style.checkboxText">
                                 Я согласен с <span @click.stop="changeStage('rule')">правилами пожертвования</span>
                             </div>
@@ -95,7 +99,7 @@
                             <div :class="$style.btn">
                                 <AppButton text="Продолжить"
                                            height="5.4rem"
-                                           @click.native="nextStep"
+                                           @click.native="checkOrder"
                                 />
                             </div>
                         </div>
@@ -145,12 +149,15 @@
 
 <script>
 
+    import {mapState} from 'vuex';
     import AppButton from '@/components/ui/inputs/AppButton';
     import AppSelect from '@/components/ui/inputs/AppSelect';
     import AppInput from '@/components/ui/inputs/AppInput';
     import AppCheckbox from '@/components/ui/inputs/AppCheckbox';
     import PaypalDonation from '@/components/layout/modals/PaypalDonation';
     import DigisellerCodeDonation from '@/components/layout/modals/DigisellerCodeDonation';
+    import {getJsonFromUrl} from 'assets/js/utils/commonUtils';
+
     export default {
         components: {AppCheckbox,
                      AppInput,
@@ -175,11 +182,17 @@
                         id: 1
                     },
                     {
-                        name: 'Способ оплаты Digiseller',
-                        full_name: 'Digiseller',
-                        value: 'digiseller',
+                        name: 'Способ оплаты PrimePayments',
+                        full_name: 'PrimePayments',
+                        value: 'primepayments',
                         id: 2
                     },
+                    // },{
+                    //     name: 'Способ оплаты Digiseller',
+                    //     full_name: 'Digiseller',
+                    //     value: 'digiseller',
+                    //     id: 2
+                    // },
                     {
                         name: 'Способ оплаты Paypal',
                         full_name: 'Paypal',
@@ -241,14 +254,49 @@
 
                 valueCoin: '50',
 
-                stage: 'pay'
+                rule: false,
+
+                stage: 'pay',
+
+                errors: {
+                    count: '',
+                },
+
+                currencyToday: {
+                    Valute: {
+                        USD: {
+                            Value: ''
+                        },
+                        EUR: {
+                            Value: ''
+                        },
+                    }
+                }
             };
         },
 
         computed: {
             thisValueDigiseller() {
                 return this.valueSelect.value === 'digiseller';
+            },
+
+            ...mapState({
+                userId: state => state.user.user.id
+            }),
+
+            calcUsd() {
+                return (this.valueCoin / this.currencyToday.Valute.USD.Value).toFixed(2);
+            },
+
+            calcEur() {
+                return (this.valueCoin / this.currencyToday.Valute.EUR.Value).toFixed(2);
             }
+        },
+
+        async mounted() {
+            await getJsonFromUrl('https://www.cbr-xml-daily.ru/daily_json.js', data => {
+                this.currencyToday = data;
+            });
         },
 
         methods: {
@@ -264,14 +312,74 @@
             setOrderType(data) {
                 this.valueSelect = data.option;
 
-                this.nextStep();
-            },
-            setValueCoin(val) {
-                this.valueCoin = val;
-            },
-            nextStep() {
                 if (this.valueSelect.value === 'paypal') {
                     this.$modal.open(PaypalDonation);
+                }
+            },
+
+            setRule() {
+                this.rule = !this.rule;
+            },
+            setValueCoin(val) {
+                // const numberPattern = /\d+/g;
+                // this.valueCoin = val.r.match( numberPattern ).join('');
+                this.valueCoin = val.replace(/[^0-9]/g, '');
+
+                console.log(this.valueCoin);
+            },
+            async checkOrder() {
+                if (this.rule) {
+                    try {
+                        const data = {
+                            payment: this.valueSelect.value,
+                            count: this.valueCoin
+                        };
+
+                        const res = await this.$axios.$post(`/payments/${this.userId}/checkout`, data);
+
+                        if (this.valueSelect.value === 'enot') {
+                            document.location.replace(res.redirect);
+                        } else if (this.valueSelect.value === 'primepayments') {
+                            if (res.redirect && res.post) {
+                                const form = document.createElement('form');
+                                form.action = res.redirect;
+                                form.method = 'post';
+
+                                for (const key in res.post) {
+                                    // eslint-disable-next-line no-prototype-builtins
+                                    if (res.post.hasOwnProperty(key)) {
+                                        const hiddenField = document.createElement('input');
+                                        hiddenField.type = 'hidden';
+
+                                        if (typeof res.post[key] == 'object') {
+                                            for (const __key in res.post[key]) {
+                                                hiddenField.name = key + '[]';
+                                                hiddenField.value = res.post[key][__key];
+                                            }
+                                        } else {
+                                            hiddenField.name = key;
+                                            hiddenField.value = res.post[key];
+                                        }
+
+                                        form.appendChild(hiddenField);
+                                    }
+                                }
+
+                                document.body.appendChild(form);
+                                form.submit();
+                            }
+                        }
+                    } catch (err) {
+                        console.warn('EffectDonation: ', err.response);
+                        if (err?.response?.data?.validation) {
+                            this.$toast.error(err.response.data.validation.count);
+                            this.errors.count = err.response.data.validation.count;
+                        } else {
+                            this.$toast.error(err.response.data.result_msg);
+                        }
+                    }
+                } else {
+                    this.$toast.error('Примите правила пожертвования');
                 }
             },
             toDigiCode() {
@@ -279,7 +387,15 @@
             },
             setDigiValue(val) {
                 this.digiValueSelect = val.option;
+            },
+
+            clearErrors() {
+                this.errors.count = '';
             }
+
+            // async checkOrder() {
+            //     this.
+            // }
         }
     };
 </script>

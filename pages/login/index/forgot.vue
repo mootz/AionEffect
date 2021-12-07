@@ -11,12 +11,17 @@
 
         <div class="login__item">
             <AppInput label="Почта"
-                      placeholder="Введите электронный адрес" />
+                      :value="email"
+                      :error="errors.email"
+                      placeholder="Введите электронный адрес"
+                      @input="email = $event"
+                      @focus="clearError"
+            />
         </div>
 
         <AppButton text="Отправить"
                    class="login__button"
-                   @click.native="$emit('change-step', 'login')"
+                   @click.native="resetPass"
         />
     </div>
 </template>
@@ -26,7 +31,36 @@
     import AppButton from '~/components/ui/inputs/AppButton';
     export default {
         name: 'Forgot',
-        components: {AppButton, AppInput}
+        components: {AppButton, AppInput},
+        data() {
+            return {
+                email: '',
+                errors: {
+                    email: ''
+                }
+            };
+        },
+        methods: {
+            async resetPass() {
+                try {
+                    const res = await this.$axios.$post('/user/forgot-password', {email: this.email});
+                    console.log(res);
+                    this.$emit('change-step', 'login');
+                } catch (err) {
+                    console.warn(err.response);
+                    if (err?.response?.data?.validation) {
+                        this.$toast.error(err.response.data.validation.email);
+                        this.errors.email = err.response.data.validation.email;
+                    } else {
+                        this.$toast.error(err.response.data.result_msg);
+                    }
+                }
+            },
+
+            clearError() {
+                this.errors.email = '';
+            }
+        }
     };
 </script>
 

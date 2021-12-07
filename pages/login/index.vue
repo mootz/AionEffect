@@ -2,38 +2,39 @@
     <div class="auth-page">
         <transition name="fade"
                     mode="out-in">
-            <Login v-if="activeStep === 'login'"
-                   @change-step="changeStep" />
-            <Register v-else-if="activeStep === 'register'"
-                      @change-step="changeStep" />
-            <Forgot v-else-if="activeStep === 'forgot'"
-                    @change-step="changeStep" />
-            <AcceptRegister v-else-if="activeStep === 'acceptRegister'"
-                            @change-step="changeStep" />
+
+            <Login v-if="isLogin" />
+            <NuxtChild v-else />
+
         </transition>
+
+
     </div>
 </template>
 
 <script>
     import Login from '~/components/layout/auth/Login';
-    import Register from '~/components/layout/auth/Register';
-    import Forgot from '~/components/layout/auth/Forgot';
-    import AcceptRegister from '~/components/layout/auth/AcceptRegister';
     export default {
         name: 'LoginPage',
-        components: {AcceptRegister, Forgot, Register, Login},
+        components: {
+            Login
+        },
         layout: 'authLayout',
         data() {
             return {
-                activeStep: 'login'
+                // activeStep: 'login'
+                isLogin: true
             };
         },
-
-        methods: {
-            changeStep(val) {
-                this.activeStep = val;
+        watch: {
+            '$route.name': {
+                handler: function(name) {
+                    this.isLogin = name === 'login';
+                },
+                deep: true,
+                immediate: true
             }
-        }
+        },
     };
 </script>
 

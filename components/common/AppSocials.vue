@@ -1,6 +1,7 @@
 <template>
     <div class="social">
-        <a href="#"
+        <a href="https://vk.com/effect.phoenix"
+           target="_blank"
            class="social__item">
             <span class="gwi gwi_vkontakte">
                 <svg width="14"
@@ -15,7 +16,8 @@
                 </svg>
             </span>
         </a>
-        <a href="#"
+        <a href="https://t.me/aioneffect"
+           target="_blank"
            class="social__item">
             <span class="gwi gwi_c-telegram">
                 <svg width="12"
@@ -28,7 +30,8 @@
                 </svg>
             </span>
         </a>
-        <a href="#"
+        <a href="https://www.instagram.com/aioneffect/"
+           target="_blank"
            class="social__item">
             <span class="gwi gwi_instagram">
                 <svg width="12"
@@ -43,7 +46,8 @@
                 </svg>
             </span>
         </a>
-        <a href="#"
+        <a href="https://discord.gg/t34TwU8A2x"
+           target="_blank"
            class="social__item">
             <span class="gwi gwi_discord">
                 <svg width="14"
@@ -58,7 +62,8 @@
                 </svg>
             </span>
         </a>
-        <a href="#"
+        <a href="https://www.facebook.com/aioneffect.phoenix/"
+           target="_blank"
            class="social__item">
             <span class="gwi gwi_facebook">
                 <svg width="8"

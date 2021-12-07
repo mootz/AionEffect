@@ -206,16 +206,18 @@ export function dateToString(date) {
 export function timestampToDate(value, type = 'full') {
     const a = new Date(value * 1000);
     const months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
-    // const year = a.getFullYear();
+    const year = a.getFullYear();
     const month = months[a.getMonth()];
     const date = a.getDate();
     const hour = a.getHours();
     const min = a.getMinutes();
     // const sec = a.getSeconds();
     if (type === 'full') {
-        return date + ' ' + month + ' в ' + hour + ':' + min;
+        return hour + ':' + min + ' / ' + date + ' ' + month;
     } else if (type === 'month') {
         return date + ' ' + month;
+    } else if (type === 'history') {
+        return `${hour}:${min} / ${date} ${month} / ${year}`;
     }
 }
 
@@ -294,4 +296,17 @@ export function unlockBody() {
     document.body.style.height = '';
     document.body.style.overflow = '';
     document.body.style.paddingRight = '';
+}
+
+function getJSON(url, callback) {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function() {
+        callback(this.responseText);
+    };
+    xhr.open('GET', url, true);
+    xhr.send();
+}
+
+export function getJsonFromUrl(url, callback) {
+    getJSON(url, data => callback(JSON.parse(data)));
 }

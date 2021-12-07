@@ -1,4 +1,7 @@
 <template>
+    <!--    <transition name="fade" v-if="!l">-->
+    <!--        -->
+    <!--    </transition>-->
     <div :class="$style.Account">
         <div :class="$style.head">
             <div :class="$style.row">
@@ -18,70 +21,98 @@
 
         </div>
 
-        <div :class="$style.table">
-            <div :class="$style.row">
-                <div :class="[$style.column1, $style.cell]">
-                    72502945
+        <transition name="fade">
+            <div v-if="history.logs.length"
+                 :class="$style.table">
+                <!--            <transition-group name="fade"-->
+                <!--                              mode="in-out"-->
+                <!--                              tag="div">-->
+
+                <div v-for="log in history.logs"
+                     :key="log.id"
+                     :class="$style.row">
+                    <div :class="[$style.column1, $style.cell]">
+                        {{ log.id }}
+                    </div>
+                    <div :class="[$style.column2, $style.cell]">
+                        {{ log.ip }}
+                    </div>
+                    <div :class="[$style.column3, $style.cell]">
+                        {{ log.action }}
+                    </div>
+                    <div :class="[$style.column4, $style.cell]">
+                        {{ getDate(log.date_create) }}
+                    </div>
                 </div>
-                <div :class="[$style.column2, $style.cell]">
-                    192.168.0.1
-                </div>
-                <div :class="[$style.column3, $style.cell]">
-                    Вход в личный кабинет
-                </div>
-                <div :class="[$style.column4, $style.cell]">
-                    17 августа 2020 в 22:53
-                </div>
+            <!--            </transition-group>-->
             </div>
-            <div :class="$style.row">
-                <div :class="[$style.column1, $style.cell]">
-                    72502945
-                </div>
-                <div :class="[$style.column2, $style.cell]">
-                    192.168.0.1
-                </div>
-                <div :class="[$style.column3, $style.cell]">
-                    Вход в личный кабинет
-                </div>
-                <div :class="[$style.column4, $style.cell]">
-                    17 августа 2020 в 22:53
-                </div>
-            </div>
-            <div :class="$style.row">
-                <div :class="[$style.column1, $style.cell]">
-                    72502945
-                </div>
-                <div :class="[$style.column2, $style.cell]">
-                    192.168.0.1
-                </div>
-                <div :class="[$style.column3, $style.cell]">
-                    Вход в личный кабинет
-                </div>
-                <div :class="[$style.column4, $style.cell]">
-                    17 августа 2020 в 22:53
-                </div>
-            </div>
-            <div :class="$style.row">
-                <div :class="[$style.column1, $style.cell]">
-                    72502945
-                </div>
-                <div :class="[$style.column2, $style.cell]">
-                    192.168.0.1
-                </div>
-                <div :class="[$style.column3, $style.cell]">
-                    Вход в личный кабинет
-                </div>
-                <div :class="[$style.column4, $style.cell]">
-                    17 августа 2020 в 22:53
-                </div>
-            </div>
-        </div>
+
+        </transition>
+
+        <Pagination :all-pages="history.page_all"
+                    :current-page="currentPage"
+                    :class="$style.pagination"
+                    @change-page="changePage"
+        />
+
     </div>
 </template>
 
 <script>
+    import {mapState} from 'vuex';
+    // import {state, actions} from 'store/user';
+    import {timestampToDate} from 'assets/js/utils/commonUtils';
+    import Pagination from '@/components/pages/history/Pagination';
+
     export default {
         name: 'Account',
+        components: {Pagination},
+        data() {
+            return {
+                // history: [],
+                currentPage: '1',
+                // userId: null,
+            };
+        },
+
+        // computed: mapState({
+        //     userId: state => state.user.user.id
+        // }),
+        computed: {
+            ...mapState({
+                userId: state => state.user.user.id,
+                history: state => state.user.history.account
+            }),
+
+            // compUserId: () => this.userId ? this.userId : null
+        },
+
+        methods: {
+            getDate(val) {
+                return timestampToDate(val, 'history');
+            },
+
+            async changePage(page) {
+                await this.$store.dispatch('user/getHistoryAccount', page);
+                this.currentPage = page;
+            }
+
+            // async fetchLog(page) {
+            //     try {
+            //         const response = await this.$axios.$post(`/user/${this.userId}/log/history/${page}`);
+            //         this.history = [...response.logs];
+            //     } catch (error) {
+            //         console.log('History/account: ', error.response);
+            //     }
+            // }
+        },
+
+        // beforeRouteEnter(to, from, next) {
+        //     if (state.user.length === 0) {
+        //         user.dispatch('getUserData')
+        //             .then(next);
+        //     }
+        // },
     };
 </script>
 
@@ -136,5 +167,11 @@
     .column4 {
         margin-left: auto;
         width: 20rem;
+    }
+
+    .pagination {
+        width: fit-content;
+        margin: 5rem auto 0;
+        padding-bottom: 4.2rem;
     }
 </style>

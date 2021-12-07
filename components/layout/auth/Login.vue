@@ -1,5 +1,6 @@
 <template>
     <div :class="$style.login">
+        <!--prime:0373ed8b-->
         <h2 :class="$style.login__title">
             Авторизация
         </h2>
@@ -28,14 +29,17 @@
                 />
             </div>
 
-            <div :class="$style.login__help">
-                <AppCheckbox label="Запомнить меня"
-                             :checked="remember"
-                             @click-check="setRemember"
-                />
+            <div :class="$style.login__help"
+            >
+                <div :class="$style.saveMe">
+                    <AppCheckbox label="Запомнить меня"
+                                 :checked="remember"
+                                 @click.stop.prevent.native="setRemember"
+                    />
+                </div>
 
-                <p :class="$style.login__forgot"
-                   @click="$emit('change-step', 'forgot')">
+                <p :class="[$style.login__forgot, {[$style._disabled]: disabled}]"
+                   @click="disabled ? null : $router.push('/login/forgot')">
                     Забыли пароль?
                 </p>
             </div>
@@ -48,11 +52,11 @@
 -->
 
             <a href="#"
-               :class="[$style.login__forgot, $style._mobile]"
-               @click="$emit('change-step', 'forgot')">Забыли пароль?</a>
+               :class="[$style.login__forgot, $style._mobile, {[$style._disabled]: disabled}]"
+               @click="disabled ? null : $router.push('/login/forgot')">Забыли пароль?</a>
 
-            <div :class="$style.login__create"
-                 @click="$emit('change-step', 'register')">
+            <div :class="[$style.login__create, {[$style._disabled]: disabled}]"
+                 @click="disabled ? null : $router.push('/login/register')">
                 Создать учетную запись
             </div>
         </form>
@@ -71,82 +75,53 @@
 
         data() {
             return {
-                login: 'Demo5',
-                password: 'Test1234',
+                login: '',
+                password: '',
                 remember: false,
                 errors: {
                     login: '',
                     password: ''
-                }
+                },
+
+                disabled: true
             };
         },
 
         methods: {
             async userLogin() {
-                await this.$auth.loginWith('local', {data: {
-                    login: this.login,
-                    password: this.password,
-                    remember: Number(this.remember)
-                }}).then(res => {
-                    const user = {
-                        id: res.data.id,
-                        token: res.data.token,
-                        session_end: res.data.session_end
-                    };
-                    this.$auth.$storage.setUniversal('userId', user.id);
+                if (this.login === 'Demo5' && this.password === 'Test1234') {
+                    await this.$auth.loginWith('local', {data: {
+                        login: this.login,
+                        password: this.password,
+                        remember: Number(this.remember)
+                    }}).then(res => {
+                        const user = {
+                            id: res.data.id,
+                            token: res.data.token,
+                            session_end: res.data.session_end
+                        };
+                        this.$auth.$storage.setUniversal('userId', user.id);
 
-                    this.$router.push('/');
-                })
-                    .catch(err => {
-                        if (err.response.data.validation) {
-                            const listErrors = Object.entries(err.response.data.validation);
+                        this.$router.push('/');
+                    })
+                        .catch(err => {
+                            if (err.response.data.validation) {
+                                const listErrors = Object.entries(err.response.data.validation);
 
-                            listErrors.forEach((e, index) => {
-                                setTimeout(() => {
-                                    this.errors[e[0]] = e[1];
-                                    this.$toast.error(e[1], {timeout: 5000});
-                                }, index * 500);
-                            });
-                        } else {
-                            this.$toast.error(err.response.data.result_msg);
-                        }
-                    });
+                                listErrors.forEach((e, index) => {
+                                    setTimeout(() => {
+                                        this.errors[e[0]] = e[1];
+                                        this.$toast.error(e[1], {timeout: 5000});
+                                    }, index * 500);
+                                });
+                            } else {
+                                this.$toast.error(err.response.data.result_msg);
+                            }
+                        });
+                } else {
+                    this.$toast.error('Личный кабинет в данный момент недоступен');
+                }
             },
-
-            // async userLogin() {
-            //     // const dataLogin = {
-            //     //     login: this.login,
-            //     //     password: this.password,
-            //     //     remember: Number(this.remember)
-            //     // };
-            //
-            //     try {
-            //         const response = await this.$auth.loginWith('local', {data: {
-            //             login: this.login,
-            //             password: this.password,
-            //             remember: Number(this.remember)
-            //         }});
-            //
-            //         // this.$auth.setUser({data: {dataLogin}})
-            //
-            //         console.log(response);
-            //     } catch (err) {
-            //         console.log(err.response);
-            //
-            //         if (err.response.data.validation) {
-            //             const listErrors = Object.entries(err.response.data.validation);
-            //
-            //             listErrors.forEach((e, index) => {
-            //                 setTimeout(() => {
-            //                     this.errors[e[0]] = e[1];
-            //                     this.$toast.error(e[1], {timeout: 5000});
-            //                 }, index * 500);
-            //             });
-            //         } else {
-            //             this.$toast.error(err.response.data.result_msg);
-            //         }
-            //     }
-            // },
 
             setPasswordValue(val) {
                 this.password = val;
@@ -240,5 +215,14 @@
         &__button {
             height: 5.4rem;
         }
+    }
+
+    ._disabled {
+        pointer-events: none;
+        opacity: .2;
+    }
+
+    .saveMe {
+        cursor: pointer;
     }
 </style>

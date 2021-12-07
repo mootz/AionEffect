@@ -1,19 +1,22 @@
 <template>
     <div class="login">
         <h2 class="login__title">
-            Пожалуйста,<br>подтвердите ваш email
+            Проверьте свою почту
         </h2>
 
         <div class="login__info">
 
-            Мы отправили письмо на {{ email }}. Оно содержит ссылку для подтверждения вашего аккаунта. <br><br>
+            Мы отправили вам электронное письмо
+            со ссылкой на <span>{{ email }}</span> <br>
+            для активации аккаунта<br><br>
 
-            Перед получением доступа к нашему сайту в качестве зарегистрированного пользователя, вам необходимо подтвердить свой Email адрес.
+            Не получили письмо? <br>
+            Проверьте свой спам-фильтр или попробуйте другой адрес электронной почты
         </div>
 
         <AppButton text="Войти"
                    class="login__button"
-                   @click.native="$emit('change-step', 'login')"
+                   @click.native="$router.push('/login')"
         />
     </div>
 </template>
@@ -65,8 +68,12 @@
             text-align: center;
             font-size: 1.4rem;
             font-weight: 500;
-            opacity: .4;
+            color: rgba(#fff, .4);
             margin-bottom: 3.2rem;
+
+            span {
+                color: #fff;
+            }
         }
 
         &__button {

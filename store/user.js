@@ -76,6 +76,7 @@ export const state = () => ({
             text: '',
             color: '',
         },
+        id: '',
         login: '',
         phone: '',
         email: '',
@@ -99,6 +100,15 @@ export const state = () => ({
         dataChange: false,
         step: 1,
         type: ''
+    },
+    history: {
+        account: {
+            logs: [
+                {
+                    date_create: ''
+                }
+            ]
+        }
     }
 });
 
@@ -112,9 +122,24 @@ export const actions = {
             const userId = localStorage['auth.userId'];
 
             const user = await this.$axios.$post(`/user/${userId}`);
-            commit('SET_USER_DATA', user.user);
+
+            commit('SET_USER_DATA', user.user, userId);
+            commit('SET_USER_DATA', {user: user.user, id: userId});
         } catch (error) {
             console.warn('VueX User Data:', error.response);
+            await this.$router.push('/login');
+            // await this.$auth.logout();
+            this.$auth.$storage.removeUniversal('userId');
+        }
+    },
+
+    async getHistoryAccount({commit}, page) {
+        try {
+            const response = await this.$axios.$post(`/user/${localStorage['auth.userId']}/log/history/${page}`);
+
+            commit('SET_HISTORY_ACCOUNT', response);
+        } catch (error) {
+            console.warn('VUEX user/account: ', error.response);
         }
     },
 
@@ -134,11 +159,17 @@ export const actions = {
 };
 
 export const mutations = {
-    SET_USER_DATA(state, user) {
+    SET_USER_DATA(state, payload) {
         // const userText = user.login.split('')[0];
         // const userAvatar = `#${Math.floor(Math.random()*16777215).toString(16)}`;
 
-        state.user = {...user};
+        state.user = {...payload.user, id: payload.id};
+    },
+    SET_HISTORY_ACCOUNT(state, payload) {
+        state.history.account = {
+            logs: [...payload.logs],
+            page_all: payload.page_all
+        };
     },
 
     TOGGLE_DATA_CHANGE(state) {

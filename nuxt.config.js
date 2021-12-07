@@ -171,7 +171,7 @@ module.exports = {
         linkActiveClass: 'is-active',
         linkExactActiveClass: 'is-exact',
         middleware: ['redirects'],
-        base: process.env.NODE_ENV !== 'production' ? '/' : '/aioneffect',
+        base: process.env.NODE_ENV !== 'production' ? '/' : '/profile',
         headers: {
             common: {
                 Authorization: '',
@@ -181,7 +181,7 @@ module.exports = {
 
     auth: {
         redirect: {
-            login: '/login',
+            login: false,
             logout: '/login',
             callback: false,
             home: false,

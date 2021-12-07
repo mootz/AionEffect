@@ -9,22 +9,19 @@
                     <div>
 
                         <form :class="$style.form"
-                              @submit.prevent="changeDataStep({step: 2, type: 'password'})">
+                              @submit.prevent="changePassword">
                             <p :class="['labelName', $style.labelName]">
                                 Изменить пароль
                             </p>
 
                             <div :class="$style.formItem">
-                                <AppInput label="Текущий пароль"
-                                          type="password"
-                                          placeholder="Введите текущий пароль"
-                                />
-                            </div>
-
-                            <div :class="$style.formItem">
                                 <AppInput label="Новый пароль"
                                           type="password"
                                           placeholder="Введите новый пароль"
+                                          :value="password"
+                                          :error="errors.password"
+                                          @input="setInputNewPass"
+                                          @focus="clearInputError('password')"
                                 />
                             </div>
 
@@ -32,6 +29,10 @@
                                 <AppInput label="Повторите новый пароль"
                                           type="password"
                                           placeholder="Введите новый пароль"
+                                          :value="passconf"
+                                          :error="errors.passconf"
+                                          @input="setInputNewPassConf"
+                                          @focus="clearInputError('passconf')"
                                 />
                             </div>
 
@@ -45,7 +46,7 @@
                         </form>
 
                         <form :class="$style.form"
-                              @submit.prevent="changeDataStep({step: 2, type: 'email'})"
+                              @submit.prevent="changeEmail"
                         >
                             <p :class="['labelName', $style.labelName]">
                                 Изменить почтовый адрес
@@ -54,13 +55,10 @@
                             <div :class="$style.formItem">
                                 <AppInput label="Новая почта"
                                           placeholder="Введите почту"
-                                />
-                            </div>
-
-                            <div :class="$style.formItem">
-                                <AppInput label="Пароль"
-                                          type="password"
-                                          placeholder="Введите пароль"
+                                          :value="email"
+                                          :error="errors.email"
+                                          @input="setEmail"
+                                          @focus="clearInputError('email')"
                                 />
                             </div>
 
@@ -96,7 +94,7 @@
                             <div :class="$style.buttonWrap">
                                 <div :class="$style.button">
                                     <AppButton height="5.4rem"
-                                               text="Подтвердить"
+                                               text="Продолжить"
                                                @click.native="leaveDataChange"
                                     />
                                 </div>
@@ -120,6 +118,20 @@
         components: {AppButton,
                      AppInput},
 
+        data() {
+            return {
+                password: '',
+                passconf: '',
+                email: '',
+
+                errors: {
+                    password: '',
+                    passconf: '',
+                    email: ''
+                }
+            };
+        },
+
         computed: {
             ...mapState({
                 userPage: state => state.user.userPage
@@ -129,7 +141,81 @@
             ...mapActions({
                 changeDataStep: 'user/changeDataStep',
                 leaveDataChange: 'user/leaveDataChange'
-            })
+            }),
+
+            async changePassword() {
+                try {
+                    const data = {
+                        password: this.password,
+                        passconf: this.passconf,
+                    };
+                    await this.$axios.$post(`user/${localStorage['auth.userId']}/change-password`, data);
+
+                    this.password = '';
+                    this.passconf = '';
+
+                    this.$toast('На почтовый адрес аккаунта была отправлена ссылка подтверждения');
+                } catch (err) {
+                    console.warn('changePass: ', err.response);
+
+                    if (err.response.data.validation) {
+                        const listErrors = Object.entries(err.response.data.validation);
+
+                        listErrors.forEach((e, index) => {
+                            setTimeout(() => {
+                                this.errors[e[0]] = e[1];
+                                this.$toast.error(e[1], {timeout: 5000});
+                            }, index * 500);
+                        });
+                    } else {
+                        this.$toast.error(err.response.data.result_msg);
+                    }
+                }
+            },
+
+            async changeEmail() {
+                try {
+                    const data = {
+                        email: this.email,
+                    };
+                    await this.$axios.$post(`user/${localStorage['auth.userId']}/change-email`, data);
+
+                    this.email = '';
+
+                    this.$toast('На новый почтовый адрес была отправлена ссылка подтверждения');
+                } catch (err) {
+                    console.warn('changeEmail: ', err.response);
+
+                    if (err.response.data.validation) {
+                        const listErrors = Object.entries(err.response.data.validation);
+
+                        listErrors.forEach((e, index) => {
+                            setTimeout(() => {
+                                this.errors[e[0]] = e[1];
+                                this.$toast.error(e[1], {timeout: 5000});
+                            }, index * 500);
+                        });
+                    } else {
+                        this.$toast.error(err.response.data.result_msg);
+                    }
+                }
+            },
+
+            setInputNewPass(val) {
+                this.password = val;
+            },
+
+            setInputNewPassConf(val) {
+                this.passconf = val;
+            },
+
+            setEmail(val) {
+                this.email = val;
+            },
+
+            clearInputError(name) {
+                this.errors[name] = '';
+            }
         }
     };
 </script>
@@ -139,7 +225,7 @@
         padding: 3.2rem;
         background: $lightdark;
         border-radius: 40px;
-        overflow-y: auto;
+        overflow-y: hidden;
         max-height: 100%;
 
         &::-webkit-scrollbar {
@@ -148,7 +234,7 @@
     }
 
     .form {
-        margin-bottom: 3.2rem;
+        margin-bottom: 2.8rem;
 
         &:last-child {
             margin-bottom: 0;

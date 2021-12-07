@@ -61,10 +61,10 @@
                        class="login__button"
             />
 
-            <div class="login__create"
-                 @click="$emit('change-step', 'login')">
+            <nuxt-link to="/login"
+                       class="login__create">
                 У меня уже есть учетная запись
-            </div>
+            </nuxt-link>
         </form>
     </div>
 </template>
@@ -89,7 +89,9 @@
                     email: '',
                     password: '',
                     passconf: ''
-                }
+                },
+
+                disabled: true,
             };
         },
 
@@ -101,35 +103,40 @@
 
         methods: {
             async userRegister() {
-                try {
-                    const data = {
-                        login: this.login,
-                        email: this.email,
-                        password: this.password,
-                        passconf: this.passconf,
-                        rules: this.rule,
-                    };
-                    // eslint-disable-next-line no-unused-vars
-                    await this.$axios.$post('/user/registration', data);
+                if (!this.disabled) {
+                    try {
+                        const data = {
+                            login: this.login,
+                            email: this.email,
+                            password: this.password,
+                            passconf: this.passconf,
+                            rules: this.rule,
+                        };
+                        // eslint-disable-next-line no-unused-vars
+                        await this.$axios.$post('/user/registration', data);
 
-                    localStorage.setItem('userEmail', this.email);
+                        localStorage.setItem('userEmail', this.email);
 
-                    this.$emit('change-step', 'acceptRegister');
-                } catch (err) {
-                    console.log(err.response);
+                        this.$router.push('/login/check-register');
+                        // this.$emit('change-step', 'acceptRegister');
+                    } catch (err) {
+                        console.log(err.response);
 
-                    if (err.response.data.validation) {
-                        const listErrors = Object.entries(err.response.data.validation);
+                        if (err.response.data.validation) {
+                            const listErrors = Object.entries(err.response.data.validation);
 
-                        listErrors.forEach((e, index) => {
-                            setTimeout(() => {
-                                this.errors[e[0]] = e[1];
-                                this.$toast.error(e[1], {timeout: 5000});
-                            }, index * 500);
-                        });
-                    } else {
-                        this.$toast.error(err.response.data.result_msg);
+                            listErrors.forEach((e, index) => {
+                                setTimeout(() => {
+                                    this.errors[e[0]] = e[1];
+                                    this.$toast.error(e[1], {timeout: 5000});
+                                }, index * 500);
+                            });
+                        } else {
+                            this.$toast.error(err.response.data.result_msg);
+                        }
                     }
+                } else {
+                    this.$toast.error('Регистрация в данный момент недоступена');
                 }
             },
 
@@ -194,6 +201,7 @@
         }
 
         &__create {
+            display: block;
             font-weight: 500;
             font-size: 1.4rem;
             margin: 3.2rem auto 0;

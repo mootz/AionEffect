@@ -46,11 +46,11 @@
             </div>
             <div :class="$style.item">
                 <div :class="$style.label">
-                    Дата регистрации
+                    Последний вход в личный кабинет
                 </div>
 
                 <div :class="$style.value">
-                    {{ dateFormat(user.date_create, 'month') }}
+                    {{ dateFormat(history[0].date_create) }}
                 </div>
             </div>
             <div :class="$style.item">
@@ -81,9 +81,14 @@
             }
         },
 
+        async fetch({store}) {
+            await store.dispatch('user/getHistoryAccount', 1);
+        },
+
         computed: {
             ...mapState({
-                userPage: state => state.user.userPage
+                userPage: state => state.user.userPage,
+                history: state => state.user.history.account.logs
             })
         },
 
