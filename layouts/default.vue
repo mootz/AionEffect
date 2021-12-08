@@ -1,19 +1,24 @@
 <template>
-    <div :class="$style.wrap"
-         @click.stop="closeAllPopups">
-        <TheSidebar />
+    <div>
+        <ThePreloader v-if="$nuxt.$loading.loading" />
+        <div v-else
+             :class="$style.wrap"
+             @click.stop="closeAllPopups">
+            <TheSidebar />
 
-        <div :class="$style.content">
-            <TheHeader />
+            <div :class="$style.content">
+                <TheHeader />
 
-            <main :class="$style.main">
-                <nuxt />
-            </main>
+                <main :class="$style.main">
+                    <nuxt />
+                </main>
+            </div>
+
+            <TheModal />
+            <TheSprite />
         </div>
-
-        <TheModal />
-        <TheSprite />
     </div>
+
 </template>
 
 <script>
@@ -22,9 +27,12 @@
     import TheSidebar from '~/components/layout/TheSidebar';
     import TheSprite from '~/components/layout/TheSprite';
     import {mapActions, mapMutations} from 'vuex';
+    import ThePreloader from '@/components/layout/ThePreloader';
 
     export default {
+        name: 'DefaultLayout',
         components: {
+            ThePreloader,
             TheSprite,
             TheSidebar,
             TheHeader,
@@ -41,8 +49,11 @@
 
 
         async created() {
+            this.$nextTick(() => {
+                this.$nuxt.$loading.start();
+            });
             await this.userData();
-            console.log(this);
+            setTimeout(() => this.$nuxt.$loading.finish(), 1000);
         },
 
         methods: {

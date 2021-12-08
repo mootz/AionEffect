@@ -1,6 +1,9 @@
 <template>
     <div>
-        <main :class="$style.authWrapper">
+        <ThePreloader v-if="$nuxt.$loading.loading" />
+        <main v-else
+              :class="$style.authWrapper">
+
             <div :class="$style.wrap">
                 <nuxt />
             </div>
@@ -23,15 +26,28 @@
     import TheModal from '~/components/layout/TheModal';
     import AppLogo from '~/components/common/AppLogo';
     import AppSocials from '~/components/common/AppSocials';
+    import ThePreloader from '@/components/layout/ThePreloader';
 
     export default {
-
+        name: 'AuthLayout',
         components: {
+            ThePreloader,
             AppSocials,
             AppLogo,
             TheModal,
         },
         middleware: 'auth',
+        created() {
+            this.$nextTick(() => {
+                this.$nuxt.$loading.start();
+                if (localStorage['auth._token.local'] !== false) {
+                    // this.$router.push('/');
+                    // console.log(localStorage['auth._token.local'] !== false);
+                }
+
+                setTimeout(() => this.$nuxt.$loading.finish(), 1000);
+            });
+        },
 
         methods: {
         }

@@ -23,18 +23,31 @@
         components: {AppButton},
         data() {
             return {
-                email: 'email@aioneffect.com'
+                // email: 'email@aioneffect.com'
             };
         },
         mounted() {
-            this.email = localStorage.getItem('userEmail');
+            // this.email = localStorage.getItem('userEmail');
+            // this.sendAcceptEmail();
         },
 
         methods: {
             goNext() {
                 this.$emit('change-step', 'login');
                 localStorage.removeItem('userEmail');
-            }
+            },
+            // sendAcceptEmail() {
+            //     console.log(this.$router);
+            //     const data = {
+            //         token: this.$router.history.current.query.token
+            //     };
+            //     try {
+            //         this.$axios.$post('/user/confirm-registration', data);
+            //     } catch (err) {
+            //         console.log(err);
+            //         console.warn('Accept Register', err.response);
+            //     }
+            // }
         }
     };
 </script>

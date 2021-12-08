@@ -105,9 +105,15 @@ export const state = () => ({
         account: {
             logs: [
                 {
-                    date_create: ''
+                    date: ''
                 }
-            ]
+            ],
+            page_all: ''
+        },
+        donation: {
+            logs: [
+            ],
+            page_all: ''
         }
     }
 });
@@ -134,10 +140,21 @@ export const actions = {
     },
 
     async getHistoryAccount({commit}, page) {
+        console.log(page);
         try {
             const response = await this.$axios.$post(`/user/${localStorage['auth.userId']}/log/history/${page}`);
 
             commit('SET_HISTORY_ACCOUNT', response);
+        } catch (error) {
+            console.warn('VUEX user/account: ', error.response);
+        }
+    },
+
+    async getHistoryDonation({commit}, page) {
+        try {
+            const response = await this.$axios.$post(`/user/${localStorage['auth.userId']}/log/donation/${page}`);
+
+            commit('SET_HISTORY_DONATION', response);
         } catch (error) {
             console.warn('VUEX user/account: ', error.response);
         }
@@ -166,7 +183,14 @@ export const mutations = {
         state.user = {...payload.user, id: payload.id};
     },
     SET_HISTORY_ACCOUNT(state, payload) {
+        console.log(payload);
         state.history.account = {
+            logs: [...payload.logs],
+            page_all: payload.page_all
+        };
+    },
+    SET_HISTORY_DONATION(state, payload) {
+        state.history.donation = {
             logs: [...payload.logs],
             page_all: payload.page_all
         };
@@ -184,11 +208,11 @@ export const mutations = {
         state.userPage.step = payload.step;
         state.userPage.type = payload.type;
 
-        if (payload.type === 'email') {
-            this.$toast('На новый почтовый адрес был отправлен код подтверждения');
-        } else {
-            this.$toast('На почтовый адрес аккаунта был отправлен код подтверждения');
-        }
+        // if (payload.type === 'email') {
+        //     this.$toast('На новый почтовый адрес был отправлен код подтверждения');
+        // } else {
+        //     this.$toast('На почтовый адрес аккаунта был отправлен код подтверждения');
+        // }
     },
     CREATE_AVATAR(state) {
         state.user.avatar.text = state.user.login.split('')[0];

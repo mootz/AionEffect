@@ -34,7 +34,7 @@
                 deep: true,
                 immediate: true
             }
-        },
+        }
     };
 </script>
 

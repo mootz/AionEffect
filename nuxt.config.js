@@ -18,7 +18,7 @@ module.exports = {
         },
     },
 
-    mode: 'spa',
+    ssr: false,
 
     // serverMiddleware: [
     //     '~/middleware/redirects.js'
@@ -79,7 +79,8 @@ module.exports = {
      * Подробнее смотри тут https://nuxtjs.org/api/configuration-loading#using-a-custom-loading-component
      * и тут https://nuxtjs.org/examples/custom-loading
      */
-    loading: {color: '#ff2e00'},
+    // loading: {color: '#ff2e00'},
+    loading: '~/components/layout/ThePreloader',
 
     /**
      * Подключаем файл с вендорными стилями и файл с общими стилями

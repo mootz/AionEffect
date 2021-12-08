@@ -11,19 +11,19 @@
                         <div :class="$style.balanceItem">
                             <BalanceCard type="effect"
                                          :value="user.balance.effect"
-                                         @click.native="openModalEffect"
+                                         @click.native="disableBalance ? openModalEffect() : null"
                             />
                         </div>
                         <div :class="$style.balanceItem">
                             <BalanceCard type="bonus"
                                          :value="user.balance.bonus"
-                                         @click.native="openModalBonus"
+                                         @click.native="disableBalance ? openModalBonus() : null"
                             />
                         </div>
                         <div :class="[$style.balanceItem, $style._kinah]">
                             <BalanceCard type="kinah"
                                          :value="user.balance.kinah"
-                                         @click.native="openModalKinah"
+                                         @click.native="disableBalance ? openModalKinah() : null"
                             />
                         </div>
                     </div>
@@ -117,11 +117,21 @@
                      AccountCard,
                      BalanceCard},
 
+        // data() {
+        //     return {
+        //         disableBalance: localStorage['auth.userId'] === '1',
+        //     };
+        // },
+
         computed: {
             ...mapState({
                 user: state => state.user.user,
                 userPage: state => state.user.userPage
-            })
+            }),
+            disableBalance() {
+                console.log(localStorage['auth.userId'] === '1');
+                return localStorage['auth.userId'] === '1';
+            }
         },
 
         methods: {
@@ -153,10 +163,7 @@
 
     .balanceItem {
         width: calc(33% - 1.5rem);
-
-        &._kinah {
-            pointer-events: none;
-        }
+        //pointer-events: none;
     }
 
     .refferalWrap {

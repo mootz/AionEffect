@@ -1,7 +1,7 @@
 <template>
     <div class="login">
         <h2 class="login__title">
-            Напомнить пароль
+            Восстановить пароль
         </h2>
 
         <div class="login__info">
@@ -44,8 +44,9 @@
             async resetPass() {
                 try {
                     const res = await this.$axios.$post('/user/forgot-password', {email: this.email});
+                    this.$toast.success('На указанный адрес электронной почты учетной записи было отправлено письмо с подтверждением');
                     console.log(res);
-                    this.$emit('change-step', 'login');
+                    this.$router.push('/login');
                 } catch (err) {
                     console.warn(err.response);
                     if (err?.response?.data?.validation) {

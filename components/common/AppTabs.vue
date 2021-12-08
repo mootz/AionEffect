@@ -4,7 +4,7 @@
             <nuxt-link v-for="(item, index) in tabs"
                        :key="index"
                        :to="item.to"
-                       :class="$style.tab"
+                       :class="[$style.tab, {[$style._disabled]: item.disable}]"
                        :exact-active-class="$style.isActive"
             >
                 {{ item.name }}
@@ -61,6 +61,10 @@
         &.isActive {
             color: #fff;
             background-color: $accent;
+        }
+
+        &._disabled {
+            pointer-events: none;
         }
     }
 </style>

@@ -30,7 +30,7 @@
 
             <div :class="$style.buttons">
                 <div :class="[$style.button, {[$style._disabled]: char.online}]"
-                     @click.stop="char.online ? errorCharOnline() : teleportChar(char.name)"
+                     @click.stop="char.online ? errorCharOnline() : teleportChar(char.char_id)"
                 >
                     <svg>
                         <use xlink:href="#icon-teleport" />
@@ -66,9 +66,21 @@
             };
         },
 
+
         methods: {
-            teleportChar() {
-                this.$toast('Персонаж успешно отправлен в столицу');
+            async teleportChar(id) {
+                const data = {
+                    char_id: id,
+                };
+                console.log('hehe', id, data);
+
+                try {
+                    await this.$axios.$post(`/user/${localStorage['auth.userId']}/teleport`, data);
+                    this.$toast('Персонаж успешно отправлен в столицу');
+                } catch (err) {
+                    console.warn('ListCharacters: ', err.response);
+                    this.$toast.error(err.response.data.result_msg);
+                }
             },
             errorCharOnline() {
                 this.$toast.error('Чтобы использовать эту функцию, персонаж должен быть вне игры');

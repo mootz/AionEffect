@@ -160,7 +160,7 @@
         &__eye {
             display: flex;
             position: absolute;
-            z-index: 9999;
+            z-index: 1;
             top: 50%;
             right: 1.8rem;
             width: 2.4rem;

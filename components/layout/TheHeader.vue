@@ -16,11 +16,13 @@
                     <div :class="$style.link">
                         <Link text="Поддержка"
                               icon-name="support"
+                              href="https://forum.aioneffect.com/index.php?/staff/"
                         />
                     </div>
                     <div :class="$style.link">
                         <Link text="Форум"
                               icon-name="forum"
+                              href="https://forum.aioneffect.com/"
                         />
                     </div>
 
@@ -415,6 +417,11 @@
 
         &:last-child {
             margin-bottom: 0;
+        }
+
+        &._disabled {
+            opacity: .2;
+            pointer-events: none;
         }
     }
 

@@ -21,7 +21,7 @@
                     <span>Мой профиль</span>
                 </nuxt-link>
             </li>
-            <li :class="$style.item">
+            <li :class="[$style.item, {[$style._disabled]: userId !== '1'}]">
 
                 <nuxt-link :to="{name: 'shop'}"
                            :class="$style.link"
@@ -107,8 +107,16 @@
     export default {
         name: 'TheSidebar',
         components: {AppSocials,
-
                      TheLogo},
+        data() {
+            return {
+                userId: '',
+            };
+        },
+
+        mounted() {
+            this.userId = localStorage['auth.userId'];
+        }
     };
 </script>
 

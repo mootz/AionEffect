@@ -38,10 +38,10 @@
                         {{ log.ip }}
                     </div>
                     <div :class="[$style.column3, $style.cell]">
-                        {{ log.action }}
+                        {{ log.msg }}
                     </div>
                     <div :class="[$style.column4, $style.cell]">
-                        {{ getDate(log.date_create) }}
+                        {{ getDate(log.date) }}
                     </div>
                 </div>
             <!--            </transition-group>-->
@@ -49,7 +49,8 @@
 
         </transition>
 
-        <Pagination :all-pages="history.page_all"
+        <Pagination v-if="history.page_all !== 1"
+                    :all-pages="history.page_all"
                     :current-page="currentPage"
                     :class="$style.pagination"
                     @change-page="changePage"
@@ -69,22 +70,19 @@
         components: {Pagination},
         data() {
             return {
-                // history: [],
                 currentPage: '1',
-                // userId: null,
             };
         },
 
-        // computed: mapState({
-        //     userId: state => state.user.user.id
-        // }),
         computed: {
             ...mapState({
                 userId: state => state.user.user.id,
                 history: state => state.user.history.account
             }),
+        },
 
-            // compUserId: () => this.userId ? this.userId : null
+        async mounted() {
+            await this.changePage(1);
         },
 
         methods: {
@@ -95,24 +93,30 @@
             async changePage(page) {
                 await this.$store.dispatch('user/getHistoryAccount', page);
                 this.currentPage = page;
-            }
+            },
 
-            // async fetchLog(page) {
-            //     try {
-            //         const response = await this.$axios.$post(`/user/${this.userId}/log/history/${page}`);
-            //         this.history = [...response.logs];
-            //     } catch (error) {
-            //         console.log('History/account: ', error.response);
+            // nameOfAction(name) {
+            //     switch (name) {
+            //         case 'User::login':
+            //             return 'Вход в личный кабинет';
+            //         case 'User::forgotConfirmationPassword':
+            //             return 'Восстановление пароля';
+            //         case 'User::changeConfirmationPassword':
+            //             return 'Подтверждение нового пароля';
+            //         case 'User::forgotPassword':
+            //             return 'Изменение пароля';
+            //         case 'User::changePassword':
+            //             return 'Изменение пароля';
+            //         case 'User::confirmEmail':
+            //             return 'Подтверждение электронной почты';
+            //         case 'User::changeEmail':
+            //             return 'Изменение электронной почты';
+            //         case 'User::changeConfirmationForEmail':
+            //             return 'Подтверждение новой электронной почты';
             //     }
+            //     return name;
             // }
         },
-
-        // beforeRouteEnter(to, from, next) {
-        //     if (state.user.length === 0) {
-        //         user.dispatch('getUserData')
-        //             .then(next);
-        //     }
-        // },
     };
 </script>
 
@@ -161,7 +165,7 @@
     }
 
     .column3 {
-        max-width: 16rem;
+        max-width: 32rem;
     }
 
     .column4 {

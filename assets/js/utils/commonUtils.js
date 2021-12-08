@@ -213,11 +213,11 @@ export function timestampToDate(value, type = 'full') {
     const min = a.getMinutes();
     // const sec = a.getSeconds();
     if (type === 'full') {
-        return hour + ':' + min + ' / ' + date + ' ' + month;
+        return date + ' ' + month + ' в ' + (hour > 9 ? hour : `0${hour}`) + ':' + (min > 9 ? min : `0${min}`);
     } else if (type === 'month') {
         return date + ' ' + month;
     } else if (type === 'history') {
-        return `${hour}:${min} / ${date} ${month} / ${year}`;
+        return `${date} ${month} в ${hour > 9 ? hour : `0${hour}`}:${min > 9 ? min : `0${min}`} / ${year}`;
     }
 }
 

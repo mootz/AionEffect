@@ -37,7 +37,7 @@
         <div :class="$style.list">
             <div :class="$style.item">
                 <div :class="$style.label">
-                    Последний вход в игру
+                    Последний вход в личный кабинет
                 </div>
 
                 <div :class="$style.value">
@@ -46,20 +46,20 @@
             </div>
             <div :class="$style.item">
                 <div :class="$style.label">
-                    Последний вход в личный кабинет
-                </div>
-
-                <div :class="$style.value">
-                    {{ dateFormat(history[0].date_create) }}
-                </div>
-            </div>
-            <div :class="$style.item">
-                <div :class="$style.label">
-                    Последняя смена пароля
+                    Изменение пароля
                 </div>
 
                 <div :class="$style.value">
                     {{ dateFormat(user.last_change_pass, 'full') }}
+                </div>
+            </div>
+            <div :class="$style.item">
+                <div :class="$style.label">
+                    Регистрация
+                </div>
+
+                <div :class="$style.value">
+                    {{ dateFormat(history[0].date) }}
                 </div>
             </div>
         </div>
@@ -81,15 +81,15 @@
             }
         },
 
-        async fetch({store}) {
-            await store.dispatch('user/getHistoryAccount', 1);
-        },
-
         computed: {
             ...mapState({
                 userPage: state => state.user.userPage,
                 history: state => state.user.history.account.logs
             })
+        },
+
+        async mounted() {
+            await this.$store.dispatch('user/getHistoryAccount', 1);
         },
 
         methods: {

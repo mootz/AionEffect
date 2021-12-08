@@ -24,7 +24,8 @@
                     },
                     {
                         name: 'Пожертвования',
-                        to: '/history/donate'
+                        to: '/history/donate',
+                        disable: true
                     },
                     // {
                     //     name: 'Голосования',
@@ -32,7 +33,8 @@
                     // },
                     {
                         name: 'Промокод',
-                        to: '/history/promo'
+                        to: '/history/promo',
+                        disable: true
                     },
                 ]
             };

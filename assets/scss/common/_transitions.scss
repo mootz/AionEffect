@@ -8,6 +8,17 @@
     opacity: 0;
 }
 
+.loader-enter-active,
+.loader-leave-active {
+    opacity: 1;
+}
+
+.loader-enter,
+.loader-leave-active {
+    transition: opacity .6s;
+    opacity: 0;
+}
+
 .show-enter-active,
 .show-leave-enter {
     transform: translateX(0);

@@ -2,7 +2,8 @@
     <component :is="link ? 'NuxtLink' : (href ? 'a' : 'div')"
                :class="$style.btn"
                :target="href ? '_blank' : null"
-               :to="link || href ? (link || href) : null"
+               :to="link ? link : null"
+               :href="href ? href : null"
                :disabled="disabled"
     >
 

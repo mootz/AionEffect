@@ -13,55 +13,55 @@
                      :class="$style.lang__img">
                 <div :class="$style.lang__name">English</div>
             </a>
-            <a href="#"
-               :class="[$style.lang__link, $style.lang__link_sub]">
-                <img src="images/lang/lang-cn.png"
-                     alt="en"
-                     :class="$style.lang__img">
-                <div :class="$style.lang__name">Chinese</div>
-            </a>
-            <a href="#"
-               :class="[$style.lang__link, $style.lang__link_sub]">
-                <img src="images/lang/lang-kr.png"
-                     alt="en"
-                     :class="$style.lang__img">
-                <div :class="$style.lang__name">Korean</div>
-            </a>
-            <a href="#"
-               :class="[$style.lang__link, $style.lang__link_sub]">
-                <img src="images/lang/lang-de.png"
-                     alt="en"
-                     :class="$style.lang__img">
-                <div :class="$style.lang__name">German</div>
-            </a>
-            <a href="#"
-               :class="[$style.lang__link, $style.lang__link_sub]">
-                <img src="images/lang/lang-es.png"
-                     alt="en"
-                     :class="$style.lang__img">
-                <div :class="$style.lang__name">Spanish</div>
-            </a>
-            <a href="#"
-               :class="[$style.lang__link, $style.lang__link_sub]">
-                <img src="images/lang/lang-fr.png"
-                     alt="en"
-                     :class="$style.lang__img">
-                <div :class="$style.lang__name">French</div>
-            </a>
-            <a href="#"
-               :class="[$style.lang__link, $style.lang__link_sub]">
-                <img src="images/lang/lang-it.png"
-                     alt="en"
-                     :class="$style.lang__img">
-                <div :class="$style.lang__name">Italian</div>
-            </a>
-            <a href="#"
-               :class="[$style.lang__link, $style.lang__link_sub]">
-                <img src="images/lang/lang-tr.png"
-                     alt="en"
-                     :class="$style.lang__img">
-                <div :class="$style.lang__name">Turkish</div>
-            </a>
+            <!--            <a href="#"-->
+            <!--               :class="[$style.lang__link, $style.lang__link_sub]">-->
+            <!--                <img src="images/lang/lang-cn.png"-->
+            <!--                     alt="en"-->
+            <!--                     :class="$style.lang__img">-->
+            <!--                <div :class="$style.lang__name">Chinese</div>-->
+            <!--            </a>-->
+            <!--            <a href="#"-->
+            <!--               :class="[$style.lang__link, $style.lang__link_sub]">-->
+            <!--                <img src="images/lang/lang-kr.png"-->
+            <!--                     alt="en"-->
+            <!--                     :class="$style.lang__img">-->
+            <!--                <div :class="$style.lang__name">Korean</div>-->
+            <!--            </a>-->
+            <!--            <a href="#"-->
+            <!--               :class="[$style.lang__link, $style.lang__link_sub]">-->
+            <!--                <img src="images/lang/lang-de.png"-->
+            <!--                     alt="en"-->
+            <!--                     :class="$style.lang__img">-->
+            <!--                <div :class="$style.lang__name">German</div>-->
+            <!--            </a>-->
+            <!--            <a href="#"-->
+            <!--               :class="[$style.lang__link, $style.lang__link_sub]">-->
+            <!--                <img src="images/lang/lang-es.png"-->
+            <!--                     alt="en"-->
+            <!--                     :class="$style.lang__img">-->
+            <!--                <div :class="$style.lang__name">Spanish</div>-->
+            <!--            </a>-->
+            <!--            <a href="#"-->
+            <!--               :class="[$style.lang__link, $style.lang__link_sub]">-->
+            <!--                <img src="images/lang/lang-fr.png"-->
+            <!--                     alt="en"-->
+            <!--                     :class="$style.lang__img">-->
+            <!--                <div :class="$style.lang__name">French</div>-->
+            <!--            </a>-->
+            <!--            <a href="#"-->
+            <!--               :class="[$style.lang__link, $style.lang__link_sub]">-->
+            <!--                <img src="images/lang/lang-it.png"-->
+            <!--                     alt="en"-->
+            <!--                     :class="$style.lang__img">-->
+            <!--                <div :class="$style.lang__name">Italian</div>-->
+            <!--            </a>-->
+            <!--            <a href="#"-->
+            <!--               :class="[$style.lang__link, $style.lang__link_sub]">-->
+            <!--                <img src="images/lang/lang-tr.png"-->
+            <!--                     alt="en"-->
+            <!--                     :class="$style.lang__img">-->
+            <!--                <div :class="$style.lang__name">Turkish</div>-->
+            <!--            </a>-->
         </div>
     </div>
 </template>

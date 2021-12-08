@@ -89,7 +89,7 @@
 
         methods: {
             async userLogin() {
-                if (this.login === 'Demo5' && this.password === 'Test1234') {
+                if (this.login === '123125215') {
                     await this.$auth.loginWith('local', {data: {
                         login: this.login,
                         password: this.password,
