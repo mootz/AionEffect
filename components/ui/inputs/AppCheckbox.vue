@@ -17,9 +17,10 @@
 
         <div v-if="rules"
              class="checkbox__text">
-            Я ознакомился(-ась) с <router-link to="#">
-                правилами
-            </router-link>
+            {{ $t('checkbox.accept') }} <a :href="$t('linkRule')"
+                                           target="_blank">
+                {{ $t('checkbox.rules') }}
+            </a>
         </div>
 
     </div>

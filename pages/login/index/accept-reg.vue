@@ -1,17 +1,17 @@
 <template>
     <div class="login">
         <h2 class="login__title">
-            Поздравляем!
+            {{ $t('acceptReg.mainTitle') }}
         </h2>
 
         <div class="login__info">
-            Аккаунт успешно зарегистрирован. <br>
-            Теперь вы можете войти в свой личный кабинет.
+            {{ $t('acceptReg.desc1') }} <br>
+            {{ $t('acceptReg.desc2') }}
         </div>
 
-        <AppButton text="Войти"
+        <AppButton :text="$t('acceptReg.btn')"
                    class="login__button"
-                   @click.native="$router.push('/login')"
+                   @click.native="$router.push(localePath('/login'))"
         />
     </div>
 </template>
@@ -32,10 +32,10 @@
         },
 
         methods: {
-            goNext() {
-                this.$emit('change-step', 'login');
-                localStorage.removeItem('userEmail');
-            },
+            // goNext() {
+            //     this.$emit('change-step', 'login');
+            //     localStorage.removeItem('userEmail');
+            // },
             // sendAcceptEmail() {
             //     console.log(this.$router);
             //     const data = {

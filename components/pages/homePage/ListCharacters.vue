@@ -1,7 +1,7 @@
 <template>
     <div :class="$style.ListCharacters">
         <div class="labelName">
-            Список персонажей
+            {{ $t('profile.listCharacters') }}
         </div>
 
         <div v-for="char in characters"
@@ -19,7 +19,7 @@
                 </div>
                 <div :class="$style.info">
                     <div :class="$style.class">
-                        {{ computClass(char.class) }} {{ char.lev }} Ур.
+                        {{ computClass(char.class) }} {{ char.lev }} {{ $t('profile.listCharacters') }}
                     </div>
                     <!--                    <div v-if="char.class2"-->
                     <!--                         :class="$style.classAccent">-->
@@ -76,14 +76,14 @@
 
                 try {
                     await this.$axios.$post(`/user/${localStorage['auth.userId']}/teleport`, data);
-                    this.$toast('Персонаж успешно отправлен в столицу');
+                    this.$toast(this.$t('notif.listChar.accept'));
                 } catch (err) {
                     console.warn('ListCharacters: ', err.response);
                     this.$toast.error(err.response.data.result_msg);
                 }
             },
             errorCharOnline() {
-                this.$toast.error('Чтобы использовать эту функцию, персонаж должен быть вне игры');
+                this.$toast.error(this.$t('notif.listChar.errOnline'));
             },
             openModal() {
                 this.$modal.open(RDignity, {title: 'hey'});
@@ -91,39 +91,39 @@
             computClass(val) {
                 switch (val) {
                     case 0:
-                        return 'Воин';
+                        return this.$t('classes.0');
                     case 1:
-                        return 'Гладиатор';
+                        return this.$t('classes.1');
                     case 2:
-                        return 'Страж';
+                        return this.$t('classes.2');
                     case 3:
-                        return 'Следопыт';
+                        return this.$t('classes.3');
                     case 4:
-                        return 'Убийца';
+                        return this.$t('classes.4');
                     case 5:
-                        return 'Стрелок';
+                        return this.$t('classes.5');
                     case 6:
-                        return 'Маг';
+                        return this.$t('classes.6');
                     case 7:
-                        return 'Волшебник';
+                        return this.$t('classes.7');
                     case 8:
-                        return 'Заклинатель';
+                        return this.$t('classes.8');
                     case 9:
-                        return 'Жрец';
+                        return this.$t('classes.9');
                     case 10:
-                        return 'Целитель';
+                        return this.$t('classes.10');
                     case 11:
-                        return 'Чародей';
+                        return this.$t('classes.11');
                     case 12:
-                        return 'Инженер';
+                        return this.$t('classes.12');
                     case 13:
-                        return 'Пилот';
+                        return this.$t('classes.13');
                     case 14:
-                        return 'Снайпер';
+                        return this.$t('classes.14');
                     case 15:
-                        return 'Артист';
+                        return this.$t('classes.15');
                     case 16:
-                        return 'Бард';
+                        return this.$t('classes.16');
                     default:
                         return 'Ошибка';
                 }

@@ -1,18 +1,34 @@
 <template>
     <div :class="$style.lang">
         <div :class="$style.lang__current">
-            <img src="images/lang/lang-ru.png"
+            <img :src="`images/lang/lang-${locale}.png`"
                  alt="ru"
                  :class="[$style.lang__img, $style.lang__currentImg]">
         </div>
         <div :class="$style.lang__list">
-            <a href="#"
-               :class="[$style.lang__link, $style.lang__link_sub]">
+            <nuxt-link v-if="locale !== 'en'"
+                       :to="switchLocalePath('en')"
+                       :class="[$style.lang__link, $style.lang__link_sub]"
+            >
                 <img src="images/lang/lang-en.png"
                      alt="en"
                      :class="$style.lang__img">
-                <div :class="$style.lang__name">English</div>
-            </a>
+                <div :class="$style.lang__name">
+                    English
+                </div>
+            </nuxt-link>
+            <nuxt-link v-if="locale !== 'ru'"
+                       :to="switchLocalePath('ru')"
+                       :class="[$style.lang__link, $style.lang__link_sub]"
+            >
+                <img src="images/lang/lang-ru.png"
+                     alt="en"
+                     :class="$style.lang__img">
+                <div :class="$style.lang__name">
+                    Russian
+                </div>
+            </nuxt-link>
+
             <!--            <a href="#"-->
             <!--               :class="[$style.lang__link, $style.lang__link_sub]">-->
             <!--                <img src="images/lang/lang-cn.png"-->
@@ -69,6 +85,24 @@
 <script>
     export default {
         name: 'ChangeLanguage',
+        data() {
+            return {
+                locale: ''
+            };
+        },
+
+        watch: {
+            '$i18n.locale': {
+                handler: function(name) {
+                    this.locale = name;
+                },
+                deep: true,
+                immediate: true
+            }
+        },
+        mounted() {
+            this.locale = this.$i18n.locale;
+        },
     };
 </script>
 

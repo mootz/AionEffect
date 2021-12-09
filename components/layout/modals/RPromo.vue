@@ -15,21 +15,21 @@
 
                 <div :class="$style.content">
                     <h5 :class="$style.title">
-                        Активация промокода
+                        {{ $t('promoModal.title') }}
                     </h5>
 
                     <p :class="$style.desc">
-                        Если у вас есть промокод, его можно активировать здесь.
+                        {{ $t('promoModal.desc') }}
                     </p>
 
                     <div class="input">
-                        <AppInput placeholder="Введите код"
-                                  label="Промокод"
+                        <AppInput :placeholder="$t('promoModal.code.placeholder')"
+                                  :label="$t('promoModal.code.label')"
                         />
                     </div>
 
                     <div :class="$style.btn">
-                        <AppButton text="Активировать"
+                        <AppButton :text="$t('promoModal.btn')"
                                    height="5.4rem"
                                    @click.native="closeModal"
 

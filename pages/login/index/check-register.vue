@@ -1,22 +1,21 @@
 <template>
     <div class="login">
         <h2 class="login__title">
-            Проверьте свою почту
+            {{ $t('checkRegister.mainTitle') }}
         </h2>
 
         <div class="login__info">
+            <!--            <span>{{ email }}</span> <br>-->
+            {{ $t('checkRegister.desc1') }}
+            {{ $t('checkRegister.desc2') }}<br><br>
 
-            Мы отправили вам электронное письмо
-            со ссылкой на <span>{{ email }}</span> <br>
-            для активации аккаунта<br><br>
-
-            Не получили письмо? <br>
-            Проверьте свой спам-фильтр или попробуйте другой адрес электронной почты
+            {{ $t('checkRegister.desc3') }} <br>
+            {{ $t('checkRegister.desc4') }}
         </div>
 
-        <AppButton text="Войти"
+        <AppButton :text="$t('checkRegister.btn')"
                    class="login__button"
-                   @click.native="$router.push('/login')"
+                   @click.native="$router.push(localePath('/login'))"
         />
     </div>
 </template>

@@ -18,13 +18,13 @@
                 console.log(data);
                 try {
                     await this.$axios.$post(`/user/${localStorage['auth.userId']}/change-confirmation-for-email`, data);
-                    this.$router.push('/');
-                    this.$toast.success('Почтовый адрес учетной записи был успешно обновлен');
+                    this.$router.push(this.localePath('/'));
+                    this.$toast.success(this.$t('notif.changeEmail.accept'));
                 } catch (err) {
                     console.log(err);
                     console.warn('Accept Email', err.response);
                     this.$toast.error(err.response.data.result_msg);
-                    this.$router.push('/');
+                    this.$router.push(this.localePath('/'));
                 }
             }
         }

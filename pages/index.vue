@@ -4,7 +4,7 @@
             <div class="lSide">
                 <div :class="$style.balanceWrap">
                     <div class="labelName">
-                        Баланс
+                        {{ $t('profile.balance') }}
                     </div>
 
                     <div :class="$style.balanceList">
@@ -31,7 +31,7 @@
 
                 <div :class="$style.accountWrap">
                     <div class="labelName">
-                        Мой аккаунт
+                        {{ $t('profile.myAccount') }}
                     </div>
 
                     <AccountCard :user="user" />
@@ -129,7 +129,6 @@
                 userPage: state => state.user.userPage
             }),
             disableBalance() {
-                console.log(localStorage['auth.userId'] === '1');
                 return localStorage['auth.userId'] === '1';
             }
         },

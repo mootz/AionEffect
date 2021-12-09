@@ -4,12 +4,12 @@
               @submit.prevent="userRegister"
         >
             <h2 class="login__title">
-                Регистрация
+                {{ $t('registration.mainTitle') }}
             </h2>
 
             <div class="login__item">
-                <AppInput label="Логин"
-                          placeholder="Введите имя пользователя"
+                <AppInput :label="$t('registration.login.label')"
+                          :placeholder="$t('registration.login.placeholder')"
                           :value="login"
                           :error="errors.login"
                           @input="setValueLogin"
@@ -18,33 +18,33 @@
             </div>
 
             <div class="login__item">
-                <AppInput label="Почта"
+                <AppInput :label="$t('registration.email.label')"
+                          :placeholder="$t('registration.email.placeholder')"
                           type="text"
                           :value="email"
                           :error="errors.email"
-                          placeholder="Введите электронный адрес"
                           @input="setValueEmail"
                           @focus="clearError('email')"
                 />
             </div>
 
             <div class="login__item">
-                <AppInput label="Пароль"
+                <AppInput :label="$t('registration.password.label')"
+                          :placeholder="$t('registration.password.placeholder')"
                           type="password"
                           :value="password"
                           :error="errors.password"
-                          placeholder="Введите пароль"
                           @input="setValuePassword"
                           @focus="clearError('password')"
                 />
             </div>
 
             <div class="login__item">
-                <AppInput label="Повторите пароль"
+                <AppInput :label="$t('registration.passconf.label')"
+                          :placeholder="$t('registration.passconf.placeholder')"
                           type="password"
                           :value="passconf"
                           :error="errors.passconf"
-                          placeholder="Введите пароль"
                           @input="setValueRePassword"
                           @focus="clearError('passconf')"
                 />
@@ -56,14 +56,14 @@
                              @click-check="setRule" />
             </div>
 
-            <AppButton text="Создать аккаунт"
+            <AppButton :text="$t('registration.btn')"
                        :disabled="!btnEnable"
                        class="login__button"
             />
 
-            <nuxt-link to="/login"
+            <nuxt-link :to="localePath('/login')"
                        class="login__create">
-                У меня уже есть учетная запись
+                {{ $t('registration.loginAlso') }}
             </nuxt-link>
         </form>
     </div>
@@ -91,7 +91,7 @@
                     passconf: ''
                 },
 
-                disabled: true,
+                disabled: false,
             };
         },
 
@@ -117,7 +117,7 @@
 
                         localStorage.setItem('userEmail', this.email);
 
-                        this.$router.push('/login/check-register');
+                        this.$router.push(this.localePath('/login/check-register'));
                         // this.$emit('change-step', 'acceptRegister');
                     } catch (err) {
                         console.log(err.response);
@@ -182,6 +182,7 @@
         &__title {
             font-size: 1.8rem;
             opacity: .9;
+            font-weight: bold;
             text-align: center;
             margin-bottom: 3.2rem;
         }

@@ -2,6 +2,7 @@ import path from 'path';
 import fs from 'fs';
 import {plugins} from './config/plugins';
 import {proxy} from './config/proxy';
+// import {i18n} from './locales/i18n-nuxt-config';
 
 module.exports = {
     target: 'static',
@@ -40,7 +41,7 @@ module.exports = {
      */
     head: {
         htmlAttrs: {
-            lang: 'ru',
+            lang: 'en',
         },
         title: 'Aion Effect',
         meta: [
@@ -115,6 +116,7 @@ module.exports = {
         '@nuxtjs/auth-next',
         '@nuxtjs/style-resources',
         'nuxt-polyfill',
+        '@nuxtjs/i18n',
         ['vue-toastification/nuxt', {
             timeout: 4000,
             draggable: false,
@@ -123,9 +125,31 @@ module.exports = {
             transition: 'Vue-Toastification__fade',
         }],
     ],
-    // axios: {
-    //     proxy: true
-    // },
+    i18n: {
+        locales: [
+            {
+                code: 'en',
+                iso: 'en-US',
+                name: 'EN',
+                file: 'en.js',
+            },
+            {
+                code: 'ru',
+                iso: 'ru-RU',
+                name: 'RU',
+                file: 'ru.js',
+            },
+        ],
+        lazy: true,
+        langDir: './locales/',
+        defaultLocale: 'ru',
+        detectBrowserLanguage: {
+            alwaysRedirect: true,
+            fallbackLocale: 'ru',
+            onlyOnRoot: true,
+        },
+    },
+
 
     buildModules: [
         [
@@ -187,6 +211,7 @@ module.exports = {
             callback: false,
             home: false,
         },
+        plugins: ['@/config/plugins/auth-lang-redirect.js'],
         strategies: {
             local: {
                 token: {

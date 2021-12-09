@@ -14,13 +14,13 @@
                 <div :class="$style.links">
 
                     <div :class="$style.link">
-                        <Link text="Поддержка"
+                        <Link :text="$t('header.help')"
                               icon-name="support"
                               href="https://forum.aioneffect.com/index.php?/staff/"
                         />
                     </div>
                     <div :class="$style.link">
-                        <Link text="Форум"
+                        <Link :text="$t('header.forum')"
                               icon-name="forum"
                               href="https://forum.aioneffect.com/"
                         />
@@ -78,19 +78,19 @@
                     <Tooltip :class="$style.menuTooltip"
                              :is-active="isActiveProfile">
 
-                        <Link text="Промокод"
+                        <Link :text="$t('header.menu.promo')"
                               :class="$style.menuItem"
                               @click.native="openPromo"
                         />
-                        <Link text="История"
+                        <Link :text="$t('header.menu.history')"
                               :class="$style.menuItem"
                               link="/history/account"
                         />
-                        <Link text="Сменить акаунт"
+                        <Link :text="$t('header.menu.logout')"
                               :class="$style.menuItem"
                               @click.native="logout"
                         />
-                        <Link text="Выход"
+                        <Link :text="$t('header.menu.exit')"
                               :class="$style.menuItem"
                               href="https://aioneffect.com/"
                         />
@@ -123,8 +123,8 @@
         },
         data() {
             return {
-                namePage: 'Мой профиль',
-                descPage: 'Информация об аккаунте',
+                namePage: this.$t('header.title.profile.title'),
+                descPage: this.$t('header.title.profile.desc'),
                 online: {}
             };
         },
@@ -165,11 +165,11 @@
                 const includeName = name => this.$router.history.current.fullPath.includes(name);
 
                 if (includeName('/shop')) {
-                    this.namePage = 'Магазин';
-                    this.descPage = 'Уникальные айтемы';
+                    this.namePage = this.$t('header.title.shop.title');
+                    this.descPage = this.$t('header.title.shop.title');
                 } else {
-                    this.namePage = 'Мой профиль';
-                    this.descPage = 'Информация об аккаунте';
+                    this.namePage = this.$t('header.title.profile.title');
+                    this.descPage = this.$t('header.title.profile.desc');
                 }
             }
         },

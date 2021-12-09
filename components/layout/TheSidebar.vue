@@ -8,7 +8,7 @@
 
             <li :class="$style.item">
 
-                <nuxt-link :to="{ name: 'index'}"
+                <nuxt-link :to="localePath('index')"
                            :class="$style.link"
                            :active-class="$style._isActive"
                            exact
@@ -18,12 +18,12 @@
                             <use xlink:href="#icon-profile" />
                         </svg>
                     </span>
-                    <span>Мой профиль</span>
+                    <span>{{ $t('sideBar.profile') }}</span>
                 </nuxt-link>
             </li>
             <li :class="[$style.item, {[$style._disabled]: userId !== '1'}]">
 
-                <nuxt-link :to="{name: 'shop'}"
+                <nuxt-link :to="localePath('shop')"
                            :class="$style.link"
                            :active-class="$style._isActive"
                 >
@@ -32,7 +32,7 @@
                             <use xlink:href="#icon-crown" />
                         </svg>
                     </span>
-                    <span>Магазин</span>
+                    <span>{{ $t('sideBar.shop') }}</span>
                 </nuxt-link>
             </li>
             <!--            <li :class="$style.item">-->
@@ -62,7 +62,7 @@
                             <use xlink:href="#icon-achievement" />
                         </svg>
                     </span>
-                    <span>Достижения</span>
+                    <span>{{ $t('sideBar.achievements') }}</span>
                 </nuxt-link>
             </li>
             <li :class="[$style.item, $style._disabled]">
@@ -77,7 +77,7 @@
                             <use xlink:href="#icon-rating" />
                         </svg>
                     </span>
-                    <span>Рейтинг</span>
+                    <span>{{ $t('sideBar.rating') }}</span>
                 </nuxt-link>
             </li>
             <li :class="[$style.item, $style._disabled]">
@@ -92,7 +92,7 @@
                             <use xlink:href="#icon-star" />
                         </svg>
                     </span>
-                    <span>Колесо удачи</span>
+                    <span>{{ $t('sideBar.fortune') }}</span>
                 </nuxt-link>
             </li>
         </ul>

@@ -1,25 +1,24 @@
 <template>
     <div class="login">
         <h2 class="login__title">
-            Восстановить пароль
+            {{ $t('forgot.mainTitle') }}
         </h2>
 
         <div class="login__info">
-            Пожалуйста введите почтовый адрес аккаунта, Вам будет направлено письмо
-            с регистрационными данными.
+            {{ $t('forgot.desc') }}
         </div>
 
         <div class="login__item">
-            <AppInput label="Почта"
+            <AppInput :label="$t('forgot.email.label')"
+                      :placeholder="$t('forgot.email.placeholder')"
                       :value="email"
                       :error="errors.email"
-                      placeholder="Введите электронный адрес"
                       @input="email = $event"
                       @focus="clearError"
             />
         </div>
 
-        <AppButton text="Отправить"
+        <AppButton :text="$t('forgot.btn')"
                    class="login__button"
                    @click.native="resetPass"
         />
@@ -44,9 +43,9 @@
             async resetPass() {
                 try {
                     const res = await this.$axios.$post('/user/forgot-password', {email: this.email});
-                    this.$toast.success('На указанный адрес электронной почты учетной записи было отправлено письмо с подтверждением');
+                    this.$toast.success(this.$t('notif.forgot.accept'));
                     console.log(res);
-                    this.$router.push('/login');
+                    this.$router.push(this.localePath('/login'));
                 } catch (err) {
                     console.warn(err.response);
                     if (err?.response?.data?.validation) {
@@ -79,6 +78,7 @@
             opacity: .9;
             text-align: center;
             margin-bottom: 3.2rem;
+            font-weight: bold;
         }
 
         &__item {

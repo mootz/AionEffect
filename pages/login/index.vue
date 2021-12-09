@@ -29,7 +29,7 @@
         watch: {
             '$route.name': {
                 handler: function(name) {
-                    this.isLogin = name === 'login';
+                    this.isLogin = name === 'login___ru' || name === 'login___en';
                 },
                 deep: true,
                 immediate: true

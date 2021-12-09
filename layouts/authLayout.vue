@@ -48,9 +48,6 @@
                 setTimeout(() => this.$nuxt.$loading.finish(), 1000);
             });
         },
-
-        methods: {
-        }
     };
 </script>
 

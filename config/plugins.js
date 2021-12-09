@@ -6,4 +6,5 @@ export const plugins = [
     '~config/plugins/lazyload',
     '~config/plugins/modal',
     '~config/plugins/tooltip/tooltip.js',
+    // '~config/plugins/i18n-nuxt-config',
 ];

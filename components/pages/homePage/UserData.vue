@@ -11,13 +11,13 @@
                         <form :class="$style.form"
                               @submit.prevent="changePassword">
                             <p :class="['labelName', $style.labelName]">
-                                Изменить пароль
+                                {{ $t('userData.changePass.title') }}
                             </p>
 
                             <div :class="$style.formItem">
-                                <AppInput label="Новый пароль"
+                                <AppInput :label="$t('userData.changePass.password.label')"
+                                          :placeholder="$t('userData.changePass.password.placeholder')"
                                           type="password"
-                                          placeholder="Введите новый пароль"
                                           :value="password"
                                           :error="errors.password"
                                           @input="setInputNewPass"
@@ -26,9 +26,9 @@
                             </div>
 
                             <div :class="$style.formItem">
-                                <AppInput label="Повторите новый пароль"
+                                <AppInput :label="$t('userData.changePass.passconf.label')"
+                                          :placeholder="$t('userData.changePass.passconf.placeholder')"
                                           type="password"
-                                          placeholder="Введите новый пароль"
                                           :value="passconf"
                                           :error="errors.passconf"
                                           @input="setInputNewPassConf"
@@ -39,7 +39,7 @@
                             <div :class="$style.buttonWrap">
                                 <div :class="$style.button">
                                     <AppButton height="5.4rem"
-                                               text="Изменить пароль"
+                                               :text="$t('userData.changePass.btn')"
                                     />
                                 </div>
                             </div>
@@ -49,12 +49,12 @@
                               @submit.prevent="changeEmail"
                         >
                             <p :class="['labelName', $style.labelName]">
-                                Изменить почтовый адрес
+                                {{ $t('userData.changeEmail.title') }}
                             </p>
 
                             <div :class="$style.formItem">
-                                <AppInput label="Новая почта"
-                                          placeholder="Введите почту"
+                                <AppInput :label="$t('userData.changeEmail.email.label')"
+                                          :placeholder="$t('userData.changeEmail.email.placeholder')"
                                           :value="email"
                                           :error="errors.email"
                                           @input="setEmail"
@@ -65,7 +65,7 @@
                             <div :class="$style.buttonWrap">
                                 <div :class="$style.button">
                                     <AppButton height="5.4rem"
-                                               text="Изменить почту"
+                                               :text="$t('userData.changeEmail.btn')"
                                     />
                                 </div>
                             </div>
@@ -154,7 +154,7 @@
                     this.password = '';
                     this.passconf = '';
 
-                    this.$toast('На адрес электронной почты учетной записи было отправлено письмо с подтверждением');
+                    this.$toast(this.$t('notif.userData.accept'));
                 } catch (err) {
                     console.warn('changePass: ', err.response);
 
@@ -182,7 +182,7 @@
 
                     this.email = '';
 
-                    this.$toast('На адрес электронной почты учетной записи было отправлено письмо с подтверждением');
+                    this.$toast(this.$t('notif.changeEmail.accept'));
                 } catch (err) {
                     console.warn('changeEmail: ', err.response);
 
@@ -254,7 +254,7 @@
 
     .button {
         height: 5.4rem;
-        width: 17.4rem;
+        width: 18rem;
     }
 
     .text {

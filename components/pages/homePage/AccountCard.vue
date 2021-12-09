@@ -37,7 +37,7 @@
         <div :class="$style.list">
             <div :class="$style.item">
                 <div :class="$style.label">
-                    Последний вход в личный кабинет
+                    {{ $t('profile.accountCard.lastLogin') }}
                 </div>
 
                 <div :class="$style.value">
@@ -46,7 +46,7 @@
             </div>
             <div :class="$style.item">
                 <div :class="$style.label">
-                    Изменение пароля
+                    {{ $t('profile.accountCard.changePass') }}
                 </div>
 
                 <div :class="$style.value">
@@ -55,7 +55,7 @@
             </div>
             <div :class="$style.item">
                 <div :class="$style.label">
-                    Регистрация
+                    {{ $t('profile.accountCard.registration') }}
                 </div>
 
                 <div :class="$style.value">

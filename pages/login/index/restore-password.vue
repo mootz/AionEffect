@@ -1,32 +1,32 @@
 <template>
     <div class="login">
         <h2 class="login__title">
-            Введите новый пароль
+            {{ $t('restorePass.mainTitle') }}
         </h2>
 
         <div class="login__item">
-            <AppInput label="Новый пароль"
+            <AppInput :label="$t('restorePass.password.label')"
+                      :placeholder="$t('restorePass.password.placeholder')"
                       :value="password"
                       :error="errors.password"
                       type="password"
-                      placeholder="Введите новый пароль"
                       @input="password = $event"
                       @focus="clearError('password')"
             />
         </div>
 
         <div class="login__item">
-            <AppInput label="Повторите новый пароль"
+            <AppInput :label="$t('restorePass.passconf.label')"
+                      :placeholder="$t('restorePass.passconf.placeholder')"
                       :value="passconf"
                       :error="errors.passconf"
                       type="password"
-                      placeholder="Введите новый пароль"
                       @input="passconf = $event"
                       @focus="clearError('passconf')"
             />
         </div>
 
-        <AppButton text="Отправить"
+        <AppButton :text="$t('restorePass.btn')"
                    class="login__button"
                    @click.native="resetPass"
         />
@@ -64,8 +64,8 @@
                     };
 
                     await this.$axios.$post('/user/forgot-confirmation-password', data);
-                    this.$toast.success('Ваш пароль успешно изменен');
-                    this.$router.push('/login');
+                    this.$toast.success(this.$t('notif.restorePass.accept'));
+                    this.$router.push(this.localePath('/login'));
                 } catch (err) {
                     console.warn('Restore password: ', err.response);
                     if (err.response.data.validation) {

@@ -133,14 +133,13 @@ export const actions = {
             commit('SET_USER_DATA', {user: user.user, id: userId});
         } catch (error) {
             console.warn('VueX User Data:', error.response);
-            await this.$router.push('/login');
+            await this.$router.push(this.localePath('/login'));
             // await this.$auth.logout();
             this.$auth.$storage.removeUniversal('userId');
         }
     },
 
     async getHistoryAccount({commit}, page) {
-        console.log(page);
         try {
             const response = await this.$axios.$post(`/user/${localStorage['auth.userId']}/log/history/${page}`);
 
@@ -183,7 +182,6 @@ export const mutations = {
         state.user = {...payload.user, id: payload.id};
     },
     SET_HISTORY_ACCOUNT(state, payload) {
-        console.log(payload);
         state.history.account = {
             logs: [...payload.logs],
             page_all: payload.page_all

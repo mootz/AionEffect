@@ -20,10 +20,10 @@
                 } catch (err) {
                     console.log(err);
                     console.warn('Accept Register', err.response);
-                    this.$router.push('/login');
+                    this.$router.push(this.localePath('/login'));
                 }
-                this.$router.push('/login');
-                this.$toast.success('Аккаунт успешно зарегистрирован');
+                this.$router.push(this.localePath('/login'));
+                this.$toast.success(this.$t('notif.acceptReg.accept'));
             }
         }
     };

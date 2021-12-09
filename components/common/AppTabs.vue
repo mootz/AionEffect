@@ -3,7 +3,7 @@
         <div :class="$style.tabs">
             <nuxt-link v-for="(item, index) in tabs"
                        :key="index"
-                       :to="item.to"
+                       :to="localePath(item.to)"
                        :class="[$style.tab, {[$style._disabled]: item.disable}]"
                        :exact-active-class="$style.isActive"
             >
