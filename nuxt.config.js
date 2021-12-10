@@ -116,6 +116,7 @@ module.exports = {
         '@nuxtjs/auth-next',
         '@nuxtjs/style-resources',
         'nuxt-polyfill',
+        '@nuxtjs/recaptcha',
         '@nuxtjs/i18n',
         ['vue-toastification/nuxt', {
             timeout: 4000,
@@ -170,6 +171,13 @@ module.exports = {
             },
         ],
     ],
+
+    // Google Recaptcha
+    recaptcha: {
+        hideBadge: true, // Hide badge element (v3 & v2 via size=invisible)
+        siteKey: '6Ldp-I4dAAAAAIwrPogeZYxRPFLFjcR9t6GzwIe3', // Site key for requests
+        version: 3,
+    },
 
     /**
      * Nuxt Polyfills

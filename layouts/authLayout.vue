@@ -48,6 +48,17 @@
                 setTimeout(() => this.$nuxt.$loading.finish(), 1000);
             });
         },
+
+
+        async mounted() {
+            try {
+                console.log(this.$recaptcha);
+                await this.$recaptcha.init();
+            } catch (e) {
+                console.warn('Initialization recaptcha error: ', e);
+            }
+        },
+
     };
 </script>
 

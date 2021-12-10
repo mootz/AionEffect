@@ -90,6 +90,8 @@
         methods: {
             async userLogin() {
                 // if (this.login === '123125215') {
+
+                await this.$recaptcha.execute('login');
                 await this.$auth.loginWith('local', {data: {
                     login: this.login,
                     password: this.password,

@@ -112,6 +112,9 @@
                             passconf: this.passconf,
                             rules: this.rule,
                         };
+
+                        await this.$recaptcha.execute('register');
+
                         // eslint-disable-next-line no-unused-vars
                         await this.$axios.$post('/user/registration', data);
 

@@ -42,9 +42,9 @@
         methods: {
             async resetPass() {
                 try {
-                    const res = await this.$axios.$post('/user/forgot-password', {email: this.email});
+                    await this.$recaptcha.execute('forgot');
+                    await this.$axios.$post('/user/forgot-password', {email: this.email});
                     this.$toast.success(this.$t('notif.forgot.accept'));
-                    console.log(res);
                     this.$router.push(this.localePath('/login'));
                 } catch (err) {
                     console.warn(err.response);
