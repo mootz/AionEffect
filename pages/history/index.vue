@@ -19,20 +19,20 @@
             return {
                 tabs: [
                     {
-                        name: 'Аккаунт',
+                        name: this.$t('history.tabs.account'),
                         to: '/history/account'
                     },
                     {
-                        name: 'Пожертвования',
+                        name: this.$t('history.tabs.donate'),
                         to: '/history/donate',
-                        disable: true
+                        disable: false
                     },
                     // {
                     //     name: 'Голосования',
                     //     to: '/history/vote'
                     // },
                     {
-                        name: 'Промокод',
+                        name: this.$t('history.tabs.promo'),
                         to: '/history/promo',
                         disable: true
                     },

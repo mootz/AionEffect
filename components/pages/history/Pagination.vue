@@ -42,7 +42,7 @@
         computed: {
             countArray() {
                 const arr = [];
-                for (let i = 1; i <= this.allPages; i++) {
+                for (let i = 1; i <= (this.allPages > 5 ? 5 : this.allPages); i++) {
                     arr.push(i);
                 }
 

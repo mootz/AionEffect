@@ -20,6 +20,9 @@ export default {
         15: 'Muse',
         16: 'Songweaver',
     },
+
+    monthsRu: '2',
+
     login: {
         mainTitle: 'Authorization',
 
@@ -216,6 +219,68 @@ export default {
 
         restorePass: {
             accept: 'Your password has been successfully changed'
+        },
+
+        paymentMeth: {
+            error: 'Payment error. Please try again later ',
+            accept: 'Payment was successful, thanks for donation!'
+        },
+        ruleEffect: {
+            error: 'You must agree to the donation rules'
+        },
+        bonusModal: {
+            accept: 'Exchange was successful'
+        }
+    },
+
+    effectModal: {
+        desc: 'When donating, you receive 10% of the amount in the form of bonuses.',
+        paymentMethod: 'Payment method',
+        label: 'Number of coins',
+        accept1: 'I agree with',
+        accept2: 'donation rules',
+        btn: 'Continue'
+    },
+
+    effectRules: {
+        title: 'Donation Rules',
+        desc1: 'By making a donation, you are not buying any product or service.',
+        desc2: 'To show our gratitude, we reward donors in exchange for their support.',
+        desc3: 'Coin of Effect is a donation reward from a private individual.',
+        desc4: 'Donations are used to keep the server running and improve the project.',
+        desc5: 'All transactions made are final and non-refundable.',
+        btn: 'Back'
+    },
+
+    paypalModal: {
+        desc1: 'The administration of the Aion Effect project unfortunately cannot add an automatic payment processor via PayPal. Therefore it was decided to process payments manually through Discord.',
+        desc2: 'Contact the main administrator of the project',
+        desc3: 'Write that you want to fund your purse via PayPal, be sure to specify the login of your account and the amount to be credited.',
+        btn: 'Back'
+    },
+
+    bonusModal: {
+        title: 'How can I get a Bonus?',
+        desc1: 'For every hour you play, we give you 5 bonuses.',
+        desc2: 'When donating, you receive 10% of the amount in the form of bonuses.',
+        title2: 'Exchange your bonuses',
+        desc3: '10 bonuses can be exchanged for Coin of Effect ',
+        calc1: 'Your balance',
+        calc2: 'To exchange',
+        calc3: 'You will receive',
+        calc4: 'Remainder',
+        btn: 'Exchange'
+    },
+
+    history: {
+        tabs: {
+            account: 'Account',
+            donate: 'Donations',
+            promo: 'Promo Code'
+        },
+        account: {
+            action: 'Action',
+            date: 'Date'
         }
     }
 };

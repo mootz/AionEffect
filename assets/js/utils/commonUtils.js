@@ -203,21 +203,23 @@ export function dateToString(date) {
     }
     return `${year}-${month}-${day}`;
 }
-export function timestampToDate(value, type = 'full') {
+export function timestampToDate(value, type = 'full', ru = '1') {
     const a = new Date(value * 1000);
-    const months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+    const langRu = ru === '1';
+    const monthsRu = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+    const monthsEn = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     const year = a.getFullYear();
-    const month = months[a.getMonth()];
+    const month = langRu ? monthsRu[a.getMonth()] : monthsEn[a.getMonth()];
     const date = a.getDate();
     const hour = a.getHours();
     const min = a.getMinutes();
     // const sec = a.getSeconds();
     if (type === 'full') {
-        return date + ' ' + month + ' в ' + (hour > 9 ? hour : `0${hour}`) + ':' + (min > 9 ? min : `0${min}`);
+        return date + ' ' + month + (langRu ? ' в ' : ' in ') + (hour > 9 ? hour : `0${hour}`) + ':' + (min > 9 ? min : `0${min}`);
     } else if (type === 'month') {
         return date + ' ' + month;
     } else if (type === 'history') {
-        return `${date} ${month} в ${hour > 9 ? hour : `0${hour}`}:${min > 9 ? min : `0${min}`} / ${year}`;
+        return `${date} ${month} ${langRu ? ' в ' : ' in '} ${hour > 9 ? hour : `0${hour}`}:${min > 9 ? min : `0${min}`} / ${year}`;
     }
 }
 

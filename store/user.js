@@ -128,6 +128,7 @@ export const actions = {
             const userId = localStorage['auth.userId'];
 
             const user = await this.$axios.$post(`/user/${userId}`);
+            console.log(user);
 
             commit('SET_USER_DATA', user.user, userId);
             commit('SET_USER_DATA', {user: user.user, id: userId});

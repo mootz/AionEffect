@@ -24,7 +24,7 @@
                         </h5>
 
                         <p :class="$style.desc">
-                            При пожертвовании более чем на 500 CoE вы получаете 10% вознаграждения в виде бонусов. Минимальный размер пожертвования 50 CoE!
+                            {{ $t('effectModal.desc') }}
                         </p>
 
                         <ul :class="$style.list">
@@ -34,7 +34,7 @@
                             </li>
                             <li :class="$style.item">
                                 <span :class="$style.label">RUB</span>
-                                <span :class="$style.value">{{ valueCoin }}</span>
+                                <span :class="$style.value">{{ valueCoin ? valueCoin : 0 }}</span>
                             </li>
                             <li :class="$style.item">
                                 <span :class="$style.label">EUR</span>
@@ -54,7 +54,7 @@
 
                             <AppSelect v-if="thisValueDigiseller"
                                        id="digiValue"
-                                       label="Количество монет"
+                                       :label="$t('effectModal.label')"
                                        :class="$style.digiSelect"
                                        :options="digiOptions"
                                        :value="digiValueSelect"
@@ -63,7 +63,7 @@
                             />
 
                             <AppInput v-else
-                                      label="Количество монет"
+                                      :label="$t('effectModal.label')"
                                       :value="valueCoin"
                                       min="1"
                                       type="number"
@@ -79,7 +79,7 @@
                                          @click-check="setRule"
                             />
                             <div :class="$style.checkboxText">
-                                Я согласен с <span @click.stop="changeStage('rule')">правилами пожертвования</span>
+                                {{ $t('effectModal.accept1') }} <span @click.stop="changeStage('rule')">{{ $t('effectModal.accept2') }}</span>
                             </div>
                         </div>
 
@@ -97,7 +97,7 @@
 
 
                             <div :class="$style.btn">
-                                <AppButton text="Продолжить"
+                                <AppButton :text="$t('effectModal.btn')"
                                            height="5.4rem"
                                            @click.native="checkOrder"
                                 />
@@ -110,29 +110,29 @@
                          key="rule"
                          :class="$style.content">
                         <h5 :class="$style.title">
-                            Правила пожертвования
+                            {{ $t('effectRules.title') }}
                         </h5>
 
                         <ol :class="$style.rules">
                             <li>
-                                Делая пожертвование, вы не покупаете какой-либо продукт или услугу.
+                                {{ $t('effectRules.desc1') }}
                             </li>
                             <li>
-                                Чтобы выразить свою благодарность, мы вознаграждаем доноров в обмен  на их поддержку.
+                                {{ $t('effectRules.desc2') }}
                             </li>
                             <li>
-                                Coin of Effect это награда за добровольное пожертвование от частного лица.
+                                {{ $t('effectRules.desc3') }}
                             </li>
                             <li>
-                                Пожертвования используются для поддержания работы сервера, а так же для улучшения проекта.
+                                {{ $t('effectRules.desc4') }}
                             </li>
                             <li>
-                                Все сделанные транзакции являются окончательными и не подлежат возврату.
+                                {{ $t('effectRules.desc5') }}
                             </li>
                         </ol>
 
                         <div :class="[$style.btn, $style.btnBack]">
-                            <AppButton text="Назад"
+                            <AppButton :text="$t('effectRules.btn')"
                                        height="5.4rem"
                                        reverse
                                        @click.native="changeStage('pay')"
@@ -176,25 +176,25 @@
             return {
                 options: [
                     {
-                        name: 'Способ оплаты Enot.io',
+                        name: `${this.$t('effectModal.paymentMethod')} Enot.io`,
                         full_name: 'Enot.io',
                         value: 'enot',
                         id: 1
                     },
                     {
-                        name: 'Способ оплаты PrimePayments',
+                        name: `${this.$t('effectModal.paymentMethod')} PrimePayments`,
                         full_name: 'PrimePayments',
                         value: 'primepayments',
                         id: 2
                     },
                     // },{
-                    //     name: 'Способ оплаты Digiseller',
+                    //     name: `${this.$t('effectModal.paymentMethod')} Digiseller`,
                     //     full_name: 'Digiseller',
                     //     value: 'digiseller',
                     //     id: 2
                     // },
                     {
-                        name: 'Способ оплаты Paypal',
+                        name: `${this.$t('effectModal.paymentMethod')} Paypal`,
                         full_name: 'Paypal',
                         value: 'paypal',
                         id: 3
@@ -241,7 +241,7 @@
                 ],
 
                 valueSelect: {
-                    name: 'Способ оплаты Enot.io',
+                    name: `${this.$t('effectModal.paymentMethod')} Enot.io`,
                     value: 'enot',
                     id: 1
                 },
@@ -324,8 +324,6 @@
                 // const numberPattern = /\d+/g;
                 // this.valueCoin = val.r.match( numberPattern ).join('');
                 this.valueCoin = val.replace(/[^0-9]/g, '');
-
-                console.log(this.valueCoin);
             },
             async checkOrder() {
                 if (this.rule) {
@@ -379,7 +377,7 @@
                         }
                     }
                 } else {
-                    this.$toast.error('Примите правила пожертвования');
+                    this.$toast.error(this.$t('notif.ruleEffect.error'));
                 }
             },
             toDigiCode() {

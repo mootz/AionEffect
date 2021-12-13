@@ -13,10 +13,10 @@
                     IP
                 </div>
                 <div :class="[$style.column3, $style.cell]">
-                    Действие
+                    {{ $t('history.account.action') }}
                 </div>
                 <div :class="[$style.column4, $style.cell]">
-                    Дата
+                    {{ $t('history.account.date') }}
                 </div>
             </div>
 
@@ -39,10 +39,10 @@
                         {{ log.ip }}
                     </div>
                     <div :class="[$style.column3, $style.cell]">
-
+                        {{ log.msg }}
                     </div>
                     <div :class="[$style.column4, $style.cell]">
-                        {{ getDate(log.date_create) }}
+                        {{ getDate(log.date) }}
                     </div>
                 </div>
                 <!--            </transition-group>-->
@@ -94,7 +94,7 @@
 
         methods: {
             getDate(val) {
-                return timestampToDate(val, 'history');
+                return timestampToDate(val, 'history', this.$t('monthsRu'));
             },
 
             async changePage(page) {
@@ -172,12 +172,13 @@
     }
 
     .column3 {
-        max-width: 16rem;
+        max-width: 100%;
     }
 
     .column4 {
+        flex-shrink: 0;
         margin-left: auto;
-        width: 20rem;
+        width: 23rem;
     }
 
     .pagination {

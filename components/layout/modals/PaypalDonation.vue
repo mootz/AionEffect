@@ -30,25 +30,19 @@
                     </h5>
 
                     <p :class="$style.desc">
-                        Администрация проекта Aion Effect
-                        к сожалению не можем добавить автоматический обработчик платежей
-                        через PayPal. Поэтому было принято решение обрабатывать платежи вручную через Discord.
+                        {{ $t('paypalModal.desc1') }}
                     </p>
 
                     <p :class="$style.desc">
-                        Свяжитесь с главным администратором проекта <span :class="$style.accent">Joiz#1886</span>
+                        {{ $t('paypalModal.desc2') }} <span :class="$style.accent">Joiz#1886</span>
                     </p>
 
                     <p :class="$style.desc">
-                        Напишите, что вы хотите пополнить свой кошелек через PayPal. Обязательно укажите логин аккаунта и количество CoE.
-                    </p>
-
-                    <p :class="$style.desc">
-                        Вы получите ответ через несколько минут и отправят квитанцию об оплате. После успешной оплаты ваш кошелек будет пополнен.
+                        {{ $t('paypalModal.desc3') }}
                     </p>
 
                     <div :class="$style.btn">
-                        <AppButton text="Назад"
+                        <AppButton :text="$t('paypalModal.btn')"
                                    reverse
                                    height="5.4rem"
                                    @click.native="backToModal"

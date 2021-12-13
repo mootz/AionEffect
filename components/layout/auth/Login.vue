@@ -103,6 +103,7 @@
                         session_end: res.data.session_end
                     };
                     this.$auth.$storage.setUniversal('userId', user.id);
+                    localStorage['auth._token_expiration.local'] = res.data.session_end;
 
                     this.$router.push(this.localePath('/'));
                 })

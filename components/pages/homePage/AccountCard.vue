@@ -41,7 +41,7 @@
                 </div>
 
                 <div :class="$style.value">
-                    {{ dateFormat(user.last_active, 'full') }}
+                    {{ dateFormat(user.last_active, 'full', $t('monthsRu')) }}
                 </div>
             </div>
             <div :class="$style.item">
@@ -50,7 +50,7 @@
                 </div>
 
                 <div :class="$style.value">
-                    {{ dateFormat(user.last_change_pass, 'full') }}
+                    {{ dateFormat(user.last_change_pass, 'full', $t('monthsRu')) }}
                 </div>
             </div>
             <div :class="$style.item">
@@ -59,7 +59,7 @@
                 </div>
 
                 <div :class="$style.value">
-                    {{ dateFormat(history[0].date) }}
+                    {{ dateFormat(user.date_create, 'full', $t('monthsRu')) }}
                 </div>
             </div>
         </div>
@@ -96,8 +96,8 @@
             ...mapActions({
                 toggleDataChange: 'user/toggleDataChange'
             }),
-            dateFormat(val, type) {
-                return timestampToDate(val, type);
+            dateFormat(val, type, lang) {
+                return timestampToDate(val, type, lang);
             }
         }
     };

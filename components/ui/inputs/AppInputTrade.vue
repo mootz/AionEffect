@@ -1,6 +1,8 @@
 <template>
     <div :class="$style.AppInputTrade">
-        <div :class="[$style.minus, $style.operator]">
+        <div :class="[$style.minus, $style.operator]"
+             @click.stop="$emit('minus')"
+        >
             <svg viewBox="0 0 12 2"
                  fill="none"
                  xmlns="http://www.w3.org/2000/svg">
@@ -9,10 +11,12 @@
         </div>
 
         <div :class="$style.value">
-            28
+            {{ value }}
         </div>
 
-        <div :class="[$style.plus, $style.operator]">
+        <div :class="[$style.plus, $style.operator]"
+             @click.stop="$emit('plus')"
+        >
             <svg viewBox="0 0 12 12"
                  fill="none"
                  xmlns="http://www.w3.org/2000/svg">
@@ -25,6 +29,12 @@
 <script>
     export default {
         name: 'AppInputTrade',
+        props: {
+            value: {
+                type: [String, Number],
+                default: 0
+            }
+        }
     };
 </script>
 

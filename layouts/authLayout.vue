@@ -52,7 +52,6 @@
 
         async mounted() {
             try {
-                console.log(this.$recaptcha);
                 await this.$recaptcha.init();
             } catch (e) {
                 console.warn('Initialization recaptcha error: ', e);

@@ -15,18 +15,15 @@
 
                 <div :class="$style.content">
                     <h5 :class="$style.title">
-                        Как я могу получить Bonus?
+                        {{ $t('bonusModal.title') }}
                     </h5>
 
                     <ol :class="$style.list">
                         <li>
-                            За каждый час, проведенный в игре,
-                            мы начисляем вам 1 бонус.
+                            {{ $t('bonusModal.desc1') }}
                         </li>
                         <li>
-                            При пожертвовании от 500 CoE
-                            вы получаете 10% вознаграждение
-                            в виде бонусов.
+                            {{ $t('bonusModal.desc2') }}
                         </li>
                         <!--                        <li>-->
                         <!--                            Голосуя за сервер, вы можете получать-->
@@ -45,31 +42,34 @@
 
 
                     <h5 :class="$style.title">
-                        Обменивайте свои бонусы
+                        {{ $t('bonusModal.title2') }}
                     </h5>
 
                     <div :class="$style.desc">
-                        10 бонусов можно обменять на Coin of Effect
+                        {{ $t('bonusModal.desc3') }}
                     </div>
 
                     <ul :class="$style.listCoin">
                         <li :class="$style.itemCoin">
-                            <span :class="$style.itemText">Ваш баланс</span>
+                            <span :class="$style.itemText">{{ $t('bonusModal.calc1') }}</span>
                             <div :class="$style.itemValue">
                                 <div :class="$style.itemIcon">
                                     <svg>
                                         <use xlink:href="#icon-bonus" />
                                     </svg>
                                 </div>
-                                <span :class="$style.itemTextValue">13,228</span>
+                                <span :class="$style.itemTextValue">{{ splitNumber(bonus) }}</span>
                             </div>
                         </li>
 
                         <li :class="$style.itemCoin">
-                            <span :class="$style.itemText">К обмену</span>
+                            <span :class="$style.itemText">{{ $t('bonusModal.calc2') }}</span>
 
                             <div :class="$style.itemChange">
-                                <AppInputTrade />
+                                <AppInputTrade :value="change"
+                                               @plus="plusValue"
+                                               @minus="minusValue"
+                                />
                             </div>
 
                             <div :class="$style.itemValue">
@@ -78,40 +78,40 @@
                                         <use xlink:href="#icon-bonus" />
                                     </svg>
                                 </div>
-                                <span :class="$style.itemTextValue">280</span>
+                                <span :class="$style.itemTextValue">{{ splitNumber(change * 10) }}</span>
                             </div>
                         </li>
 
                         <li :class="$style.itemCoin">
-                            <span :class="$style.itemText">Вы получите</span>
+                            <span :class="$style.itemText">{{ $t('bonusModal.calc3') }}</span>
                             <div :class="$style.itemValue">
                                 <div :class="[$style.itemIcon, $style._effect]">
                                     <svg>
                                         <use xlink:href="#icon-coin-effect" />
                                     </svg>
                                 </div>
-                                <span :class="$style.itemTextValue">28</span>
+                                <span :class="$style.itemTextValue">{{ willEffect }}</span>
                             </div>
                         </li>
 
                         <li :class="$style.itemCoin">
-                            <span :class="$style.itemText">Остаток</span>
+                            <span :class="$style.itemText">{{ $t('bonusModal.calc4') }}</span>
                             <div :class="$style.itemValue">
                                 <div :class="$style.itemIcon">
                                     <svg>
                                         <use xlink:href="#icon-bonus" />
                                     </svg>
                                 </div>
-                                <span :class="$style.itemTextValue">12,948</span>
+                                <span :class="$style.itemTextValue">{{ willBalance }}</span>
                             </div>
                         </li>
 
                     </ul>
 
                     <div :class="$style.btn">
-                        <AppButton text="Обменять"
+                        <AppButton :text="$t('bonusModal.btn')"
                                    height="5.4rem"
-                                   @click.native="closeModal"
+                                   @click.native="userChange"
                         />
                     </div>
                 </div>
@@ -122,9 +122,11 @@
 </template>
 
 <script>
+    import {splitThousands} from 'assets/js/utils/commonUtils';
+    import {mapState, mapActions} from 'vuex';
 
     import AppButton from '@/components/ui/inputs/AppButton';
-    import VoteDescription from '@/components/layout/modals/VoteDescription';
+    // import VoteDescription from '@/components/layout/modals/VoteDescription';
     import AppInputTrade from '@/components/ui/inputs/AppInputTrade';
 
     export default {
@@ -139,12 +141,65 @@
             },
         },
 
-        methods: {
-            openVoteDesc() {
-                this.$modal.open(VoteDescription);
+        data() {
+            return {
+                change: 0
+            };
+        },
+
+        computed: {
+            willEffect() {
+                return this.splitNumber(this.change.toFixed(0));
             },
+            willBalance() {
+                return this.bonus - (this.change * 10);
+            },
+            ...mapState({
+                bonus: state => state.user.user.balance.bonus,
+            })
+        },
+
+        methods: {
+            // openVoteDesc() {
+            //     this.$modal.open(VoteDescription);
+            // },
+            ...mapActions({
+                fetchUser: 'user/getUserData'
+            }),
             closeModal() {
                 this.$modal.close();
+            },
+
+            plusValue() {
+                if ((this.change < this.bonus / 10) && ((this.change + 1) * 10 <= this.bonus)) {
+                    this.change += 1;
+                }
+            },
+
+            minusValue() {
+                if (this.change !== 0) {
+                    this.change -= 1;
+                }
+            },
+
+            splitNumber(val) {
+                return splitThousands(Number(val), ',');
+            },
+
+            async userChange() {
+                const data = {
+                    count: this.change
+                };
+                try {
+                    await this.$axios.$post(`/payments/${localStorage['auth.userId']}/exchange`, data);
+                    await this.fetchUser();
+                    this.$modal.close();
+                    this.$toast.success(this.$t('notif.bonusModal.accept'));
+                } catch (err) {
+                    console.log(err);
+                    console.warn('Bonus change', err.response);
+                    this.$toast.error(err.response.data.result_msg);
+                }
             }
         }
     };

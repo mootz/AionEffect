@@ -132,7 +132,7 @@
 
         &:hover:before {
             transition: 0.3s all;
-            background-position: 100% 100%;
+            background-position: 90% 90%;
         }
 
         &__content {
@@ -143,6 +143,7 @@
             justify-content: center;
             color: #fff;
             z-index: 5;
+            border: 0;
         }
 
         &:disabled {

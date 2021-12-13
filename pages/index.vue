@@ -23,7 +23,7 @@
                         <div :class="[$style.balanceItem, $style._kinah]">
                             <BalanceCard type="kinah"
                                          :value="user.balance.kinah"
-                                         @click.native="disableBalance ? openModalKinah() : null"
+                                         @click.native="null"
                             />
                         </div>
                     </div>
@@ -101,7 +101,6 @@
 
 <script>
     import {mapState} from 'vuex';
-    import FormExample1 from '~/components/layout/modals/FormExample1';
     import KinahDonation from '@/components/layout/modals/KinahDonation';
     import EffectDonation from '@/components/layout/modals/EffectDonation';
     import BonusDonation from '@/components/layout/modals/BonusDonation';
@@ -129,14 +128,16 @@
                 userPage: state => state.user.userPage
             }),
             disableBalance() {
-                return localStorage['auth.userId'] === '1';
+                return this.user.login === 'Joiz';
+                // return true;
             }
         },
 
+        mounted() {
+            console.log(this.$auth.strategy.token.status().expired());
+        },
+
         methods: {
-            openModal() {
-                this.$modal.open(FormExample1);
-            },
             openModalKinah() {
                 this.$modal.open(KinahDonation);
             },

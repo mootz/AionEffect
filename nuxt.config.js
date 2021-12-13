@@ -226,12 +226,13 @@ module.exports = {
                     property: 'token',
                     global: true,
                     // required: true,
-                    type: ''
+                    type: '',
+                    maxAge: 60 * 60 * 24,
                 },
                 refreshToken: {
                     property: 'refresh_token',
                     data: 'refresh_token',
-                    maxAge: 60 * 60,
+                    maxAge: 60 * 60 * 24,
                 },
                 // user: {
                 //     property: 'user',

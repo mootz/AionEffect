@@ -19,7 +19,7 @@
                 </div>
                 <div :class="$style.info">
                     <div :class="$style.class">
-                        {{ computClass(char.class) }} {{ char.lev }} {{ $t('profile.listCharacters') }}
+                        {{ computClass(char.class) }} {{ char.lev }} {{ $t('profile.level') }}
                     </div>
                     <!--                    <div v-if="char.class2"-->
                     <!--                         :class="$style.classAccent">-->
