@@ -195,8 +195,8 @@
             };
         },
 
-        beforeDestroy() {
-            this.$emit('open-category', null);
+        mounted() {
+            console.log(this.$router);
         },
 
         methods: {

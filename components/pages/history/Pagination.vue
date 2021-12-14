@@ -16,7 +16,7 @@
             </div>
         </div>
 
-        <div :class="[$style.btn, $style.next, {[$style.disable]: currentPage == allPages}]"
+        <div :class="[$style.btn, $style.next, {[$style.disable]: currentPage == allPages || currentPage == 5}]"
              @click="$emit('change-page', currentPage + 1)"
         >
             Следующая

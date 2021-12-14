@@ -281,6 +281,12 @@ export default {
         account: {
             action: 'Action',
             date: 'Date'
+        },
+        donate: {
+            date: 'Date',
+            method: 'Method',
+            count: 'Amount',
+            status: 'Status'
         }
     }
 };

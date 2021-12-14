@@ -10,13 +10,16 @@
                     ID
                 </div>
                 <div :class="[$style.column2, $style.cell]">
-                    IP
+                    {{ $t('history.donate.method') }}
                 </div>
                 <div :class="[$style.column3, $style.cell]">
-                    {{ $t('history.account.action') }}
+                    {{ $t('history.donate.count') }}
                 </div>
                 <div :class="[$style.column4, $style.cell]">
-                    {{ $t('history.account.date') }}
+                    {{ $t('history.donate.status') }}
+                </div>
+                <div :class="[$style.column5, $style.cell]">
+                    {{ $t('history.donate.date') }}
                 </div>
             </div>
 
@@ -36,12 +39,15 @@
                         {{ log.id }}
                     </div>
                     <div :class="[$style.column2, $style.cell]">
-                        {{ log.ip }}
+                        {{ log.payment }}
                     </div>
                     <div :class="[$style.column3, $style.cell]">
-                        {{ log.msg }}
+                        {{ log.count }}
                     </div>
-                    <div :class="[$style.column4, $style.cell]">
+                    <div :class="[$style.column4, $style.cell, {[$style._active]: log.status === '0'}]">
+                        {{ log.status === '1' ? 'Завершен' : 'Активен' }}
+                    </div>
+                    <div :class="[$style.column5, $style.cell]">
                         {{ getDate(log.date) }}
                     </div>
                 </div>
@@ -55,7 +61,7 @@
 
         </transition>
 
-        <Pagination v-if="donation.logs.length"
+        <Pagination v-if="donation.page_all > 1"
                     :all-pages="donation.page_all"
                     :current-page="currentPage"
                     :class="$style.pagination"
@@ -135,7 +141,7 @@
     }
 
     .table .row:hover .cell {
-        opacity: 1;
+        color: #fff;
     }
 
     .row {
@@ -147,9 +153,9 @@
         width: 100%;
         margin-right: 8.4rem;
         padding: 2.2rem 0;
-        opacity: .4;
+        color: rgba(#fff, .4);
         font-weight: 500;
-        transition: opacity $transition;
+        transition: color $transition;
 
         &:first-child {
             padding-left: 2rem;
@@ -159,25 +165,33 @@
             margin-right: 0;
             padding-right: 3.2rem;
         }
+
+        &._active {
+            color: #00ff2a;
+        }
     }
 
     // columns
 
     .column1 {
-        max-width: 6.2rem;
+        width: 6.2rem;
     }
 
     .column2 {
-        max-width: 7rem;
+        width: 11rem;
     }
 
     .column3 {
-        max-width: 100%;
+        width: 9rem;
     }
 
     .column4 {
-        flex-shrink: 0;
+        width: 9rem;
         margin-left: auto;
+    }
+
+    .column5 {
+        flex-shrink: 0;
         width: 23rem;
     }
 

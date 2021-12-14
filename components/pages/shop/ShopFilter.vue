@@ -3,11 +3,11 @@
         <transition name="fade"
                     mode="in-out"
         >
-            <div v-if="activeCategory"
+            <div v-if="slug"
                  :class="$style.bread">
                 <ul :class="$style.breadList">
                     <li :class="[$style.breadItem, $style._catalog]">
-                        <nuxt-link to="/shop/categories">
+                        <nuxt-link to="/shop">
                             Каталог
                         </nuxt-link>
                         <span> / </span>
@@ -20,7 +20,7 @@
             </div>
         </transition>
 
-        <div :class="[$style.wrap, {[$style._activeCat]: activeCategory}]">
+        <div :class="[$style.wrap, {[$style._activeCat]: slug}]">
             <div :class="$style.search">
                 <AppInput search
                           placeholder="Поиск"
@@ -140,6 +140,10 @@
         computed: {
             showPath() {
                 return this.$router.history.current.fullPath.includes('/shop/goods');
+            },
+
+            slug() {
+                return this.$router.history.current.params.slug;
             }
         },
 

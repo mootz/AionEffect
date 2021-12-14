@@ -203,7 +203,7 @@ module.exports = {
     router: {
         linkActiveClass: 'is-active',
         linkExactActiveClass: 'is-exact',
-        middleware: ['redirects'],
+        // middleware: ['redirects'],
         base: process.env.NODE_ENV !== 'production' ? '/' : '/profile',
         headers: {
             common: {

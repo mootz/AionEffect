@@ -1,9 +1,10 @@
 <template>
-    <div :class="$style.CategoryItem">
+    <nuxt-link :class="$style.CategoryItem"
+               :to="`/shop/${item.key}`"
+               @click.prevent="$router.push(`/shop/${item.key}`)">
         <div :class="$style.imgWrap">
             <div :class="$style.img">
-                <ImageLazy image="images/shop_placeholder.png"
-                           contain
+                <ImageLazy :image="item.img"
                 />
             </div>
         </div>
@@ -12,7 +13,7 @@
             {{ item.name }}
         </div>
 
-    </div>
+    </nuxt-link>
 </template>
 
 <script>
@@ -44,7 +45,6 @@
         position: relative;
         width: 100%;
         height: 20rem;
-        padding: 3.2rem;
         border-radius: 30px;
         background-color: #638fd1;
     }

@@ -4,67 +4,58 @@
             <ShopFilter :active-category="activeCategory" />
         </div>
 
-        <NuxtChild @open-category="openCategory" />
+        <div :class="$style.categories">
+            <div :class="$style.items">
+                <CategoryItem v-for="cat in categories"
+                              :key="cat.key"
+                              :item="cat"
+                              :class="$style.item"
+                />
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
     import ShopFilter from '@/components/pages/shop/ShopFilter';
+    import CategoryItem from '@/components/pages/shop/CategoryItem';
+    import {mapActions, mapState} from 'vuex';
+
     export default {
         name: 'Shop',
-        components: {ShopFilter},
-        data() {
-            return {
-                activeCategory: null,
-                categories: [
-                    {
-                        name: 'Популярное'
-                    },
-                    {
-                        name: 'Премиум'
-                    },
-                    {
-                        name: 'Полезное'
-                    },
-                    {
-                        name: 'Наборы'
-                    },
-                    {
-                        name: 'Бесплатное'
-                    },
-                    {
-                        name: 'Внешний вид'
-                    },
-                    {
-                        name: 'Оружие и Щиты'
-                    },
-                    {
-                        name: 'Эмоции и движения'
-                    },
-                    {
-                        name: 'Питомцы и Маунты'
-                    },
-                    {
-                        name: 'Домоводство'
-                    },
-                ]
-            };
+        components: {ShopFilter, CategoryItem},
+
+        computed: {
+            ...mapState({
+                categories: state => state.shop.categories
+            })
         },
 
         mounted() {
-            this.$router.push('/shop/categories');
+            this.getCategories();
+            console.log(this.$router);
         },
 
         methods: {
-            openCategory(name) {
-                this.activeCategory = name;
-            }
+            ...mapActions({
+                getCategories: 'shop/getCategories'
+            }),
         }
     };
 </script>
 
 <style lang="scss" module>
     .Shop {
+        height: 100%;
+    }
+
+    .items {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        grid-template-rows: 1fr;
+        gap: 3.2rem 20px;
+        grid-template-areas: ". . . . .";
+        width: 100%;
         height: 100%;
     }
 

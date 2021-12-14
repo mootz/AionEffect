@@ -53,6 +53,7 @@
                 this.$nuxt.$loading.start();
             });
             await this.userData();
+            // this.$nuxt.$loading.finish();
             setTimeout(() => this.$nuxt.$loading.finish(), 1000);
         },
 

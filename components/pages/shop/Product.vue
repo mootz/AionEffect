@@ -79,7 +79,7 @@
 
     .img {
         position: relative;
-        height: 14rem;
+        height: 20rem;
         border-radius: 30px;
         cursor: zoom-in;
 

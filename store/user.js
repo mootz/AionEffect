@@ -1,76 +1,4 @@
 export const state = () => ({
-    // user: {
-    //     login: 'Overlord',
-    //     avatar: {
-    //         text: '',
-    //         color: '',
-    //     },
-    //     email: 'aioneffect@mail.ru',
-    //     // последний вход в игру
-    //     last_entrance: '17 августа в 22:53',
-    //     // дата регистрации
-    //     register_date: '06 мая 2013',
-    //     // последняя смена пароля
-    //     last_change_password: '10 августа в 22:53',
-    //     coins: {
-    //         effect: '12,241',
-    //         bonus: '102',
-    //         kinah: '726'
-    //     },
-    //     characters: [
-    //         {
-    //             name: 'Assassin',
-    //             class: 'Убийца',
-    //             level: 40,
-    //             online: false
-    //         },
-    //         {
-    //             name: 'Hello',
-    //             class: 'Лучник',
-    //             level: 12,
-    //             online: true
-    //         }
-    //     ],
-    //
-    //     // реферальная программа
-    //     refferal: {
-    //         url: 'ссылка для приглашения',
-    //         invited: '66',
-    //         gifts: '2'
-    //     },
-    //
-    //     // уведомления
-    //     notifications: [
-    //         {
-    //             type: 'bonus',
-    //             text: 'Спасибо за поддержку! Вам начислено 23 Bonus'
-    //         },
-    //         {
-    //             type: 'bonus',
-    //             text: 'Спасибо за поддержку! Вам начислено 23 Bonus'
-    //         },
-    //         {
-    //             type: 'bonus',
-    //             text: 'Спасибо за поддержку! Вам начислено 23 Bonus'
-    //         },
-    //         {
-    //             type: 'bonus',
-    //             text: 'Спасибо за поддержку! Вам начислено 23 Bonus'
-    //         },
-    //         {
-    //             type: 'bonus',
-    //             text: 'Спасибо за поддержку! Вам начислено 23 Bonus'
-    //         },
-    //         {
-    //             type: 'bonus',
-    //             text: 'Спасибо за поддержку! Вам начислено 23 Bonus'
-    //         },
-    //         {
-    //             type: 'bonus',
-    //             text: 'Спасибо за поддержку! Вам начислено 23 Bonus'
-    //         },
-    //     ]
-    // },
     user: {
         avatar: {
             text: '',
@@ -135,7 +63,7 @@ export const actions = {
         } catch (error) {
             console.warn('VueX User Data:', error.response);
             await this.$router.push(this.localePath('/login'));
-            // await this.$auth.logout();
+            await this.$auth.logout();
             this.$auth.$storage.removeUniversal('userId');
         }
     },
@@ -153,6 +81,7 @@ export const actions = {
     async getHistoryDonation({commit}, page) {
         try {
             const response = await this.$axios.$post(`/user/${localStorage['auth.userId']}/log/donation/${page}`);
+            console.log(response);
 
             commit('SET_HISTORY_DONATION', response);
         } catch (error) {

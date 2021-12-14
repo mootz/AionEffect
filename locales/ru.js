@@ -281,6 +281,12 @@ export default {
         account: {
             action: 'Действие',
             date: 'Дата'
+        },
+        donate: {
+            date: 'Дата',
+            method: 'Метод',
+            count: 'Сумма',
+            status: 'Статус'
         }
     },
 };
