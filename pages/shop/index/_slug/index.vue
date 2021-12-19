@@ -15,7 +15,7 @@
         <div v-if="goodsPag.page_all !== currentPage && goods.length !== 0 && goodsPag.page_all !== 1"
              :class="$style.load">
             <div :class="$style.loadText">
-                Вы посмотрели {{ goodsPag.product_count * currentPage }} из {{ goodsPag.count }}
+                {{ $t('shop.watched.1') }} {{ goodsPag.product_count * currentPage }} {{ $t('shop.watched.2') }} {{ goodsPag.count }}
             </div>
             <div :class="$style.loadBtn">
                 <AppButton text="Загрузить еще"

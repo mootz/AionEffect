@@ -305,7 +305,11 @@ export default {
             btnBuy: 'Buy',
         },
 
-        empty: 'There are no matching products'
+        empty: 'There are no matching products',
+        watched: {
+            1: 'You have watched',
+            2: 'of'
+        }
 
     },
 
