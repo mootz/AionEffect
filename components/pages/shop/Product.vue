@@ -1,8 +1,9 @@
 <template>
     <div :class="$style.Product">
-        <div :class="$style.img"
-             @click="openLightBox">
-            <ImageLazy image="images/item_placeholder.png"
+        <div :class="[$style.img, {[$style._zoom]: item.img_zoom}]"
+             @click.prevent="item.img_zoom ? openLightBox() : null">
+            <!--            <ImageLazy :image="item.img"-->
+            <ImageLazy image="item.img"
                        border-radius="30px"
             />
         </div>
@@ -14,21 +15,22 @@
             </div>
 
             <div :class="$style.priceWrap">
-                <div :class="[$style.priceIconWrap, $style[item.price.type]]">
+                <div :class="[$style.priceIconWrap, $style[item.currency]]">
                     <span :class="$style.priceIcon">
                         <svg>
                             <use :xlink:href="`#icon-${typeIcon}`" />
                         </svg>
                     </span>
                 </div>
-                <span :class="$style.priceValue">{{ item.price.value }}</span>
-            </div>
-        </div>
+                <span :class="$style.priceValue">{{ item.price }}</span>
 
-        <LightBox :items="listImages"
-                  :index="activeIndex"
-                  @close="activeIndex = null"
-        />
+            </div>
+
+            <LightBox :items="listImages"
+                      :index="activeIndex"
+                      @close="activeIndex = null"
+            />
+        </div>
     </div>
 </template>
 
@@ -54,19 +56,20 @@
 
         computed: {
             typeIcon() {
-                return this.item.price.type === 'effect' ? 'coin-effect' : this.item.price.type;
+                // return 'effect';
+                return this.item.currency === 'effect' ? 'coin-effect' : this.item.currency;
             },
             listImages() {
-                return this.item.images.map(e => e.src);
+                return [this.item.img];
             }
         },
 
         methods: {
             openItem() {
-                this.$modal.open(ProductModal);
+                this.$modal.open(ProductModal, this.item);
             },
             openLightBox() {
-                this.activeIndex = this.item.images[0].id;
+                this.activeIndex = this.item.img[0].id;
             }
         }
     };
@@ -81,13 +84,6 @@
         position: relative;
         height: 20rem;
         border-radius: 30px;
-        cursor: zoom-in;
-
-        &:hover {
-            &:before {
-                opacity: 1;
-            }
-        }
 
         &:before {
             content: '';
@@ -101,6 +97,16 @@
             opacity: 0;
             border-radius: 30px;
             z-index: 1;
+        }
+
+        &._zoom {
+            cursor: zoom-in;
+
+            &:hover {
+                &:before {
+                    opacity: 1;
+                }
+            }
         }
     }
 

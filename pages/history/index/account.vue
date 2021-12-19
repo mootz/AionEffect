@@ -61,7 +61,6 @@
 
 <script>
     import {mapState} from 'vuex';
-    // import {state, actions} from 'store/user';
     import {timestampToDate} from 'assets/js/utils/commonUtils';
     import Pagination from '@/components/pages/history/Pagination';
 
@@ -94,28 +93,6 @@
                 await this.$store.dispatch('user/getHistoryAccount', page);
                 this.currentPage = page;
             },
-
-            // nameOfAction(name) {
-            //     switch (name) {
-            //         case 'User::login':
-            //             return 'Вход в личный кабинет';
-            //         case 'User::forgotConfirmationPassword':
-            //             return 'Восстановление пароля';
-            //         case 'User::changeConfirmationPassword':
-            //             return 'Подтверждение нового пароля';
-            //         case 'User::forgotPassword':
-            //             return 'Изменение пароля';
-            //         case 'User::changePassword':
-            //             return 'Изменение пароля';
-            //         case 'User::confirmEmail':
-            //             return 'Подтверждение электронной почты';
-            //         case 'User::changeEmail':
-            //             return 'Изменение электронной почты';
-            //         case 'User::changeConfirmationForEmail':
-            //             return 'Подтверждение новой электронной почты';
-            //     }
-            //     return name;
-            // }
         },
     };
 </script>

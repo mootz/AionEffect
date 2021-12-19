@@ -216,6 +216,11 @@
             &:hover {
                 background-color: rgba(#fff, 0.04);
             }
+
+            &:disabled {
+                opacity: .2;
+                border: 1px solid rgba(255, 255, 255, 0.4);
+            }
         }
     }
 

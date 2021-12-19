@@ -3,27 +3,27 @@
         <transition name="fade"
                     mode="in-out"
         >
-            <div v-if="slug"
+            <div v-if="thisSlug"
                  :class="$style.bread">
                 <ul :class="$style.breadList">
                     <li :class="[$style.breadItem, $style._catalog]">
                         <nuxt-link to="/shop">
-                            Каталог
+                            {{ $t('shop.bread') }}
                         </nuxt-link>
                         <span> / </span>
                     </li>
 
                     <li :class="[$style.breadItem, $style._current]">
-                        {{ activeCategory }}
+                        {{ activeCategory ? activeCategory.name : '' }}
                     </li>
                 </ul>
             </div>
         </transition>
 
-        <div :class="[$style.wrap, {[$style._activeCat]: slug}]">
+        <div :class="[$style.wrap, {[$style._activeCat]: activeCategory ? activeCategory.key : null}, {[$style._activeSubCategories]: subcategories.length > 1}]">
             <div :class="$style.search">
                 <AppInput search
-                          placeholder="Поиск"
+                          :placeholder="$t('shop.search')"
                           :class="$style.searchInp"
                 />
             </div>
@@ -39,7 +39,7 @@
             <div :class="$style.values">
                 <div :class="$style.valColumn">
                     <div :class="$style.valTitle">
-                        12,241
+                        {{ balance.effect }}
                     </div>
                     <div :class="$style.valCurrency">
                         CoE
@@ -47,7 +47,7 @@
                 </div>
                 <div :class="$style.valColumn">
                     <div :class="$style.valTitle">
-                        13,450
+                        {{ balance.bonus }}
                     </div>
                     <div :class="$style.valCurrency">
                         Bonus
@@ -55,7 +55,7 @@
                 </div>
                 <div :class="$style.valColumn">
                     <div :class="$style.valTitle">
-                        0
+                        {{ balance.kinah }}
                     </div>
                     <div :class="$style.valCurrency">
                         Kinah
@@ -64,12 +64,23 @@
             </div>
 
             <div :class="$style.btn">
-                <AppButton text="Пополнить баланс"
+                <AppButton :text="$t('shop.addPayment')"
                            height="5.4rem"
                            @click.native="openModalChoose"
                 />
             </div>
         </div>
+
+        <transition name="fade"
+                    mode="in-out"
+        >
+            <ShopCategories v-if="subcategories.length > 1"
+                            :subcategories="subcategories"
+                            :class="$style.subcategories"
+                            :active-sub-category="activeSubCategory"
+                            @click-subcategory="setSubCategories"
+            />
+        </transition>
 
     </div>
 </template>
@@ -79,18 +90,15 @@
     import AppButton from '@/components/ui/inputs/AppButton';
     import ChoosePayTypeModal from '@/components/layout/modals/ChoosePayTypeModal';
     import AppMultiSelect from '@/components/ui/inputs/AppMultiSelect';
+    import {mapState, mapActions} from 'vuex';
+    import ShopCategories from '@/components/pages/shop/ShopCategories';
+
     export default {
         name: 'ShopFilter',
-        components: {AppMultiSelect,
+        components: {ShopCategories,
+                     AppMultiSelect,
                      AppButton,
                      AppInput},
-
-        props: {
-            activeCategory: {
-                type: String,
-                default: null
-            }
-        },
 
         data() {
             return {
@@ -133,30 +141,58 @@
                         value: 'kinah',
                         id: 3
                     }
-                ]
+                ],
+                thisSlug: ''
             };
         },
 
         computed: {
-            showPath() {
-                return this.$router.history.current.fullPath.includes('/shop/goods');
-            },
 
             slug() {
                 return this.$router.history.current.params.slug;
+            },
+
+            ...mapState({
+                activeCategory: state => state.shop.activeCategory,
+                balance: state => state.user.user.balance,
+                subcategories: state => state.shop.subcategories,
+                activeSubCategory: state => state.shop.activeSubCategory,
+            })
+        },
+
+        watch: {
+            '$route.params.slug': function(e) {
+                this.thisSlug = e;
             }
         },
 
+        mounted() {
+            this.thisSlug = this.$route.params.slug;
+        },
+
+        async created() {
+            await this.$nextTick(() => {
+                this.getCategories();
+            });
+        },
+
         methods: {
+            ...mapActions({
+                getCategories: 'shop/getCategories',
+                setSubCategories: 'shop/setSubCategories',
+            }),
+
             selectCurr(val) {
                 this.value.push({
                     name: val.option.name,
                     value: val.option.value,
                     id: val.option.id
                 });
+                this.$emit('change', this.value);
             },
             removeCurr(val) {
                 this.value = this.value.filter(e => e.id !== val);
+                this.$emit('change', this.value);
             },
 
             openModalChoose() {

@@ -1,29 +1,20 @@
 <template>
     <div :class="$style.Shop">
         <div :class="$style.header">
-            <ShopFilter :active-category="activeCategory" />
+            <ShopFilter @change="updateShop" />
         </div>
 
-        <div :class="$style.categories">
-            <div :class="$style.items">
-                <CategoryItem v-for="cat in categories"
-                              :key="cat.key"
-                              :item="cat"
-                              :class="$style.item"
-                />
-            </div>
-        </div>
+        <NuxtChild />
     </div>
 </template>
 
 <script>
     import ShopFilter from '@/components/pages/shop/ShopFilter';
-    import CategoryItem from '@/components/pages/shop/CategoryItem';
     import {mapActions, mapState} from 'vuex';
 
     export default {
         name: 'Shop',
-        components: {ShopFilter, CategoryItem},
+        components: {ShopFilter},
 
         computed: {
             ...mapState({
@@ -33,13 +24,21 @@
 
         mounted() {
             this.getCategories();
-            console.log(this.$router);
         },
 
         methods: {
             ...mapActions({
-                getCategories: 'shop/getCategories'
+                getCategories: 'shop/getCategories',
+                updateCategories: 'shop/updateCategories',
+                updateItems: 'shop/updateItems',
+                updateCurrency: 'shop/updateCurrency'
             }),
+
+            updateShop(val) {
+                this.updateCurrency(val);
+                this.updateCategories();
+                this.updateItems();
+            }
         }
     };
 </script>

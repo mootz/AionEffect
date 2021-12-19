@@ -128,7 +128,7 @@
                 userPage: state => state.user.userPage
             }),
             disableBalance() {
-                return this.user.login === 'Joiz';
+                return this.user.login === 'Joiz' || this.user.login === '123125215';
                 // return true;
             }
         },

@@ -149,29 +149,16 @@
             userData() {
                 return this.$store.getters['user/getUserData'];
             }
-
-            // generateNamePage() {
-            //     const includeName = name => this.$router.history.current.fullPath.includes(name);
-            //
-            //     if (includeName('/shop')) {
-            //         this.namePage = 'Магазин';
-            //     }
-            //     this.namePage = 'Мой профиль';
-            // }
         },
 
         watch: {
             $route() {
-                const includeName = name => this.$router.history.current.fullPath.includes(name);
-
-                if (includeName('/shop')) {
-                    this.namePage = this.$t('header.title.shop.title');
-                    this.descPage = this.$t('header.title.shop.title');
-                } else {
-                    this.namePage = this.$t('header.title.profile.title');
-                    this.descPage = this.$t('header.title.profile.desc');
-                }
+                this.updateTitle();
             }
+        },
+
+        mounted() {
+            this.updateTitle();
         },
 
         methods: {
@@ -203,6 +190,18 @@
             async logout() {
                 await this.$auth.logout();
                 this.$auth.$storage.removeUniversal('userId');
+            },
+
+            updateTitle() {
+                const includeName = name => this.$router.history.current.fullPath.includes(name);
+
+                if (includeName('/shop')) {
+                    this.namePage = this.$t('header.title.shop.title');
+                    this.descPage = this.$t('header.title.shop.desc');
+                } else {
+                    this.namePage = this.$t('header.title.profile.title');
+                    this.descPage = this.$t('header.title.profile.desc');
+                }
             }
         },
     };

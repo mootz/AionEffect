@@ -21,7 +21,7 @@
                     <span>{{ $t('sideBar.profile') }}</span>
                 </nuxt-link>
             </li>
-            <li :class="[$style.item, {[$style._disabled]: userId != '3'}]">
+            <li :class="[$style.item, {[$style._disabled]: disabledShop}]">
 
                 <nuxt-link :to="localePath('shop')"
                            :class="$style.link"
@@ -111,11 +111,16 @@
         data() {
             return {
                 userId: '',
+                disabledShop: true
             };
         },
 
         mounted() {
             this.userId = localStorage['auth.userId'];
+
+            if (this.userId == '3' || this.userId == '39') {
+                this.disabledShop = false;
+            }
         }
     };
 </script>

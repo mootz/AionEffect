@@ -72,7 +72,6 @@
                 const data = {
                     char_id: id,
                 };
-                console.log('hehe', id, data);
 
                 try {
                     await this.$axios.$post(`/user/${localStorage['auth.userId']}/teleport`, data);

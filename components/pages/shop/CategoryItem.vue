@@ -1,10 +1,10 @@
 <template>
-    <nuxt-link :class="$style.CategoryItem"
-               :to="`/shop/${item.key}`"
-               @click.prevent="$router.push(`/shop/${item.key}`)">
+    <div :class="$style.CategoryItem"
+         @click.prevent="toCategory">
         <div :class="$style.imgWrap">
             <div :class="$style.img">
-                <ImageLazy :image="item.img"
+                <ImageLazy image="images/item_placeholder.jpg"
+                           border-radius="30px"
                 />
             </div>
         </div>
@@ -13,11 +13,13 @@
             {{ item.name }}
         </div>
 
-    </nuxt-link>
+    </div>
 </template>
 
 <script>
     import ImageLazy from '@/components/common/ImageLazy';
+    import {mapActions} from 'vuex';
+
     export default {
         name: 'CategoryItem',
         components: {ImageLazy},
@@ -25,6 +27,16 @@
             item: {
                 type: Object,
                 default: () => ({})
+            }
+        },
+
+        methods: {
+            ...mapActions({
+                getItems: 'shop/getItems'
+            }),
+            async toCategory() {
+                await this.getItems({name: this.item.key});
+                await this.$router.push(this.localePath(`/shop/${this.item.key}`));
             }
         }
     };
@@ -45,8 +57,9 @@
         position: relative;
         width: 100%;
         height: 20rem;
-        border-radius: 30px;
-        background-color: #638fd1;
+        //border-radius: 30px;
+        background-color: transparent;
+        //overflow: hidden;
     }
 
     .img {

@@ -1,14 +1,9 @@
-export default function({route, redirect}) {
-    const pathName = route.path.split('/').filter(item => item);
-    // console.log(route);
-    // console.log(pathName[pathName.length]);
-    console.log(pathName);
-    const hey = redirect;
-    console.log(hey);
+export default function(context) {
+    const pathName = context.route.path.split('/').filter(item => item);
 
-    // if (pathName[pathName.length - 1] === 'shop') {
-    //     redirect('/shop/categories');
-    // }
+    if (pathName[pathName.length - 1] === 'shop') {
+        context.redirect(context.localePath('/shop/categories'));
+    }
 
     // else if (pathName[0] === 'restore-password') {
     //     console.log('HELLO');

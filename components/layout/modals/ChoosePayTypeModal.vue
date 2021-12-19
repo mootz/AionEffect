@@ -8,7 +8,7 @@
                 <div :class="$style.content">
 
                     <p :class="$style.title">
-                        Выберите валюту
+                        {{ $t('shop.choosePayment') }}
                     </p>
 
                     <div :class="[$style.type, $style._effect, {[$style._active]: activeBtn === 'effect'}]"
@@ -54,7 +54,7 @@
                     <!--                    </div>-->
 
                     <div :class="$style.btn">
-                        <AppButton text="Продолжить"
+                        <AppButton :text="$t('shop.btnPayment')"
                                    height="5.4rem"
                                    :disabled="!activeBtn"
                                    @click.native="openModal"

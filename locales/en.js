@@ -287,6 +287,46 @@ export default {
             method: 'Method',
             count: 'Amount',
             status: 'Status'
+        },
+
+        empty: 'History empty'
+    },
+    shop: {
+        bread: 'Catalog',
+        search: 'Search',
+        addPayment: 'Top up balance',
+        choosePayment: 'Choose currency',
+        btnPayment: 'Continue',
+        item: {
+            balance: 'Your balance',
+            checkout: 'For payment',
+            end: 'Remainder',
+            btnGift: 'Gift',
+            btnBuy: 'Buy',
+        },
+
+        empty: 'There are no matching products'
+
+    },
+
+    giftModal: {
+        title: 'Send Gift',
+        desc1: 'Please enter the name of the character you want to gift.',
+        label: 'Character name',
+        placeholder: 'Enter character name',
+        desc2: 'Make sure that the entered data is correct, after clicking on the button, the gift will be sent to the character\'s in-game mail.',
+        btnBack: 'Back',
+        btnGift: 'Gift',
+        notif: {
+            accept: 'Item has been successfully sent to the character\'s in-game mail'
+        }
+    },
+
+    ListCharactersModal: {
+        title: 'Select a character',
+        btn: 'Submit',
+        notif: {
+            accept: 'Item has been successfully sent to the character\'s in-game mail'
         }
     }
 };

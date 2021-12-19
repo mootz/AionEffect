@@ -21,6 +21,8 @@ module.exports = {
 
     ssr: false,
 
+    // fallback: 'index.html',
+
     // serverMiddleware: [
     //     '~/middleware/redirects.js'
     // ],
@@ -203,7 +205,7 @@ module.exports = {
     router: {
         linkActiveClass: 'is-active',
         linkExactActiveClass: 'is-exact',
-        // middleware: ['redirects'],
+        middleware: ['redirects'],
         base: process.env.NODE_ENV !== 'production' ? '/' : '/profile',
         headers: {
             common: {

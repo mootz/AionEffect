@@ -15,35 +15,37 @@
 
                 <div :class="$style.content">
                     <h5 :class="$style.title">
-                        Отправить подарок
+                        {{ $t('giftModal.title') }}
                     </h5>
 
                     <p :class="$style.desc">
-                        Пожалуйста введите имя персонажа, которому вы хотите сделать подарок.
+                        {{ $t('giftModal.desc1') }}
                     </p>
 
                     <p :class="$style.inp">
-                        <AppInput label="Имя персонажа"
-                                  placeholder="Введите имя персонажа"
+                        <AppInput :label="$t('giftModal.label')"
+                                  :placeholder="$t('giftModal.placeholder')"
+                                  :value="name"
+                                  @input="setName"
                         />
                     </p>
 
                     <p :class="$style.desc">
-                        Убедитесь, что введенные данные верны, после нажатия на кнопку подарок будет отправлен на игровую почту персонажа.
+                        {{ $t('giftModal.desc2') }}
                     </p>
 
                     <div :class="$style.btns">
                         <div :class="$style.btn">
-                            <AppButton text="Назад"
+                            <AppButton :text="$t('giftModal.btnBack')"
                                        height="5.4rem"
                                        reverse
-                                       @click.native="backToModal"
+                                       @click.native="closeModal"
                             />
                         </div>
                         <div :class="[$style.btn, $style.btnChange]">
-                            <AppButton text="Подарить"
+                            <AppButton :text="$t('giftModal.btnGift')"
                                        height="5.4rem"
-                                       @click.native="closeModal"
+                                       @click.native="buyItem"
                             />
                         </div>
                     </div>
@@ -59,6 +61,8 @@
     import AppButton from '@/components/ui/inputs/AppButton';
     import AppInput from '@/components/ui/inputs/AppInput';
     import ProductModal from '@/components/layout/modals/ProductModal';
+    import {mapState, mapActions} from 'vuex';
+
     export default {
         components: {AppInput,
                      AppButton},
@@ -71,13 +75,51 @@
             },
         },
 
+        data() {
+            return {
+                name: ''
+            };
+        },
+
+        computed: {
+            ...mapState({
+                userId: state => state.user.user.id
+            })
+        },
+
         methods: {
+            ...mapActions({
+                updateUser: 'user/getUserData'
+            }),
+
             closeModal() {
                 this.$modal.close();
             },
             backToModal() {
                 this.$modal.open(ProductModal);
-            }
+            },
+
+            setName(val) {
+                this.name = val;
+            },
+
+            async buyItem() {
+                try {
+                    const data = {
+                        char_name: this.name,
+                        product_id: this.data.product_id,
+                        count: this.data.count
+                    };
+
+                    await this.$axios.$post(`/shop/${this.userId}/friend`, data);
+                    await this.updateUser();
+                    this.$toast.success(this.$t('giftModal.notif.accept'), {timeout: 3000});
+                    this.$modal.close();
+                } catch (error) {
+                    console.warn('GiftModal: ', error.response);
+                    this.$toast.error(error.response.data.result_msg);
+                }
+            },
         }
     };
 </script>

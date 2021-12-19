@@ -8,84 +8,84 @@
 
                 <div :class="$style.content">
                     <h5 :class="$style.title">
-                        Anniversary Fairy Treasure Pack
+                        {{ data.name }}
                     </h5>
 
                     <div :class="$style.desc">
-                        Grab yours and get Enchantment Stones that can improve your Stigmas by up to 3 levels!
-
-                        You can participate in Ribbit’s Lucky Pot with this item and have a chance of winning fantastic prizes! Check the AION Newsletter to learn more about how the lucky pot works and what you can win.
+                        {{ data.info }}
                     </div>
 
                     <div :class="$style.tags">
-                        <div :class="$style.tag">
-                            Нельзя продать
-                        </div>
-                        <div :class="$style.tag">
-                            Только для асмодиан
-                        </div>
-                        <div :class="$style.tag">
-                            Привязан к персонажу
+                        <div v-for="tag in data.teg"
+                             :key="tag.id"
+                             :class="$style.tag">
+                            {{ tag.name }}
                         </div>
                     </div>
 
                     <ul :class="$style.listCoin">
                         <li :class="$style.itemCoin">
-                            <span :class="$style.itemText">Ваш баланс</span>
+                            <span :class="$style.itemText">{{ $t('shop.item.balance') }}</span>
                             <div :class="$style.itemValue">
-                                <div :class="$style.itemIcon">
+                                <div :class="[$style.itemIcon, $style[`_${data.currency}`]]">
                                     <svg>
-                                        <use xlink:href="#icon-bonus" />
+                                        <use :xlink:href="`#icon-${thisCurrency}`" />
                                     </svg>
                                 </div>
-                                <span :class="$style.itemTextValue">13,228</span>
+                                <span :class="$style.itemTextValue">{{ currency[data.currency] }}</span>
                             </div>
                         </li>
 
                         <li :class="$style.itemCoin">
-                            <span :class="$style.itemText">К оплате</span>
+                            <span :class="$style.itemText">{{ $t('shop.item.checkout') }}</span>
 
-                            <div :class="$style.itemChange">
-                                <AppInputTrade />
+                            <div v-if="data.stack"
+                                 :class="$style.itemChange">
+                                <AppInputTrade :value="change"
+                                               @plus="plusValue"
+                                               @minus="minusValue"
+                                />
                             </div>
 
                             <div :class="$style.itemValue">
-                                <div :class="$style.itemIcon">
+                                <div :class="[$style.itemIcon, $style[`_${data.currency}`]]">
                                     <svg>
-                                        <use xlink:href="#icon-bonus" />
+                                        <use :xlink:href="`#icon-${thisCurrency}`" />
                                     </svg>
                                 </div>
-                                <span :class="$style.itemTextValue">280</span>
+                                <span :class="$style.itemTextValue">{{ data.price * change }}</span>
                             </div>
                         </li>
 
                         <li :class="$style.itemCoin">
-                            <span :class="$style.itemText">Остаток</span>
+                            <span :class="$style.itemText">{{ $t('shop.item.end') }}</span>
                             <div :class="$style.itemValue">
-                                <div :class="$style.itemIcon">
+                                <div :class="[$style.itemIcon, $style[`_${data.currency}`]]">
                                     <svg>
-                                        <use xlink:href="#icon-bonus" />
+                                        <use :xlink:href="`#icon-${thisCurrency}`" />
                                     </svg>
                                 </div>
-                                <span :class="$style.itemTextValue">12,948</span>
+                                <span :class="$style.itemTextValue">{{ currency[data.currency] - data.price * change }}</span>
                             </div>
                         </li>
 
                     </ul>
-
                     <div :class="$style.btns">
-                        <div :class="$style.btn">
-                            <AppButton text="Подарить"
+                        <div v-if="data.friendly"
+                             :class="[$style.btn]">
+                            <AppButton :text="$t('shop.item.btnGift')"
                                        reverse
                                        height="5.4rem"
+                                       :disabled="(currency[data.currency] - data.price * change) < 0"
                                        @click.native="giftModal"
 
                             />
                         </div>
                         <div :class="[$style.btn, $style.btnChange]">
-                            <AppButton text="Купить"
+                            <AppButton :text="$t('shop.item.btnBuy')"
                                        height="5.4rem"
-                                       @click.native="closeModal"
+                                       :disabled="(currency[data.currency] - data.price * change) < 0"
+                                       @click.native="openModal"
                             />
                         </div>
                     </div>
@@ -101,10 +101,14 @@
     import AppButton from '@/components/ui/inputs/AppButton';
     import GiftModal from '@/components/layout/modals/GiftModal';
     import AppInputTrade from '@/components/ui/inputs/AppInputTrade';
+    import {mapState} from 'vuex';
+    import ListCharactersModal from '@/components/layout/modals/ListCharactersModal';
 
     export default {
-        components: {AppInputTrade,
-                     AppButton},
+        components: {
+            AppInputTrade,
+            AppButton
+        },
         props: {
             visible: Boolean,
 
@@ -114,12 +118,55 @@
             },
         },
 
+        data() {
+            return {
+                change: 1
+            };
+        },
+
+        computed: {
+            ...mapState({
+                currency: state => state.user.user.balance
+            }),
+
+            thisCurrency() {
+                return this.data.currency === 'effect' ? 'coin-effect' : this.data.currency;
+            }
+        },
+
+        mounted() {
+            console.log(this.data);
+        },
+
         methods: {
             closeModal() {
                 this.$modal.close();
             },
+
             giftModal() {
-                this.$modal.open(GiftModal);
+                this.$modal.open(GiftModal, {
+                    count: this.change,
+                    product_id: this.data.id
+                });
+            },
+
+            plusValue() {
+                if (this.data.price * (this.change + 1) < this.currency[this.data.currency]) {
+                    this.change += 1;
+                }
+            },
+
+            minusValue() {
+                if (this.change !== 0 && this.change !== 1) {
+                    this.change -= 1;
+                }
+            },
+
+            openModal() {
+                this.$modal.open(ListCharactersModal, {
+                    count: this.change,
+                    product_id: this.data.id
+                });
             }
         }
     };
@@ -257,6 +304,11 @@
         &._effect {
             background-color: #9e00ff;
             box-shadow: 0 10px 20px rgba(158, 0, 255, 0.3);
+        }
+
+        &._kinah {
+            background-color: #ff8a00;
+            box-shadow: 0 10px 20px rgba(255, 138, 0, 0.3);
         }
     }
 
