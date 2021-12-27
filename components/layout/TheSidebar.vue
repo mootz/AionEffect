@@ -21,7 +21,7 @@
                     <span>{{ $t('sideBar.profile') }}</span>
                 </nuxt-link>
             </li>
-            <li :class="[$style.item, {[$style._disabled]: disabledShop}]">
+            <li :class="[$style.item]">
 
                 <nuxt-link :to="localePath('shop')"
                            :class="$style.link"

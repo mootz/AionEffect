@@ -45,7 +45,7 @@
                         {{ log.count }}
                     </div>
                     <div :class="[$style.column4, $style.cell, {[$style._active]: log.status === '0'}]">
-                        {{ log.status === '1' ? 'Завершен' : 'Активен' }}
+                        {{ log.status === '1' ? 'Оплачен' : 'Не оплачен' }}
                     </div>
                     <div :class="[$style.column5, $style.cell]">
                         {{ getDate(log.date) }}

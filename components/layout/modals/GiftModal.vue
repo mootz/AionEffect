@@ -45,6 +45,7 @@
                         <div :class="[$style.btn, $style.btnChange]">
                             <AppButton :text="$t('giftModal.btnGift')"
                                        height="5.4rem"
+                                       :disabled="btnDisable"
                                        @click.native="buyItem"
                             />
                         </div>
@@ -77,7 +78,8 @@
 
         data() {
             return {
-                name: ''
+                name: '',
+                btnDisable: false
             };
         },
 
@@ -104,6 +106,7 @@
             },
 
             async buyItem() {
+                this.btnDisable = true;
                 try {
                     const data = {
                         char_name: this.name,
@@ -119,6 +122,7 @@
                     console.warn('GiftModal: ', error.response);
                     this.$toast.error(error.response.data.result_msg);
                 }
+                this.btnDisable = false;
             },
         }
     };

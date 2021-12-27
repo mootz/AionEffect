@@ -3,7 +3,7 @@
         <div :class="[$style.img, {[$style._zoom]: item.img_zoom}]"
              @click.prevent="item.img_zoom ? openLightBox() : null">
             <!--            <ImageLazy :image="item.img"-->
-            <ImageLazy image="item.img"
+            <ImageLazy :image="item.img"
                        border-radius="30px"
             />
         </div>

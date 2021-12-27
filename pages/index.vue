@@ -128,13 +128,9 @@
                 userPage: state => state.user.userPage
             }),
             disableBalance() {
-                return this.user.login === 'Joiz' || this.user.login === '123125215';
-                // return true;
+                // return this.user.login === 'Joiz' || this.user.login === '123125215';
+                return true;
             }
-        },
-
-        mounted() {
-            console.log(this.$auth.strategy.token.status().expired());
         },
 
         methods: {

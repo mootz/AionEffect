@@ -108,6 +108,7 @@
                     this.$router.push(this.localePath('/'));
                 })
                     .catch(err => {
+                        console.log(err);
                         if (err.response.data.validation) {
                             const listErrors = Object.entries(err.response.data.validation);
 

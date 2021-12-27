@@ -21,6 +21,31 @@ module.exports = {
 
     ssr: false,
 
+    generate: {
+        routes: [
+            '/shop/premium',
+            '/shop/utility',
+            '/shop/services',
+            '/shop/kits',
+            '/shop/free',
+            '/shop/appearance',
+            '/shop/movement',
+            '/shop/pets',
+            '/shop/ammunition',
+            '/shop/home',
+            '/en/shop/premium',
+            '/en/shop/utility',
+            '/en/shop/services',
+            '/en/shop/kits',
+            '/en/shop/free',
+            '/en/shop/appearance',
+            '/en/shop/movement',
+            '/en/shop/pets',
+            '/en/shop/ammunition',
+            '/en/shop/home',
+        ]
+    },
+
     // fallback: 'index.html',
 
     // serverMiddleware: [

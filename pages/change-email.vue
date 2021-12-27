@@ -15,7 +15,6 @@
                 const data = {
                     token: this.$router.history.current.query.token
                 };
-                console.log(data);
                 try {
                     await this.$axios.$post(`/user/${localStorage['auth.userId']}/change-confirmation-for-email`, data);
                     this.$router.push(this.localePath('/'));

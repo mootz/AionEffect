@@ -80,7 +80,6 @@ export const actions = {
     async getHistoryDonation({commit}, page) {
         try {
             const response = await this.$axios.$post(`/user/${localStorage['auth.userId']}/log/donation/${page}`);
-            console.log(response);
 
             commit('SET_HISTORY_DONATION', response);
         } catch (error) {

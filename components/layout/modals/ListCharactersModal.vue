@@ -35,7 +35,7 @@
 
                     <AppButton :text="$t('ListCharactersModal.btn')"
                                height="5.4rem"
-                               :disabled="!activeChar"
+                               :disabled="!activeChar || btnDisable"
                                :class="$style.btn"
                                @click.native="buyItem"
                     />
@@ -65,7 +65,8 @@
 
         data() {
             return {
-                activeChar: null
+                activeChar: null,
+                btnDisable: false
             };
         },
 
@@ -74,10 +75,6 @@
                 characters: state => state.user.user.characters,
                 userId: state => state.user.user.id
             })
-        },
-
-        mounted() {
-            console.log(this);
         },
 
         methods: {
@@ -97,6 +94,8 @@
             },
 
             async buyItem() {
+                this.btnDisable = true;
+
                 try {
                     const data = {
                         char_id: this.activeChar,
@@ -112,6 +111,7 @@
                     console.warn('ListCharactersModal: ', error.response);
                     this.$toast.error(error.response.data.result_msg);
                 }
+                this.btnDisable = false;
             },
 
             computClass(val) {
