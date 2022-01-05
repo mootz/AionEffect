@@ -291,6 +291,7 @@ export default {
 
         empty: 'History empty'
     },
+
     shop: {
         bread: 'Catalog',
         search: 'Search',
@@ -332,5 +333,22 @@ export default {
         notif: {
             accept: 'Item has been successfully sent to the character\'s in-game mail'
         }
+    },
+
+    copy: {
+        success: 'Link copied successfully!',
+        error: 'Copy to clipboard: Ctrl+C, Enter',
+    },
+
+    giftReferral: {
+        success: 'Gift sent successfully',
+    },
+
+    referral: {
+        giftInfo: 'Gift for the invited player',
+        info: 'Everything about the referral program',
+        invited: 'Players invited',
+        btn: 'Copy link',
+        name: 'Referral program'
     }
 };

@@ -113,15 +113,18 @@
                             rules: this.rule,
                         };
 
+                        if (this.$router.history.current.query.userReferral) {
+                            data.referral = Number(this.$router.history.current.query.userReferral);
+                        }
+
+
                         await this.$recaptcha.execute('register');
 
-                        // eslint-disable-next-line no-unused-vars
                         await this.$axios.$post('/user/registration', data);
 
                         localStorage.setItem('userEmail', this.email);
 
-                        this.$router.push(this.localePath('/login/check-register'));
-                        // this.$emit('change-step', 'acceptRegister');
+                        await this.$router.push(this.localePath('/login/check-register'));
                     } catch (err) {
                         console.log(err.response);
 

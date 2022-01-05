@@ -11,6 +11,7 @@
                         {{ $t('ListCharactersModal.title') }}
                     </div>
 
+
                     <div v-for="char in characters"
                          v-show="characters.length"
                          :key="char.char_id"
@@ -37,7 +38,7 @@
                                height="5.4rem"
                                :disabled="!activeChar || btnDisable"
                                :class="$style.btn"
-                               @click.native="buyItem"
+                               @click.native="data.referral ? giveGift() : buyItem()"
                     />
                 </div>
 
@@ -77,6 +78,10 @@
             })
         },
 
+        mounted() {
+            console.log(this.data);
+        },
+
         methods: {
             ...mapActions({
                 updateUser: 'user/getUserData'
@@ -111,6 +116,26 @@
                     console.warn('ListCharactersModal: ', error.response);
                     this.$toast.error(error.response.data.result_msg);
                 }
+                this.btnDisable = false;
+            },
+
+            async giveGift() {
+                this.btnDisable = true;
+
+                try {
+                    const data = {
+                        char_id: this.activeChar
+                    };
+
+                    await this.$axios.$post(`/user/${this.userId}/give-gift`, data);
+                    await this.updateUser();
+                    this.$toast.success(this.$t('giftReferral.success'), {timeout: 3000});
+                    this.$modal.close();
+                } catch (error) {
+                    console.warn('ListCharactersModal: ', error.response);
+                    this.$toast.error(error.response.data.result_msg);
+                }
+
                 this.btnDisable = false;
             },
 

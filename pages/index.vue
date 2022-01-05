@@ -37,31 +37,36 @@
                     <AccountCard :user="user" />
                 </div>
 
-                <!--                <div :class="$style.refferalWrap">
+                <div v-if="user.id === '39' || user.id === '3'"
+                     :class="$style.referralWrap">
                     <div class="labelName">
-                        Реферальная программа
+                        {{ $t('referral.name') }}
                     </div>
 
-                                        <div :class="$style.refferal">
+                    <div :class="$style.referral">
                         <div :class="$style.buttonWrap">
-                            <AppButton text="Скопировать ссылку"
+                            <AppButton :text="$t('referral.btn')"
                                        height="100%"
+                                       @click.native.stop="copyReferralLink(user.referral.url_key)"
                             />
                         </div>
 
                         <div :class="$style.number">
-                            &lt;!&ndash;                            {{ user.refferal.invited }}&ndash;&gt;
+                            {{ user.referral.count }}
                         </div>
                         <p :class="$style.rText">
-                            Игроков приглашено
+                            {{ $t('referral.invited') }}
                         </p>
 
                         <div :class="$style.rIcons">
                             <div v-tippy="{ distance: 14 }"
                                  :class="$style.rIconWrap"
-                                 content="Подарок за приглашенного игрока">
-                                <div :class="$style.rIconGifts">
-                                    &lt;!&ndash;                                    {{ user.refferal.gifts }}&ndash;&gt;
+                                 :content="$t('referral.giftInfo')"
+                                 @click.stop="user.referral.gift > 0 ? openModalListCharacters() : false"
+                            >
+                                <div v-if="user.referral.gift > 0"
+                                     :class="$style.rIconGifts">
+                                    {{ user.referral.gift }}
                                 </div>
                                 <div :class="$style.rIcon">
                                     <svg>
@@ -71,7 +76,7 @@
                             </div>
                             <div v-tippy="{ distance: 14 }"
                                  :class="$style.rIconWrap"
-                                 content="Все о реферальной программе"
+                                 :content="$t('referral.info')"
                             >
                                 <div :class="$style.rIcon">
                                     <svg>
@@ -81,7 +86,7 @@
                             </div>
                         </div>
                     </div>
-                </div>-->
+                </div>
 
             </div>
 
@@ -108,13 +113,18 @@
     import AccountCard from '@/components/pages/homePage/AccountCard';
     import ListCharacters from '@/components/pages/homePage/ListCharacters';
     import UserData from '@/components/pages/homePage/UserData';
+    import AppButton from '../components/ui/inputs/AppButton';
+    import ListCharactersModal from '../components/layout/modals/ListCharactersModal';
 
     export default {
         name: 'HomePage',
-        components: {UserData,
-                     ListCharacters,
-                     AccountCard,
-                     BalanceCard},
+        components: {
+            UserData,
+            ListCharacters,
+            AccountCard,
+            BalanceCard,
+            AppButton
+        },
 
         // data() {
         //     return {
@@ -143,6 +153,62 @@
             openModalBonus() {
                 this.$modal.open(BonusDonation);
             },
+            openModalListCharacters() {
+                this.$modal.open(ListCharactersModal, {referral: true});
+            },
+
+            copyReferralLink(id) {
+                const url = `${window.location.origin}/profile${this.$i18n.locale === 'en' ? '/en/' : '/'}login/register?userReferral=${id}`;
+
+                this.copyTextToClipboard(url);
+            },
+
+            fallbackCopyTextToClipboard(text) {
+                const toast = this.$toast;
+                // eslint-disable-next-line consistent-this
+                const thisHe = this;
+
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+
+                // Avoid scrolling to bottom
+                textArea.style.top = '0';
+                textArea.style.left = '0';
+                textArea.style.position = 'fixed';
+
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+
+                try {
+                    const successful = document.execCommand('copy');
+                    const msg = successful ? 'successful' : 'unsuccessful';
+                    console.log('Fallback: Copying text command was ' + msg);
+                    toast.success(thisHe.$t('copy.success'));
+                } catch (err) {
+                    // eslint-disable-next-line no-alert
+                    window.prompt(thisHe.$t('copy.error'), text);
+                }
+
+                document.body.removeChild(textArea);
+            },
+            copyTextToClipboard(text) {
+                const toast = this.$toast;
+                // eslint-disable-next-line consistent-this
+                const thisHe = this;
+
+                if (!navigator.clipboard) {
+                    this.fallbackCopyTextToClipboard(text);
+                    return;
+                }
+                navigator.clipboard.writeText(text).then(function() {
+                    toast.success(thisHe.$t('copy.success'));
+                }, function(err) {
+                    console.log(err);
+                    // eslint-disable-next-line no-alert,no-invalid-this
+                    window.prompt(thisHe.$t('copy.error'), text);
+                });
+            }
         },
     };
 </script>
@@ -162,11 +228,11 @@
         //pointer-events: none;
     }
 
-    .refferalWrap {
+    .referralWrap {
         margin-top: 3.2rem;
     }
 
-    .refferal {
+    .referral {
         display: flex;
         align-items: center;
         padding: 3.2rem;

@@ -26,7 +26,7 @@
     import TheModal from '~/components/layout/TheModal';
     import TheSidebar from '~/components/layout/TheSidebar';
     import TheSprite from '~/components/layout/TheSprite';
-    import {mapActions, mapMutations} from 'vuex';
+    import {mapActions} from 'vuex';
     import ThePreloader from '@/components/layout/ThePreloader';
 
     export default {
@@ -62,10 +62,6 @@
                 userData: 'user/getUserData',
                 closeProfileMenu: 'header/closeProfileMenu',
                 closeNotifications: 'header/closeNotifications'
-            }),
-
-            ...mapMutations({
-                createNewAvatar: 'user/CREATE_AVATAR'
             }),
 
             // getUserData() {

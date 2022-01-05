@@ -21,6 +21,11 @@ export const state = () => ({
             bonus: '0',
             kinah: '0'
         },
+        referral: {
+            url_key: '',
+            count: 0,
+            gift: 0
+        },
         characters: []
     },
 

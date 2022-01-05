@@ -1,6 +1,6 @@
 <template>
     <transition name="loader"
-                :duration="{ enter: 100, leave: 700 }"
+                :duration="{ enter: 100, leave: 400 }"
     >
         <div v-if="loading"
              :class="$style.ThePreloader">
