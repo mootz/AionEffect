@@ -181,12 +181,12 @@
                         value: 'enot',
                         id: 1
                     },
-                    {
-                        name: `${this.$t('effectModal.paymentMethod')} PrimePayments`,
-                        full_name: 'PrimePayments',
-                        value: 'primepayments',
-                        id: 2
-                    },
+                    // {
+                    //     name: `${this.$t('effectModal.paymentMethod')} PrimePayments`,
+                    //     full_name: 'PrimePayments',
+                    //     value: 'primepayments',
+                    //     id: 2
+                    // },
                     // },{
                     //     name: `${this.$t('effectModal.paymentMethod')} Digiseller`,
                     //     full_name: 'Digiseller',

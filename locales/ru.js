@@ -1,6 +1,7 @@
 export default {
     // без переводчика
     linkRule: 'https://forum.aioneffect.com/index.php?/topic/92-общие-правила-проекта/',
+    linkReferralInfo: 'https://forum.aioneffect.com/index.php?/topic/90-реферальная-программа/',
 
     classes: {
         0: 'Воин',

@@ -37,8 +37,7 @@
                     <AccountCard :user="user" />
                 </div>
 
-                <div v-if="user.id === '39' || user.id === '3'"
-                     :class="$style.referralWrap">
+                <div :class="$style.referralWrap">
                     <div class="labelName">
                         {{ $t('referral.name') }}
                     </div>
@@ -74,16 +73,18 @@
                                     </svg>
                                 </div>
                             </div>
-                            <div v-tippy="{ distance: 14 }"
-                                 :class="$style.rIconWrap"
-                                 :content="$t('referral.info')"
+                            <a v-tippy="{ distance: 14 }"
+                               :class="$style.rIconWrap"
+                               :content="$t('referral.info')"
+                               :href="$t('linkReferralInfo')"
+                               target="_blank"
                             >
                                 <div :class="$style.rIcon">
                                     <svg>
                                         <use xlink:href="#icon-info" />
                                     </svg>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     </div>
                 </div>

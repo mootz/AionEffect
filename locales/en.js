@@ -1,5 +1,6 @@
 export default {
     linkRule: 'https://forum.aioneffect.com/index.php?/topic/96-general-project-rules/',
+    linkReferralInfo: 'https://forum.aioneffect.com/index.php?/topic/346-referral-program/',
 
     classes: {
         0: 'Warrior',

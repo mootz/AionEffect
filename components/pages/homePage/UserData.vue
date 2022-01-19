@@ -182,7 +182,7 @@
 
                     this.email = '';
 
-                    this.$toast(this.$t('notif.changeEmail.accept'));
+                    this.$toast(this.$t('notif.userData.accept'));
                 } catch (err) {
                     console.warn('changeEmail: ', err.response);
 
